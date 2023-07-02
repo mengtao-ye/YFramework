@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FB0CBE41-701A-42C7-B6AA-FFEDE399AAC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YFramework</RootNamespace>
+    <AssemblyName>YFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>C:\UnityProject\YunCunProject_2020.3.32f1c1\Assets\Plugin\YFramework\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>Dll\UnityEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>Dll\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>..\Dll\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Dll\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Center\Controller\ChildController\IChildController.cs" />
+    <Compile Include="Core\Center\Controller\Controller\IController.cs" />
+    <Compile Include="Core\Center\Main\Module\IModule.cs" />
+    <Compile Include="Core\Center\Main\SceneModule\ISceneModule.cs" />
+    <Compile Include="Core\Center\Model\ChildModel\IChildModel.cs" />
+    <Compile Include="Core\Center\Model\Model\IModel.cs" />
+    <Compile Include="Core\Common\Interface\IDataConverter.cs" />
+    <Compile Include="Core\Common\Interface\IPool.cs" />
+    <Compile Include="Core\Common\Interface\IRecycle.cs" />
+    <Compile Include="Core\DesignPattern\ObserverPattern\Observer\IObserver.cs" />
+    <Compile Include="Core\DesignPattern\ObserverPattern\Subject\ISubject.cs" />
+    <Compile Include="Core\Extend\BytesConverterExtend.cs" />
+    <Compile Include="Core\Extend\DateTimeExtend.cs" />
+    <Compile Include="Core\Extend\ObjectExtend.cs" />
+    <Compile Include="Core\Extend\StringExtend.cs" />
+    <Compile Include="Core\Manager\SceneManager\IScene.cs" />
+    <Compile Include="Core\Manager\SceneManager\ISceneManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\IRequestHandle.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\PlatformType.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\SocketData.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpBigData.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpBigDataItem.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpBigDataManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpMsg.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpMsgType.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\IUdpRequestHandle.cs" />
+    <Compile Include="Core\Module\LockStepModule\Data\LockStepData.cs" />
+    <Compile Include="Core\Module\LockStepModule\Data\LockStepUserData.cs" />
+    <Compile Include="Core\Module\LockStepModule\FixedData\Fix32\Fix32.cs" />
+    <Compile Include="Core\Module\LockStepModule\FixedData\Fix32\Fix32Vector2.cs" />
+    <Compile Include="Core\Module\LockStepModule\FixedData\Fix32\Fix32Vector3.cs" />
+    <Compile Include="Core\Module\LockStepModule\FixedData\Fix64\Fix64.cs" />
+    <Compile Include="Core\Module\LockStepModule\FixedData\Fix64\FixVector2.cs" />
+    <Compile Include="Core\Module\LockStepModule\FixedData\Fix64\FixVector3.cs" />
+    <Compile Include="Core\Module\UndoModule\IUnDo.cs" />
+    <Compile Include="Core\UI\Form\BaseForm.cs" />
+    <Compile Include="Core\UI\Canvas\ICanvas.cs" />
+    <Compile Include="Core\UI\Form\IForm.cs" />
+    <Compile Include="Core\UI\Log\ILogUI.cs" />
+    <Compile Include="Core\UI\Log\ILogUIManager.cs" />
+    <Compile Include="Core\UI\Panel\IPanel.cs" />
+    <Compile Include="Core\UI\Sub\BaseSubUI.cs" />
+    <Compile Include="Core\UI\Sub\ISubUI.cs" />
+    <Compile Include="Core\UI\TipsUI\ITipsUI.cs" />
+    <Compile Include="Core\UI\TipsUI\ITipsUIManager.cs" />
+    <Compile Include="Core\Utility\Utility.BinaryMapper.cs" />
+    <Compile Include="Core\Utility\Utility.ConvertDataTools.cs" />
+    <Compile Include="Core\Utility\Utility.DictionaryTools.cs" />
+    <Compile Include="Core\Utility\Utility.ListTools.cs" />
+    <Compile Include="Core\Utility\Utility.PermissionTools.cs" />
+    <Compile Include="Core\Utility\Utility.XmlMapper.cs" />
+    <Compile Include="Core\Utility\Utlilty.Algorithm.cs" />
+    <Compile Include="Core\Center\Controller\ChildController\BaseChildController.cs" />
+    <Compile Include="Core\Center\Controller\Controller\BaseController.cs" />
+    <Compile Include="Core\Center\Main\SceneModule\BaseSceneModule.cs" />
+    <Compile Include="Core\Center\Main\Module\BaseModule.cs" />
+    <Compile Include="Core\Center\Main\Center.cs" />
+    <Compile Include="Core\Center\Model\ChildModel\BaseChildModel.cs" />
+    <Compile Include="Core\Center\Model\Model\BaseModel.cs" />
+    <Compile Include="Core\Extend\RectTransformExtend.cs" />
+    <Compile Include="Core\Manager\SceneManager\BaseScene.cs" />
+    <Compile Include="Core\Manager\SceneManager\SceneManager.cs" />
+    <Compile Include="Core\DataStructure\DoubleLinkedList\DoubleLinkedList.cs" />
+    <Compile Include="Core\DataStructure\DoubleLinkedList\DoubleLinkedNode.cs" />
+    <Compile Include="Core\Data\Struct\boool.cs" />
+    <Compile Include="Core\Data\UIData\UIMappperData\UIMapperData.cs" />
+    <Compile Include="Core\Data\XmlAndExcelConvert\SheetClass.cs" />
+    <Compile Include="Core\Data\XmlAndExcelConvert\VariableClass.cs" />
+    <Compile Include="Core\Data\XmlAndExcelConvert\XmlClass.cs" />
+    <Compile Include="Core\DesignPattern\ObserverPattern\Observer\BaseObserver.cs" />
+    <Compile Include="Core\DesignPattern\ObserverPattern\Subject\BaseSubject.cs" />
+    <Compile Include="Core\DesignPattern\SinglePattern\Singleton.cs" />
+    <Compile Include="Core\DesignPattern\SinglePattern\SingletonMono.cs" />
+    <Compile Include="Core\Extend\ByteExtend.cs" />
+    <Compile Include="Core\Extend\CollectionExtend.cs" />
+    <Compile Include="Core\Extend\DotweenExtend.cs" />
+    <Compile Include="Core\Extend\GameObjectExtend.cs" />
+    <Compile Include="Core\Extend\ToggleGroupExtend.cs" />
+    <Compile Include="Core\Extend\TransformExtend.cs" />
+    <Compile Include="Core\Extend\UIExtend.cs" />
+    <Compile Include="Core\Utility\Utility.Directory.cs" />
+    <Compile Include="Core\Manager\SocketManager\Data\CommonData.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\Message.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\BaseRequestHandle.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\RequestData.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\RequestHandleManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\SocketMsg.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\SocketManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\BaseUdpRequestHandle.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\UdpRequestHandleManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\UdpSocketManager.cs" />
+    <Compile Include="Core\Module\AudioPlayerModule\AudioPlayerModule.cs" />
+    <Compile Include="Core\Module\BoardCastModule\BoardCastDelegate.cs" />
+    <Compile Include="Core\Module\BoardCastModule\BoardCastModule.cs" />
+    <Compile Include="Core\Module\DoTweenModule\BaseTween.cs" />
+    <Compile Include="Core\Module\DoTweenModule\Core\PositionTween.cs" />
+    <Compile Include="Core\Module\DoTweenModule\ITween.cs" />
+    <Compile Include="Core\Module\IEnumeratorModule\IEnumeratorModule.cs" />
+    <Compile Include="Core\Module\IEnumeratorModule\IEnumeratorMono.cs" />
+    <Compile Include="Core\Module\LogModule\Log.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\ClassPoolModule.cs" />
+    <Compile Include="Core\Module\PoolModule\GameObjectPoolModule\Base\BaseGameObjectPoolTarget.cs" />
+    <Compile Include="Core\Module\PoolModule\GameObjectPoolModule\Base\IGameObjectPoolTarget.cs" />
+    <Compile Include="Core\Module\PoolModule\GameObjectPoolModule\GameObjectPoolModule.cs" />
+    <Compile Include="Core\Module\ResourceModule\Resource.cs" />
+    <Compile Include="Core\Module\UndoModule\BaseUndo.cs" />
+    <Compile Include="Core\Module\UndoModule\UndoModule.cs" />
+    <Compile Include="Core\Mono\UI\ScrollView\FlashScrollView.cs" />
+    <Compile Include="Core\Mono\UI\Text\TextSpacing.cs" />
+    <Compile Include="Core\Common\Abstractor\BaseCount.cs" />
+    <Compile Include="Core\Common\Abstractor\Map.cs" />
+    <Compile Include="Core\Common\Abstractor\SingleMap.cs" />
+    <Compile Include="Core\Common\Interface\IClear.cs" />
+    <Compile Include="Core\Common\Interface\ICollectionContain.cs" />
+    <Compile Include="Core\Common\Interface\ICollectionCount.cs" />
+    <Compile Include="Core\Common\Interface\ICollectionDoubleAdd.cs" />
+    <Compile Include="Core\Common\Interface\ICollectionDoubleMove.cs" />
+    <Compile Include="Core\Common\Interface\ICollectionRemove.cs" />
+    <Compile Include="Core\Common\Interface\ILife.cs" />
+    <Compile Include="Core\Common\Interface\IMap.cs" />
+    <Compile Include="Core\Common\Interface\IReset.cs" />
+    <Compile Include="Core\Common\Interface\IResume.cs" />
+    <Compile Include="Core\Utility\Utility.BesierLineTools.cs" />
+    <Compile Include="Core\Utility\Utility.BirdFlyLinesTools.cs" />
+    <Compile Include="Core\Utility\Utility.ByteTools.cs" />
+    <Compile Include="Core\Utility\Utility.CompressTools.cs" />
+    <Compile Include="Core\Utility\Utility.CRC32Tool.cs" />
+    <Compile Include="Core\Utility\Utility.MD5Tool.cs" />
+    <Compile Include="Core\Utility\Utility.FileTools.cs" />
+    <Compile Include="Core\Utility\Utility.HttpTools.cs" />
+    <Compile Include="Core\Utility\Utility.MeshTools.cs" />
+    <Compile Include="Core\Utility\Utility.MicroPhoneTools.cs" />
+    <Compile Include="Core\Utility\Utility.PointTools.cs" />
+    <Compile Include="Core\Utility\Utility.RandomTools.cs" />
+    <Compile Include="Core\Utility\Utility.ReflectionTools.cs" />
+    <Compile Include="Core\UI\Custom\ActionButton.cs" />
+    <Compile Include="Core\Utility\Utility.UITools.cs" />
+    <Compile Include="Core\Utility\Utility.WindowsFileName.cs" />
+    <Compile Include="Core\UI\Canvas\BaseCanvas.cs" />
+    <Compile Include="Core\UI\Log\BaseLogUI.cs" />
+    <Compile Include="Core\UI\Panel\BasePanel.cs" />
+    <Compile Include="Core\UI\TipsUI\BaseTipsUI.cs" />
+    <Compile Include="Core\UI\Base\BaseUI.cs" />
+    <Compile Include="Core\UI\Panel\CommonPanel\TakePhotoPanel.cs" />
+    <Compile Include="Core\UI\Data\CanvasLayerData.cs" />
+    <Compile Include="Core\UI\Data\Enum\HideAnimEnum.cs" />
+    <Compile Include="Core\UI\Data\Enum\ShowAnimEnum.cs" />
+    <Compile Include="Core\UI\Base\IUI.cs" />
+    <Compile Include="Core\UI\Log\LogUIManager.cs" />
+    <Compile Include="Core\UI\TipsUI\TipsUIManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Utility\Utility.ConverterTools.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
