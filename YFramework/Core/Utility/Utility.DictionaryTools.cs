@@ -18,7 +18,6 @@ namespace YFramework
                     mTempData = new byte[MAX_SIZE];
                 }
             }
-
             /// <summary>
             /// 将字典转换成数组 
             /// 前提条件：
@@ -82,7 +81,6 @@ namespace YFramework
                 }
                 return tempData;
             }
-
             /// <summary>
             /// 将字典转换成数组 
             /// 前提条件：

@@ -1,4 +1,7 @@
-﻿namespace YFramework
+﻿using System;
+using UnityEngine.UI;
+
+namespace YFramework
 {
     public interface ITipsUIManager :IPanel
     {
@@ -9,5 +12,7 @@
         T FindTipsPanel<T>() where T : class, ITipsUI, new();
         bool IsShow<T>() where T : class, ITipsUI, new();
         void SetBGActive(bool active);
+        void SetBGClickCallBack(Action callBack);
+        void ClearBGClickCallBack();
     }
 }

@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static YFramework.Utility;
 
 namespace YFramework
 {
@@ -13,11 +17,23 @@ namespace YFramework
         private ITipsUI mCurShowTipsUI = null;//当前显示的TipsUI的名字
         public ITipsUI curShowTipsUI { get { return mCurShowTipsUI; } }//当前显示的TipsUI的名字
         private Stack<ITipsUI> mTempTipsUI;//存放临时的TipsUI
-        
+        private Action mBGClickCallBack;//背景点击响应
         public TipsUIManager()
         {
 
         }
+
+        public void SetBG( Button bgImg )
+        {
+            if (bgImg == null) return;
+            bgImg.onClick.AddListener(BGClick);
+        }
+
+        private void BGClick()
+        {
+            mBGClickCallBack?.Invoke();
+        }
+
         public override void Awake()
         {
             base.Awake();
@@ -276,6 +292,16 @@ namespace YFramework
             if (BG != null) {
                 BG.gameObject.SetAvtiveExtend(active);
             }
+        }
+
+        public void SetBGClickCallBack(Action callBack)
+        {
+            mBGClickCallBack = callBack;
+        }
+
+        public void ClearBGClickCallBack()
+        {
+            mBGClickCallBack = null;
         }
     }
 }

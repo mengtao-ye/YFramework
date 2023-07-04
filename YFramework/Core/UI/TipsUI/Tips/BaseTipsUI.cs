@@ -23,6 +23,15 @@ namespace YFramework
         {
             mShowTipsPanel = panel;
         }
+        /// <summary>
+        /// 设置背景点击响应
+        /// </summary>
+        /// <param name="callBack"></param>
+        protected void SetBGClickCallBack(Action callBack)
+        {
+            mShowTipsPanel.SetBGClickCallBack(callBack);
+        }
+
         public override void Show()
         {
             if (isShow) return;
@@ -55,6 +64,7 @@ namespace YFramework
                     transform.DoMoveY(transform.position.y + Screen.height, ShowAnimTime);
                     break;
             }
+
         }
         public void Hide(Action finish)
         {
@@ -111,6 +121,7 @@ namespace YFramework
         public override void Hide()
         {
             mShowTipsPanel.Hide();
+            mShowTipsPanel.ClearBGClickCallBack();
         }
     }
 }

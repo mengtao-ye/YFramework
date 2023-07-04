@@ -57,9 +57,10 @@ namespace YFramework
         /// <returns></returns>
         private ITipsUIManager InitShowPanel()
         {
-            ITipsUIManager mShowTipsPanel = new TipsUIManager();
+            TipsUIManager mShowTipsPanel = new TipsUIManager();
             mShowTipsPanel.SetCanvas(this);
-            SpawnShowTipsPanel();
+            Button bgImg =  SpawnShowTipsPanel();
+            mShowTipsPanel.SetBG(bgImg);
             mShowTipsPanel.SetTrans(GetLayer(CanvasLayerData.TIPS_LAYER));
             mShowTipsPanel.Awake();
             mShowTipsPanel.Start();
@@ -124,7 +125,7 @@ namespace YFramework
         /// <summary>
         /// 生成提示面板的背景
         /// </summary>
-        private void SpawnShowTipsPanel()
+        private Button SpawnShowTipsPanel()
         {
             GameObject tipsPanel = new GameObject("TipsPanel");
             tipsPanel.transform.SetParent(GetLayer(CanvasLayerData.TIPS_LAYER));
@@ -133,8 +134,11 @@ namespace YFramework
             BG.transform.SetParent(GetLayer(CanvasLayerData.TIPS_LAYER));
             UITools.SetFullScreen(BG.AddComponent<RectTransform>());
             BG.AddComponent<Image>().color = new Color(130 / 255f, 130 / 255f, 130 / 255f, 70 / 255f);
+            Button btn = BG.AddComponent<Button>();
+            btn.transition = Selectable.Transition.None;
             tipsPanel.transform.Reset();
             BG.transform.Reset();
+            return btn;
         }
 
         /// <summary>
