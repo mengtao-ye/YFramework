@@ -21,10 +21,5 @@ namespace YFramework
         public virtual void Clear() { }
         public virtual void FixedUpdate() { }
         public virtual void LaterUpdate() { }
-        public virtual void LaterStartPriorityOne() { }
-        public virtual void LaterStartPriorityTwo() { }
-        public virtual void LaterStartPriorityThree() { }
-        public virtual void LaterStartPriorityFour() { }
-        public virtual void LaterStartPriorityFive() { }
     }
 }

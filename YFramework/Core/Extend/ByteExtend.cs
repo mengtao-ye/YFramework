@@ -24,7 +24,7 @@ namespace YFramework
         }
 
         /// <summary>
-        /// 
+        ///  获取指定下标位置及长度数组
         /// </summary>
         /// <param name="bs"></param>
         /// <param name="startIndex"></param>

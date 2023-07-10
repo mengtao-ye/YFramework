@@ -6,7 +6,8 @@ namespace YFramework
     public static class ClassPoolModule<T> where T : class, IReset, new()
     {
         private static Dictionary<Type, Stack<T>> mClassPoolDict = new Dictionary<Type, Stack<T>>();
-        public static T Pop() {
+        public static T Pop() 
+        {
             Type type =  typeof(T);
             if (!mClassPoolDict.ContainsKey(type)) 
             {
@@ -23,7 +24,8 @@ namespace YFramework
             }
             return value;
         }
-        public static void Push(T target) {
+        public static void Push(T target) 
+        {
             if (target == null) return;
             Type type = target.GetType();
             if (!mClassPoolDict.ContainsKey(type))

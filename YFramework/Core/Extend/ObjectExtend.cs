@@ -2,7 +2,6 @@
 {
     public static class ObjectExtend
     {
-
         /// <summary>
         /// 将object作为泛型类型
         /// </summary>

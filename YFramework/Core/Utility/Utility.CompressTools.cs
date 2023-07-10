@@ -3,7 +3,8 @@ using System.IO.Compression;
 
 namespace YFramework
 {
-    public partial class Utility {
+    public partial class Utility 
+    {
         /// <summary>
         /// 压缩工具
         /// </summary>

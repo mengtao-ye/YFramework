@@ -14,7 +14,7 @@ namespace YFramework
         /// 添加撤回对象
         /// </summary>
         /// <param name="undo"></param>
-        public static void Add(IUnDo undo) 
+        public static void Add(IUnDo undo)
         {
             if (undo == null) return;
             if (mUndoStack == null) mUndoStack = new Stack<IUnDo>();

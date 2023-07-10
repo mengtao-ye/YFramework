@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="UnityEngine.AndroidJNIModule">
       <HintPath>..\Dll\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Dll\UnityEngine.UI.dll</HintPath>
@@ -64,6 +65,8 @@
     <Compile Include="Core\Common\Interface\IDataConverter.cs" />
     <Compile Include="Core\Common\Interface\IPool.cs" />
     <Compile Include="Core\Common\Interface\IRecycle.cs" />
+    <Compile Include="Core\DataStructure\MultiTree\MultiTree.cs" />
+    <Compile Include="Core\DataStructure\MultiTree\MultiTreeNode.cs" />
     <Compile Include="Core\DesignPattern\ObserverPattern\Observer\IObserver.cs" />
     <Compile Include="Core\DesignPattern\ObserverPattern\Subject\ISubject.cs" />
     <Compile Include="Core\Extend\BytesConverterExtend.cs" />
@@ -81,6 +84,12 @@
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpMsg.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpMsgType.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\IUdpRequestHandle.cs" />
+    <Compile Include="Core\Module\ECSModule\Component\BaseECSComponent.cs" />
+    <Compile Include="Core\Module\ECSModule\Component\IECSComponent.cs" />
+    <Compile Include="Core\Module\ECSModule\Entity\BaseECSEntity.cs" />
+    <Compile Include="Core\Module\ECSModule\Entity\IECSEntity.cs" />
+    <Compile Include="Core\Module\ECSModule\System\BaseECSSystem.cs" />
+    <Compile Include="Core\Module\ECSModule\System\IECSSystem.cs" />
     <Compile Include="Core\Module\LockStepModule\Data\LockStepData.cs" />
     <Compile Include="Core\Module\LockStepModule\Data\LockStepUserData.cs" />
     <Compile Include="Core\Module\LockStepModule\FixedData\Fix32\Fix32.cs" />
