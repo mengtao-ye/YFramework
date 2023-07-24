@@ -125,7 +125,8 @@ namespace YFramework
             {
                 for (int i = 0; i < parent.childNode.Count; i++)
                 {
-                    return FindByNode(parent.childNode[i], data);
+                    MultiTreeNode<T> treeNode = FindByNode(parent.childNode[i], data);
+                    if (treeNode != null) return treeNode;
                 }
             }
             return null;

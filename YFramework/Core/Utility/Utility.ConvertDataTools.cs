@@ -7,13 +7,13 @@ namespace YFramework
 {
     public partial class Utility
     {
-        public static class ConvertDataTools
+        public static class ConverterDataTools
         {
             public static byte[] ToByte<T>(T value) where T : IDataConverter, new()
             {
                 return value.ToBytes();
             }
-            public static byte[] ToByte<T>(List<T> value) where T : IDataConverter, new()
+            public static byte[] ToByte<T>(IList<T> value) where T : IDataConverter, new()
             {
                 if (value == null || value.Count == 0) return null;
                 List<byte[]> byteList = new List<byte[]>();

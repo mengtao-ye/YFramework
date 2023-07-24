@@ -16,7 +16,7 @@ namespace YFramework
 
         public void Response( short requestCode, short actionCode, ushort eventID,Dictionary<string, byte[]> data)
         {
-            SocketMsg mTempMsg =  ClassPoolModule<SocketMsg>.Pop();
+            SocketMsg mTempMsg =  ClassPool<SocketMsg>.Pop();
             mTempMsg.requestCode = requestCode;
             mTempMsg.actionCode = actionCode;
             mTempMsg.eventID = eventID;
@@ -43,7 +43,7 @@ namespace YFramework
                         mSocketManager.callBackDict.Remove(mTempSocketMsg.eventID);
                     }
                 }
-                ClassPoolModule<SocketMsg>.Push(mTempSocketMsg);
+                mTempSocketMsg.Recycle();
             }
         }
     }

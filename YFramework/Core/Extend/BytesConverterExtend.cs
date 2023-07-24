@@ -11,15 +11,15 @@ namespace YFramework
     public static class BytesConverterExtend
     {
         #region ToBytes
-        public static byte[] ToBytes(this Dictionary<byte, byte[]> @this)
+        public static byte[] ToBytes(this IDictionary<byte, byte[]> @this)
         {
             return DictionaryTools.DictionaryToBytes(@this);
         }
-        public static byte[] ToBytes<T>(this List<T> @this) where T : IDataConverter, new()
+        public static byte[] ToBytes<T>(this IList<T> @this) where T : IDataConverter, new()
         {
-            return ConvertDataTools.ToByte(@this);
+            return ConverterDataTools.ToByte(@this);
         }
-        public static byte[] ToBytes(this List<byte[]> @this)
+        public static byte[] ToBytes(this IList<byte[]> @this)
         {
             return ListTools.GetBytes(@this);
         }
@@ -68,7 +68,7 @@ namespace YFramework
         }
         public static List<T> ToListBytes<T>(this byte[] @this) where T : IDataConverter, new()
         {
-            return ConvertDataTools.ToListObject<T>(@this);
+            return ConverterDataTools.ToListObject<T>(@this);
         }
         public static List<byte[]> ToListBytes(this byte[] @this)
         {

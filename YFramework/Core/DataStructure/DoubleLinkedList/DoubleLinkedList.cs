@@ -13,7 +13,7 @@ namespace YFramework
         /// <param name="data"></param>
         public void AddToHeader(T data)
         {
-            DoubleLinkedNode<T> temp =  ClassPoolModule<DoubleLinkedNode<T>>.Pop();
+            DoubleLinkedNode<T> temp =  ClassPool<DoubleLinkedNode<T>>.Pop();
             temp.Next = null;
             temp.Pre = null;
             temp.data = data;
@@ -49,7 +49,7 @@ namespace YFramework
         /// <param name="data"></param>
         public void AddToTail(T data)
         {
-            DoubleLinkedNode<T> temp = ClassPoolModule<DoubleLinkedNode<T>>.Pop();
+            DoubleLinkedNode<T> temp = ClassPool<DoubleLinkedNode<T>>.Pop();
             temp.Next = null;
             temp.Pre = null;
             temp.data = data;
@@ -142,7 +142,7 @@ namespace YFramework
                 node.Next.Pre = node.Pre;
             }
             Count--;
-            ClassPoolModule<DoubleLinkedNode<T>>.Push(node);
+            ClassPool<DoubleLinkedNode<T>>.Push(node);
         }
         /// <summary>
         ///删除节点

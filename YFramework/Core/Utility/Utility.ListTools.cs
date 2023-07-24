@@ -7,7 +7,7 @@ namespace YFramework
     {
         public static class ListTools
         {
-            public static byte[] GetBytes(List<byte[]> data)
+            public static byte[] GetBytes(IList<byte[]> data)
             {
                 if (data == null || data.Count == 0) return null;
                 int length = 0;

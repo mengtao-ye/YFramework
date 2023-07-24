@@ -73,6 +73,7 @@
     <Compile Include="Core\Extend\DateTimeExtend.cs" />
     <Compile Include="Core\Extend\ObjectExtend.cs" />
     <Compile Include="Core\Extend\StringExtend.cs" />
+    <Compile Include="Core\Extend\TypeExtend.cs" />
     <Compile Include="Core\Manager\SceneManager\IScene.cs" />
     <Compile Include="Core\Manager\SceneManager\ISceneManager.cs" />
     <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\IRequestHandle.cs" />
@@ -84,12 +85,20 @@
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpMsg.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpMsgType.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\IUdpRequestHandle.cs" />
+    <Compile Include="Core\Module\DataModule\Dictionary\DictionaryModule.cs" />
+    <Compile Include="Core\Module\DataModule\Dictionary\DictionaryPoolModule.cs" />
+    <Compile Include="Core\Module\DataModule\List\ListModule.cs" />
+    <Compile Include="Core\Module\DataModule\List\ListPoolModule.cs" />
     <Compile Include="Core\Module\ECSModule\Component\BaseECSComponent.cs" />
     <Compile Include="Core\Module\ECSModule\Component\IECSComponent.cs" />
     <Compile Include="Core\Module\ECSModule\Entity\BaseECSEntity.cs" />
     <Compile Include="Core\Module\ECSModule\Entity\IECSEntity.cs" />
     <Compile Include="Core\Module\ECSModule\System\BaseECSSystem.cs" />
     <Compile Include="Core\Module\ECSModule\System\IECSSystem.cs" />
+    <Compile Include="Core\Module\FSM\FSM\BaseFSM.cs" />
+    <Compile Include="Core\Module\FSM\FSM\IFSM.cs" />
+    <Compile Include="Core\Module\FSM\State\BaseFSMState.cs" />
+    <Compile Include="Core\Module\FSM\State\IFSMState.cs" />
     <Compile Include="Core\Module\LockStepModule\Data\LockStepData.cs" />
     <Compile Include="Core\Module\LockStepModule\Data\LockStepUserData.cs" />
     <Compile Include="Core\Module\LockStepModule\FixedData\Fix32\Fix32.cs" />
@@ -98,6 +107,18 @@
     <Compile Include="Core\Module\LockStepModule\FixedData\Fix64\Fix64.cs" />
     <Compile Include="Core\Module\LockStepModule\FixedData\Fix64\FixVector2.cs" />
     <Compile Include="Core\Module\LockStepModule\FixedData\Fix64\FixVector3.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\Dictionary\Base\BaseDictionaryData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\Dictionary\Base\IDictionaryData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\Dictionary\Entity\DictionaryData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\Dictionary\Entity\DictionaryPoolData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\List\Base\BaseListData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\List\Base\IListData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\List\Entity\ListData.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\PoolData\List\Entity\ListPoolData.cs" />
+    <Compile Include="Core\Module\ProcessModule\ProcessController\ProcessController.cs" />
+    <Compile Include="Core\Module\ProcessModule\ProcessManager\ProcessManager.cs" />
+    <Compile Include="Core\Module\ProcessModule\Process\BaseProcess.cs" />
+    <Compile Include="Core\Module\ProcessModule\Process\IProcess.cs" />
     <Compile Include="Core\Module\UndoModule\IUnDo.cs" />
     <Compile Include="Core\UI\Form\BaseForm.cs" />
     <Compile Include="Core\UI\Canvas\ICanvas.cs" />
@@ -114,7 +135,9 @@
     <Compile Include="Core\Utility\Utility.DictionaryTools.cs" />
     <Compile Include="Core\Utility\Utility.ListTools.cs" />
     <Compile Include="Core\Utility\Utility.PermissionTools.cs" />
+    <Compile Include="Core\Utility\Utility.PhysicsTools.cs" />
     <Compile Include="Core\Utility\Utility.XmlMapper.cs" />
+    <Compile Include="Core\Utility\Utility.Yielders.cs" />
     <Compile Include="Core\Utility\Utlilty.Algorithm.cs" />
     <Compile Include="Core\Center\Controller\ChildController\BaseChildController.cs" />
     <Compile Include="Core\Center\Controller\Controller\BaseController.cs" />
@@ -164,7 +187,7 @@
     <Compile Include="Core\Module\IEnumeratorModule\IEnumeratorModule.cs" />
     <Compile Include="Core\Module\IEnumeratorModule\IEnumeratorMono.cs" />
     <Compile Include="Core\Module\LogModule\Log.cs" />
-    <Compile Include="Core\Module\PoolModule\ClassPoolModule\ClassPoolModule.cs" />
+    <Compile Include="Core\Module\PoolModule\ClassPoolModule\ClassPool.cs" />
     <Compile Include="Core\Module\PoolModule\GameObjectPoolModule\Base\BaseGameObjectPoolTarget.cs" />
     <Compile Include="Core\Module\PoolModule\GameObjectPoolModule\Base\IGameObjectPoolTarget.cs" />
     <Compile Include="Core\Module\PoolModule\GameObjectPoolModule\GameObjectPoolModule.cs" />
@@ -207,7 +230,6 @@
     <Compile Include="Core\UI\Panel\BasePanel.cs" />
     <Compile Include="Core\UI\TipsUI\Tips\BaseTipsUI.cs" />
     <Compile Include="Core\UI\Base\BaseUI.cs" />
-    <Compile Include="Core\UI\Panel\CommonPanel\TakePhotoPanel.cs" />
     <Compile Include="Core\UI\Data\CanvasLayerData.cs" />
     <Compile Include="Core\UI\Data\Enum\HideAnimEnum.cs" />
     <Compile Include="Core\UI\Data\Enum\ShowAnimEnum.cs" />
@@ -219,5 +241,6 @@
   <ItemGroup>
     <Compile Include="Core\Utility\Utility.ConverterTools.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

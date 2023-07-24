@@ -1,7 +1,8 @@
 ﻿namespace YFramework
 {
-    public class DoubleLinkedNode<T> : IReset
+    public class DoubleLinkedNode<T> : IPool
     {
+        public bool isPop { get; set; }
         /// <summary>
         /// 前一个节点
         /// </summary>
@@ -14,20 +15,24 @@
         /// 数据
         /// </summary>
         public T data = default(T);
-
         public DoubleLinkedNode()
         {
 
         }
-        public DoubleLinkedNode(T data)
+        public void PopPool()
         {
-            this.data = data;
+            
         }
-        public void Reset()
+        public void PushPool()
         {
             Pre = null;
             Next = null;
             data = default(T);
+        }
+
+        public void Recycle()
+        {
+            ClassPool<DoubleLinkedNode<T>>.Push(this);
         }
     }
 }

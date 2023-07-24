@@ -2,6 +2,7 @@
 {
     public interface IPool : IRecycle
     {
+        bool isPop { get; set; }
         /// <summary>
         /// 从对象池出来时
         /// </summary>

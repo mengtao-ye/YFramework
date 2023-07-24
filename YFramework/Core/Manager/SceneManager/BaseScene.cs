@@ -53,7 +53,8 @@ namespace YFramework
             if (model != null) model.OnDestory();
             if (controller != null) controller.OnDestory();
         }
-        public virtual void Clear() {
+        public virtual void Clear()
+        {
             if (canvas != null) canvas.Clear();
             if (model != null) model.Clear();
             if (controller != null) controller.Clear();

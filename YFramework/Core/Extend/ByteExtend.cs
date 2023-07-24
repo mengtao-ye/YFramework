@@ -22,7 +22,6 @@ namespace YFramework
             }
             return temp;
         }
-
         /// <summary>
         ///  获取指定下标位置及长度数组
         /// </summary>
@@ -62,6 +61,10 @@ namespace YFramework
                 }
             }
             return tempData;
+        }
+        public static bool ToBool(this byte b)
+        {
+            return b == 1;    
         }
     }
 }
