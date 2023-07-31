@@ -9,6 +9,7 @@ namespace YFramework
         protected GameObject gameObject { get; private set; }
         public bool isShow { get { return gameObject.activeInHierarchy; } set { gameObject.SetActive(value); } }
         public string uiName =>transform.name;
+        public ICanvas mUICanvas { get; private set; }
         public BaseUI()
         {
 
@@ -21,7 +22,8 @@ namespace YFramework
         /// 设置UI的父对象
         /// </summary>
         /// <param name="trans"></param>
-         public void SetTrans(Transform trans) {
+         public void SetTrans(Transform trans)
+        {
             if (trans == null || trans.GetComponent<RectTransform>() == null)
             {
                 return;
@@ -29,6 +31,10 @@ namespace YFramework
             transform = trans;
             gameObject = trans.gameObject;
             rectTransform = trans.GetComponent<RectTransform>();
+        }
+        public void SetCanvas(ICanvas canvas)
+        {
+            mUICanvas = canvas;
         }
         //虚方法
         public virtual void Show()
@@ -78,5 +84,6 @@ namespace YFramework
         public virtual void Clear() { }
         public virtual void FixedUpdate() { }
         public virtual void LaterUpdate() { }
+       
     }
 }

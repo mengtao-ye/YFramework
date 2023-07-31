@@ -252,6 +252,7 @@ namespace YFramework
             panel.SetShowTipsPanel(this);
             GameObject target = Resource.LoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath);
             target = GameObject.Instantiate(target, mTipsUIParent);
+            panel.SetCanvas(mUICanvas);
             panel.SetTrans(target.transform);
             panel.transform.Reset();
             panel.Awake();

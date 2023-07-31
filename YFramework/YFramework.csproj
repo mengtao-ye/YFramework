@@ -123,8 +123,8 @@
     <Compile Include="Core\UI\Form\BaseForm.cs" />
     <Compile Include="Core\UI\Canvas\ICanvas.cs" />
     <Compile Include="Core\UI\Form\IForm.cs" />
-    <Compile Include="Core\UI\Log\ILogUI.cs" />
-    <Compile Include="Core\UI\Log\ILogUIManager.cs" />
+    <Compile Include="Core\UI\Log\LogUI\ILogUI.cs" />
+    <Compile Include="Core\UI\Log\LogUIManager\ILogUIManager.cs" />
     <Compile Include="Core\UI\Panel\IPanel.cs" />
     <Compile Include="Core\UI\Sub\BaseSubUI.cs" />
     <Compile Include="Core\UI\Sub\ISubUI.cs" />
@@ -226,7 +226,7 @@
     <Compile Include="Core\Utility\Utility.UITools.cs" />
     <Compile Include="Core\Utility\Utility.WindowsFileName.cs" />
     <Compile Include="Core\UI\Canvas\BaseCanvas.cs" />
-    <Compile Include="Core\UI\Log\BaseLogUI.cs" />
+    <Compile Include="Core\UI\Log\LogUI\BaseLogUI.cs" />
     <Compile Include="Core\UI\Panel\BasePanel.cs" />
     <Compile Include="Core\UI\TipsUI\Tips\BaseTipsUI.cs" />
     <Compile Include="Core\UI\Base\BaseUI.cs" />
@@ -234,7 +234,7 @@
     <Compile Include="Core\UI\Data\Enum\HideAnimEnum.cs" />
     <Compile Include="Core\UI\Data\Enum\ShowAnimEnum.cs" />
     <Compile Include="Core\UI\Base\IUI.cs" />
-    <Compile Include="Core\UI\Log\LogUIManager.cs" />
+    <Compile Include="Core\UI\Log\LogUIManager\LogUIManager.cs" />
     <Compile Include="Core\UI\TipsUI\Manager\TipsUIManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

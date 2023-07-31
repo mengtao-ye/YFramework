@@ -14,5 +14,6 @@ namespace YFramework
         void SetBGActive(bool active);
         void SetBGClickCallBack(Action callBack);
         void ClearBGClickCallBack();
+        void SetBG(Button bgImg);
     }
 }

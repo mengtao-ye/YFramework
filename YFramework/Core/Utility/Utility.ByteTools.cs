@@ -126,7 +126,7 @@ namespace YFramework
             /// <param name="data1"></param>
             /// <param name="data2"></param>
             /// <returns></returns>
-            public static byte[] Concat(List<byte[]> bytes)
+            public static byte[] Concat(IList<byte[]> bytes)
             {
                 int len = 0;
                 for (int i = 0; i < bytes.Count; i++)

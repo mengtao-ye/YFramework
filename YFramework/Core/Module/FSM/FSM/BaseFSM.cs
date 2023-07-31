@@ -29,6 +29,7 @@ namespace YFramework
             }
             state.SetFSM(this);
             mStateDict.Add(state.stateID, state);
+            state.Init();
         }
         /// <summary>
         /// 执行状态

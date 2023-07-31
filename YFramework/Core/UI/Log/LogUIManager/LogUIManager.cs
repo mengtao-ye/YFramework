@@ -98,6 +98,7 @@ namespace YFramework
             panel.SetLogUIManager(this);
             GameObject target = Resource.LoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath);
             target = GameObject.Instantiate(target, transform);
+            panel.SetCanvas(mUICanvas);
             panel.SetTrans(target.transform);
             panel.Awake();
             panel.Start();

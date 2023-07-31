@@ -49,6 +49,7 @@ namespace YFramework
             GameObject canvas = SpawnCanvas();
             SetTrans(canvas.transform);
             Init(scene);
+            SetCanvas(this);//设置面板为自己
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace YFramework
         /// <returns></returns>
         private ITipsUIManager InitShowPanel()
         {
-            TipsUIManager mShowTipsPanel = new TipsUIManager();
+            ITipsUIManager mShowTipsPanel = new TipsUIManager();
             mShowTipsPanel.SetCanvas(this);
             Button bgImg =  SpawnShowTipsPanel();
             mShowTipsPanel.SetBG(bgImg);
@@ -244,9 +245,15 @@ namespace YFramework
         /// <returns></returns>
         public T FindPanel<T>() where T : class, IPanel, new()
         {
+            //在打开的面板里面查找
             foreach (var item in mPopStack)
             {
                 if (item is T) return item as T;
+            }
+            //在关闭的面板中查找
+            for (int i = 0; i < mClosePanel.Count; i++)
+            {
+                if (mClosePanel[i] is T) return mClosePanel[i] as T;
             }
             return null;
         }
@@ -342,7 +349,47 @@ namespace YFramework
             }
             mTempStackPanel.Clear();
         }
-
+        /// <summary>
+        /// 实例化面板，但是不显示
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool InstantiatePanel<T>() where T : class, IPanel, new()
+        {
+            for (int i = 0; i < mClosePanel.Count; i++)//先检查下需要生成的面板是否在关闭列表中
+            {
+                if (mClosePanel[i].GetType().Name == typeof(T).Name) return true;//已经实例化了
+            }
+            T panel = new T();
+            panel.SetCanvas(this);
+            string assetPath = UIMap.Get(typeof(T).Name).assetPath;
+            if (assetPath == null)
+            {
+                Log.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
+                return false;
+            }
+            GameObject target = Resource.LoadAsset<GameObject>(assetPath);
+            if (target == null)
+            {
+                Log.LogError(assetPath + "未找到对应的对象");
+                return false;
+            }
+            target = GameObject.Instantiate(target, GetLayer((byte)CanvasLayerData.PANEL_LAYER));
+            if (target == null)
+            {
+                Log.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
+                return false;
+            }
+            panel.SetTrans(target.transform);
+            panel.Awake();
+            panel.Start();
+            panel.Hide();
+            if (!mClosePanel.Contains(panel))
+            {
+                mClosePanel.Add(panel);//添加到关闭列表里面
+            }
+            return true;
+        }
         /// <summary>
         /// 生成Panel
         /// </summary>

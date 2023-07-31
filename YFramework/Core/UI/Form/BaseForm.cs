@@ -18,8 +18,10 @@ namespace YFramework
         {
             if (subUI == null) throw new System.Exception("Sub UI is null");
             mSubUIList.Add(subUI);
+            subUI.SetCanvas(mUICanvas);
             subUI.Awake();
             subUI.Start();
+
         }
         public ISubUI FindSubUI(string targetName)
         {
