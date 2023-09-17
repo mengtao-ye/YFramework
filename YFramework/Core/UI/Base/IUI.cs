@@ -21,6 +21,7 @@ namespace YFramework
         /// </summary>
         /// <param name="canvas"></param>
         void SetCanvas(ICanvas canvas);
+        void FirstShow();
         #endregion
     }
 }

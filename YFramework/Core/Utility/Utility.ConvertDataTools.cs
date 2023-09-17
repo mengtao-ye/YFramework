@@ -24,10 +24,10 @@ namespace YFramework
                 return ListTools.GetBytes(byteList);
             }
 
-            public static T ToObject<T>(byte[] data) where T : IDataConverter, new()
+            public static T ToObject<T>(byte[] data,int startIndex=0) where T : IDataConverter, new()
             {
                 T value = new T();
-                value.ToValue(data);
+                value.ToValue(ByteTools.SubBytes(data,startIndex) );
                 return value;
             }
 

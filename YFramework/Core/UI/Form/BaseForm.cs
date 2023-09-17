@@ -12,8 +12,6 @@ namespace YFramework
         {
             mSubUIList = new List<ISubUI>();
         }
-
-
         public void AddSubUI( ISubUI subUI)
         {
             if (subUI == null) throw new System.Exception("Sub UI is null");
@@ -83,5 +81,6 @@ namespace YFramework
                     mSubUIList[i].OnDestory();
             }
         }
+
     }
 }

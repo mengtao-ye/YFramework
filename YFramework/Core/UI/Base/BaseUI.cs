@@ -10,6 +10,7 @@ namespace YFramework
         public bool isShow { get { return gameObject.activeInHierarchy; } set { gameObject.SetActive(value); } }
         public string uiName =>transform.name;
         public ICanvas mUICanvas { get; private set; }
+        private bool mIsFirstShow;//是否是首次打开
         public BaseUI()
         {
 
@@ -44,6 +45,11 @@ namespace YFramework
                 return;
             }
             gameObject.SetAvtiveExtend(true);
+            if (!mIsFirstShow) 
+            {
+                FirstShow();
+                mIsFirstShow = true;
+            }
             //transform.SetAsLastSibling();
         }
         public virtual void Hide()
@@ -84,6 +90,6 @@ namespace YFramework
         public virtual void Clear() { }
         public virtual void FixedUpdate() { }
         public virtual void LaterUpdate() { }
-       
+        public virtual void FirstShow() { }
     }
 }
