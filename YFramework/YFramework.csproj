@@ -76,7 +76,7 @@
     <Compile Include="Core\Extend\TypeExtend.cs" />
     <Compile Include="Core\Manager\SceneManager\IScene.cs" />
     <Compile Include="Core\Manager\SceneManager\ISceneManager.cs" />
-    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\IRequestHandle.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\ITcpRequestHandle.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\PlatformType.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\SocketData.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\BigData\UdpBigData.cs" />
@@ -170,14 +170,13 @@
     <Compile Include="Core\Utility\Utility.Directory.cs" />
     <Compile Include="Core\Manager\SocketManager\Data\CommonData.cs" />
     <Compile Include="Core\Manager\SocketManager\Tcp\Message.cs" />
-    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\BaseRequestHandle.cs" />
-    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\RequestData.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\BaseTcpRequestHandle.cs" />
     <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\RequestHandleManager.cs" />
     <Compile Include="Core\Manager\SocketManager\Tcp\RequestHandle\SocketMsg.cs" />
-    <Compile Include="Core\Manager\SocketManager\Tcp\SocketManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Tcp\TCPServer.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\BaseUdpRequestHandle.cs" />
     <Compile Include="Core\Manager\SocketManager\Udp\UdpRequestHandleManager.cs" />
-    <Compile Include="Core\Manager\SocketManager\Udp\UdpSocketManager.cs" />
+    <Compile Include="Core\Manager\SocketManager\Udp\UdpServer.cs" />
     <Compile Include="Core\Module\AudioPlayerModule\AudioPlayerModule.cs" />
     <Compile Include="Core\Module\BoardCastModule\BoardCastDelegate.cs" />
     <Compile Include="Core\Module\BoardCastModule\BoardCastModule.cs" />

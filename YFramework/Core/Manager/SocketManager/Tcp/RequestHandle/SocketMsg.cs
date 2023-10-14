@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace YFramework
+﻿namespace YFramework
 {
     public class SocketMsg : IPool
     {
         public short requestCode;
         public short actionCode;
-        public ushort eventID;
-        public Dictionary<string, byte[]> data;
+        public byte[] data;
         public bool isPop { get ; set ; }
         public void PopPool()
         {
@@ -15,7 +12,6 @@ namespace YFramework
 
         public void PushPool()
         {
-            data.Clear();
         }
 
         public void Recycle()

@@ -8,7 +8,7 @@ using static YFramework.Utility;
 
 namespace YFramework
 {
-    public abstract class UdpSocketManager : BaseModule
+    public abstract class UdpServer : BaseModule
     {
         protected Socket mUdpSocket;//Udp对象
         private EndPoint mPoint;
@@ -19,9 +19,9 @@ namespace YFramework
         private Queue<UdpMsg> mMsgQueue;
         private string mIPAddress = null;
         private int mPort = 0;
-        Thread receiveThread;
+        private Thread receiveThread;
         private Action mReconnectAction;
-        public UdpSocketManager(Center center, IMap<short, IUdpRequestHandle> map) : base(center)
+        public UdpServer(Center center, IMap<short, IUdpRequestHandle> map) : base(center)
         {
             mUdpHandle = new UdpRequestHandleManager(this, map);
 
@@ -46,9 +46,8 @@ namespace YFramework
                 mMsgQueue = new Queue<UdpMsg>();
                 mBuffer = new byte[CommonData.UDP_BUFFER_SIZE];
                 ReConnectServer();
-                Debug.Log("UDP服务器启动成功！");
             }
-            catch 
+            catch
             {
 
             }
@@ -129,17 +128,17 @@ namespace YFramework
                     Debug.LogError("UdpCode:" + udpCode + "发送的数据过长");
                     return;
                 }
-                if (mUdpSocket != null && mPoint != null) 
+                if (mUdpSocket != null && mPoint != null)
                 {
                     UdpMsg msg = new UdpMsg();
                     msg.SetUdpMsg(udpCode, type, data);
                     mUdpSocket.SendTo(msg.ToBytes(), mPoint);
                 }
             }
-            catch 
+            catch
             {
             }
-           
+
         }
         /// <summary>
         /// UDP数据接收
@@ -174,9 +173,9 @@ namespace YFramework
         /// <summary>
         /// 解析返回的数据
         /// </summary>
-        public void Response(short udpCode,byte[] data) 
+        public void Response(short udpCode, byte[] data)
         {
-            mUdpHandle.Response(udpCode,data);
+            mUdpHandle.Response(udpCode, data);
         }
     }
 }

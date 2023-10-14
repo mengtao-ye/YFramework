@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace YFramework
 {
     public class UdpRequestHandleManager
     {
-        private UdpSocketManager mServer;
+        private UdpServer mServer;
         private IMap<short, IUdpRequestHandle> mHandleMap;
-        public UdpRequestHandleManager(UdpSocketManager server, IMap<short, IUdpRequestHandle> map)
+        public UdpRequestHandleManager(UdpServer server, IMap<short, IUdpRequestHandle> map)
         {
             mHandleMap = map;
             mServer = server;
