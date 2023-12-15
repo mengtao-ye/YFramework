@@ -5,7 +5,8 @@ using System.Text;
 
 namespace YFramework
 {
-    public partial class Utility {
+    public partial class Utility 
+    {
         public partial class FileTools
         {
             /// <summary>

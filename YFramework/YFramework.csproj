@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>C:\UnityProject\YunCunProject_2020.3.32f1c1\Assets\Plugin\YFramework\</OutputPath>
+    <OutputPath>C:\UnityProject\JuHeYaMainPro\Assets\Plugin\YFramework\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -67,6 +67,7 @@
     <Compile Include="Core\Common\Interface\IRecycle.cs" />
     <Compile Include="Core\DataStructure\MultiTree\MultiTree.cs" />
     <Compile Include="Core\DataStructure\MultiTree\MultiTreeNode.cs" />
+    <Compile Include="Core\Data\Const\BytesConst.cs" />
     <Compile Include="Core\DesignPattern\ObserverPattern\Observer\IObserver.cs" />
     <Compile Include="Core\DesignPattern\ObserverPattern\Subject\ISubject.cs" />
     <Compile Include="Core\Extend\BytesConverterExtend.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Core\Utility\Utility.BinaryMapper.cs" />
     <Compile Include="Core\Utility\Utility.ConvertDataTools.cs" />
     <Compile Include="Core\Utility\Utility.DictionaryTools.cs" />
+    <Compile Include="Core\Utility\Utility.EndPointTools.cs" />
     <Compile Include="Core\Utility\Utility.ListTools.cs" />
     <Compile Include="Core\Utility\Utility.PermissionTools.cs" />
     <Compile Include="Core\Utility\Utility.PhysicsTools.cs" />

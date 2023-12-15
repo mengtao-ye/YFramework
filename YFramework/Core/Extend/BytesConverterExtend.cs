@@ -82,9 +82,9 @@ namespace YFramework
         {
             return BitConverter.ToInt64(@this, 0);
         }
-        public static int ToInt(this byte[] @this)
+        public static int ToInt(this byte[] @this,int startIndex = 0)
         {
-            return BitConverter.ToInt32(@this, 0);
+            return BitConverter.ToInt32(@this, startIndex);
         }
         public static uint ToUInt(this byte[] @this)
         {

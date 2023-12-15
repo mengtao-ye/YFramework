@@ -10,17 +10,10 @@
         /// </summary>
         public IProcess Next { get; private set; }
         /// <summary>
-        /// 流程管理类对象
+        /// 流程管理器
         /// </summary>
-        private ProcessManager mProcessManager;
-        /// <summary>
-        /// 初始化对象，传入流程管理类
-        /// </summary>
-        /// <param name="processManaegr"></param>
-        public BaseProcess(ProcessManager processManaegr )
-        {
-            mProcessManager = processManaegr;
-        }
+        public ProcessManager processManager { get;  set; }
+      
         /// <summary>
         /// 链接流程对象
         /// </summary>
@@ -29,6 +22,7 @@
         public IProcess Concat(IProcess process)
         {
             Next = process;
+            process.processManager = processManager;
             return Next;
         }
         /// <summary>
@@ -36,7 +30,7 @@
         /// </summary>
         public void DoNext()
         {
-            mProcessManager.DoNext();
+            processManager.DoNext();
         }
         /// <summary>
         /// 帧函数

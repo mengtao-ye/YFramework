@@ -5,6 +5,7 @@
     /// </summary>
     public interface IProcess
     {
+        ProcessManager processManager { get; set; }
         /// <summary>
         /// 下一个流程
         /// </summary>

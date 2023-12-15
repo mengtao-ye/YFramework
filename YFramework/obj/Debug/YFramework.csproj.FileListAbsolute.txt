@@ -19,6 +19,8 @@ E:\C#Project\YFramework\YFramework\obj\Debug\YFramework.dll
 E:\C#Project\YFramework\YFramework\obj\Debug\YFramework.pdb
 E:\UnityProject\YunCunProject\Assets\Plugin\YFramework\YFramework.dll
 E:\UnityProject\YunCunProject\Assets\Plugin\YFramework\YFramework.pdb
-D:\C#Project\YFramework\YFramework\obj\Debug\YFramework.csproj.AssemblyReference.cache
 C:\UnityProject\YunCunProject_2020.3.32f1c1\Assets\Plugin\YFramework\YFramework.dll
 C:\UnityProject\YunCunProject_2020.3.32f1c1\Assets\Plugin\YFramework\YFramework.pdb
+C:\UnityProject\JuHeYaMainPro\Assets\Plugin\YFramework\YFramework.dll
+C:\UnityProject\JuHeYaMainPro\Assets\Plugin\YFramework\YFramework.pdb
+D:\C#Project\YFramework\YFramework\obj\Debug\YFramework.csproj.AssemblyReference.cache

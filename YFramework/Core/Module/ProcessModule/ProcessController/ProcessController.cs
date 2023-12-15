@@ -19,14 +19,24 @@ namespace YFramework
         public void Add(ProcessManager processManager)
         { 
             if (processManager == null) return;
-            if (processManager.curProcess == null) return;
             if (!mProcessList.Contains(processManager))
             {
                 processManager.SetProcessManager(this);
                 mProcessList.Add(processManager);
-                processManager.curProcess.Enter();
             }
         }
+        /// <summary>
+        /// 创建processManager
+        /// </summary>
+        /// <returns></returns>
+        public ProcessManager Create() 
+        {
+            ProcessManager processManager = new ProcessManager();
+            Add(processManager);
+            return processManager;
+        }
+
+
         /// <summary>
         ///刷新
         /// </summary>

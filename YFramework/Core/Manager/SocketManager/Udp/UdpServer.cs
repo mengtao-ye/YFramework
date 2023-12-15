@@ -55,7 +55,7 @@ namespace YFramework
         /// <summary>
         /// 重新连接服务器
         /// </summary>
-        public void ReConnectServer()
+        public virtual void ReConnectServer()
         {
             try
             {
@@ -65,15 +65,12 @@ namespace YFramework
                     mUdpSocket.Close();
                 }
                 mUdpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
                 mPoint = new IPEndPoint(IPAddress.Parse(mIPAddress), mPort);
                 mUdpSocket.Connect(mPoint);
                 mUdpSocket.ReceiveBufferSize = CommonData.UDP_BUFFER_SIZE;
                 mUdpSocket.SendBufferSize = CommonData.UDP_BUFFER_SIZE;
                 mUdpReceivePoint = new IPEndPoint(IPAddress.Any, 0);
-                //uint IOC_IN = 0x80000000;
-                //uint IOC_VENDOR = 0x18000000;
-                //uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
-                //mUdpSocket.IOControl((IOControlCode)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
                 if (receiveThread != null) receiveThread.Abort();
                 receiveThread = new Thread(UdpReceive);
                 receiveThread.Start();
@@ -97,7 +94,6 @@ namespace YFramework
                     if (mUdpHandle != null)
                     {
                         ResponseData(msg);
-                        //mUdpHandle.Response(msg.udpCode, msg.Data);
                     }
                 }
             }

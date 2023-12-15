@@ -11,6 +11,13 @@
         /// </summary>
         private ProcessController mProcessController;
         /// <summary>
+        /// 启动
+        /// </summary>
+        public void Launcher()
+        {
+            curProcess?.Enter();
+        }
+        /// <summary>
         /// 设置流程控制器
         /// </summary>
         /// <param name="processController"></param>
@@ -25,6 +32,7 @@
         public IProcess Concat(IProcess process)
         {
             curProcess = process;
+            process.processManager = this;
             return curProcess;
         }
         /// <summary>

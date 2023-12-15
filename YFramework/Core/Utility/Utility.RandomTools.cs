@@ -10,6 +10,14 @@ namespace YFramework
         {
             private static System.Random mRandom = new System.Random();
             /// <summary>
+            /// 随机数，是否为真
+            /// </summary>
+            /// <returns></returns>
+            public static bool IsTrue()
+            {
+                return mRandom.Next(0,2) == 0;
+            }
+            /// <summary>
             /// 获取随机生成的二维数组
             /// </summary>
             /// <param name="xMin"></param>
