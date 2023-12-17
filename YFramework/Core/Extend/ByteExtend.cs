@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace YFramework
 {
+    /// <summary>
+    /// byte拓展器
+    /// </summary>
     public static class ByteExtend
     {
         /// <summary>
@@ -62,6 +64,11 @@ namespace YFramework
             }
             return tempData;
         }
+       /// <summary>
+       /// 将byte类型转换成bool类型 当传入的对象==1时为true,否则为false
+       /// </summary>
+       /// <param name="b"></param>
+       /// <returns></returns>
         public static bool ToBool(this byte b)
         {
             return b == 1;    

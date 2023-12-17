@@ -11,12 +11,12 @@ namespace YFramework
     public class LockStepUserData : IDataConverter
     {
         public int userID;//玩家ID
-        public List<byte[]> data;//玩家帧数据
+        public IListData<byte[]> data;//玩家帧数据
         public LockStepUserData()
         {
 
         }
-        public LockStepUserData(int userID, List<byte[]> data)
+        public LockStepUserData(int userID, IListData<byte[]> data)
         {
             this.userID = userID;
             this.data = data;

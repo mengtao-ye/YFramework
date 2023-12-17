@@ -46,11 +46,16 @@ namespace YFramework
                 }
                 return concat;
             }
-            public static List<byte[]> ToList(byte[] bytes, int startIndex = 0)
+            public static byte[] GetBytes(IListData<byte[]> data)
+            {
+                if (data == null) return null;
+                return GetBytes(data.list);
+            }
+            public static IListData<byte[]> ToList(byte[] bytes, int startIndex = 0)
             {
                 if (bytes == null || bytes.Length == 0 || bytes.Length <= startIndex) return null;
                 ushort length = 0;
-                List<byte[]> data = new List<byte[]>();
+                IListData<byte[]> data = ClassPool<ListData<byte[]>>.Pop();
                 for (int i = startIndex; i < bytes.Length; i++)
                 {
                     length = BitConverter.ToUInt16(bytes, i);
@@ -68,8 +73,6 @@ namespace YFramework
                 }
                 return data;
             }
-
-
         }
     }
 }

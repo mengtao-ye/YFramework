@@ -2,10 +2,23 @@
 
 namespace YFramework
 {
+    /// <summary>
+    /// 双向链表
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DoubleLinkedList<T> : ICollectionDoubleAdd<DoubleLinkedNode<T>>, ICollectionDoubleAdd<T>, ICollectionDoubleMove<DoubleLinkedNode<T>>, ICollectionCount ,ICollectionContain<DoubleLinkedNode<T>>, ICollectionContain<T> ,ICollectionRemove<DoubleLinkedNode<T>>, ICollectionRemove<T>
     {
+        /// <summary>
+        /// 表头
+        /// </summary>
         public DoubleLinkedNode<T> Head = null;
+        /// <summary>
+        /// 表尾
+        /// </summary>
         public DoubleLinkedNode<T> Tail = null;
+        /// <summary>
+        /// 表内数量
+        /// </summary>
         public int Count { get; private set; }
         /// <summary>
         /// 添加数据至头部
@@ -127,6 +140,10 @@ namespace YFramework
                 temp = temp.Next;
             }
         }
+        /// <summary>
+        /// 删除节点
+        /// </summary>
+        /// <param name="node"></param>
         private void DeleteNode(DoubleLinkedNode<T> node) {
             if (node == null ||Count == 0 ) return;
             if (node == Head) {

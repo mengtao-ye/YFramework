@@ -20,13 +20,6 @@ namespace YFramework
                 mEntity[i].Update();
             }
         }
-        public virtual void Clear() {
-            if (mEntity.Count == 0) return;
-            for (int i = 0; i < mEntity.Count; i++)
-            {
-                mEntity[i].Clear();
-            }
-        }
         public virtual void FixedUpdate() {
             if (mEntity.Count == 0) return;
             for (int i = 0; i < mEntity.Count; i++)

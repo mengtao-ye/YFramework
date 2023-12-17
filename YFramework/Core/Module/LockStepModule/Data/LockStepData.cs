@@ -7,7 +7,7 @@ namespace YFramework
     public class LockStepData : IDataConverter
     {
         public int frameIndex;//帧下标
-        public List<LockStepUserData> frameData;//帧数据
+        public IListData<LockStepUserData> frameData;//帧数据
         public LockStepData()
         {
 

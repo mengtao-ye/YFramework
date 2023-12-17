@@ -8,11 +8,29 @@ namespace YFramework
     /// <typeparam name="T"></typeparam>
     public class MultiTreeNode<T>
     {
-        private MultiTreeNode<T> mParentNode;//父节点
-        public MultiTreeNode<T> parentNode { get { return mParentNode; } }//父节点
-        private List<MultiTreeNode<T>> mChildNode;//所有的子节点
-        public List<MultiTreeNode<T>> childNode { get { return mChildNode; } }//所有的子节点
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        private MultiTreeNode<T> mParentNode;
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        public MultiTreeNode<T> parentNode { get { return mParentNode; } }
+        /// <summary>
+        /// 所有的子节点
+        /// </summary>
+        private List<MultiTreeNode<T>> mChildNode;
+        /// <summary>
+        /// 所有的子节点
+        /// </summary>
+        public List<MultiTreeNode<T>> childNode { get { return mChildNode; } }
+        /// <summary>
+        ///数据
+        /// </summary>
         private T mData;
+        /// <summary>
+        ///数据
+        /// </summary>
         public T data { get { return mData; } }
         public MultiTreeNode(T data, MultiTreeNode<T> parent)
         {
@@ -28,6 +46,10 @@ namespace YFramework
             if (mChildNode == null) mChildNode = new List<MultiTreeNode<T>>();
             mChildNode.Add(node);
         }
+        /// <summary>
+        /// 重载ToString()
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             if (mData == null) return "";

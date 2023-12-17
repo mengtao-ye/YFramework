@@ -4,7 +4,7 @@
     {
 
         /// <summary>
-        /// 判断是否为空
+        /// 数据转换成float类型
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>

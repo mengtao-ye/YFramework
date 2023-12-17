@@ -40,14 +40,6 @@ namespace YFramework
                 mAllLogUIList[i].OnDestory();
             }
         }
-        public override void Clear()
-        {
-            for (int i = 0; i < mAllLogUIList.Count; i++)
-            {
-                mAllLogUIList[i].Clear();
-            }
-        }
-
         /// <summary>
         /// 显示提示UI
         /// </summary>

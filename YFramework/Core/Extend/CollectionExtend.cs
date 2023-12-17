@@ -4,6 +4,9 @@ using System.Text;
 
 namespace YFramework
 {
+    /// <summary>
+    /// 数组拓展器
+    /// </summary>
     public static class CollectionExtend
     {
         /// <summary>

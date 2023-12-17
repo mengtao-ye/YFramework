@@ -78,13 +78,6 @@ namespace YFramework
             }
         }
 
-        public override void Clear()
-        {
-            for (int i = 0; i < mAllTipsUI.Count; i++)
-            {
-                mAllTipsUI[i].Clear();
-            }
-        }
         /// <summary>
         /// 显示提示UI
         /// </summary>

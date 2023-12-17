@@ -2,9 +2,19 @@
 
 namespace YFramework
 {
+    /// <summary>
+    /// Mono单例
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
     {
+        /// <summary>
+        /// 单例对象
+        /// </summary>
         private static T mInstance;
+        /// <summary>
+        /// 单例对象
+        /// </summary>
         public static T Instance
         {
             get

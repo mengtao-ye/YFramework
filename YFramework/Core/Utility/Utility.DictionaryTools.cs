@@ -25,10 +25,10 @@ namespace YFramework
             /// </summary>
             /// <param name="dict"></param>
             /// <returns></returns>
-            public static IDictionary<byte, byte[]> BytesToDictionary32(byte[] data)
+            public static IDictionaryData<byte, byte[]> BytesToDictionary32(byte[] data)
             {
                 if (data == null || data.Length == 0) return null;
-                Dictionary<byte, byte[]> tempDict = new Dictionary<byte, byte[]>();
+                IDictionaryData<byte, byte[]> tempDict = ClassPool<DictionaryData<byte, byte[]>>.Pop();
                 int len = 0;
                 for (int i = 0; i < data.Length; i++)
                 {
@@ -37,6 +37,18 @@ namespace YFramework
                     i += len + 4;//这里+4是因为上面i++还加了一个
                 }
                 return tempDict;
+            }
+            /// <summary>
+            /// 将字典转换成数组 
+            /// 前提条件：
+            ///  1.value值数据长度不能超过256个字节
+            /// </summary>
+            /// <param name="dict"></param>
+            /// <returns></returns>
+            public static byte[] DictionaryToBytes32(IDictionaryData<byte, byte[]> dict)
+            {
+                if (dict == null) return null;
+                return DictionaryToBytes32(dict.data);
             }
             /// <summary>
             /// 将字典转换成数组 
@@ -88,10 +100,10 @@ namespace YFramework
             /// </summary>
             /// <param name="dict"></param>
             /// <returns></returns>
-            public static IDictionary<byte, byte[]> BytesToDictionary(byte[] data)
+            public static IDictionaryData<byte, byte[]> BytesToDictionary(byte[] data)
             {
                 if (data == null || data.Length == 0) return null;
-                Dictionary<byte, byte[]> tempDict = new Dictionary<byte, byte[]>();
+                IDictionaryData<byte, byte[]> tempDict = ClassPool<DictionaryData<byte, byte[]>>.Pop();
                 ushort len = 0;
                 for (int i = 0; i < data.Length; i++)
                 {
@@ -140,6 +152,18 @@ namespace YFramework
                     tempData[i] = mTempData[i];
                 }
                 return tempData;
+            }
+            /// <summary>
+            /// 将字典转换成数组 
+            /// 前提条件：
+            ///  1.value值数据长度不能超过256个字节
+            /// </summary>
+            /// <param name="dict"></param>
+            /// <returns></returns>
+            public static byte[] DictionaryToBytes(IDictionaryData<byte, byte[]> dict)
+            {
+                if (dict == null) return null;
+                return DictionaryToBytes(dict.data);
             }
         }
     }

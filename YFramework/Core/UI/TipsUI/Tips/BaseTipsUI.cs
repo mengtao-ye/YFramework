@@ -41,27 +41,27 @@ namespace YFramework
             {
                 case ShowAnimEnum.SmallToNormalSize:
                     transform.localScale = Vector3.zero;
-                    transform.DoScale(Vector3.one, ShowAnimTime);
+                    transform.ToScale(Vector3.one, ShowAnimTime);
                     break;
                 case ShowAnimEnum.BigToNormalSize:
                     transform.localScale = Vector3.one * 2;
-                    transform.DoScale(Vector3.one, ShowAnimTime);
+                    transform.ToScale(Vector3.one, ShowAnimTime);
                     break;
                 case ShowAnimEnum.RightToLeftPos:
                     transform.position += new Vector3(Screen.width, 0, 0);
-                    transform.DoMoveX(transform.position.x - Screen.width, ShowAnimTime);
+                    transform.ToMoveX(transform.position.x - Screen.width, ShowAnimTime);
                     break;
                 case ShowAnimEnum.LeftToRightPos:
                     transform.position -= new Vector3(Screen.width, 0, 0);
-                    transform.DoMoveX(transform.position.x + Screen.width, ShowAnimTime);
+                    transform.ToMoveX(transform.position.x + Screen.width, ShowAnimTime);
                     break;
                 case ShowAnimEnum.TopToBottomPos:
                     transform.position += new Vector3(0, Screen.height, 0);
-                    transform.DoMoveY(transform.position.y - Screen.height, ShowAnimTime);
+                    transform.ToMoveY(transform.position.y - Screen.height, ShowAnimTime);
                     break;
                 case ShowAnimEnum.BottmToTopPos:
                     transform.position -= new Vector3(0, Screen.height, 0);
-                    transform.DoMoveY(transform.position.y + Screen.height, ShowAnimTime);
+                    transform.ToMoveY(transform.position.y + Screen.height, ShowAnimTime);
                     break;
             }
 
@@ -74,43 +74,52 @@ namespace YFramework
             switch (HideAnim)
             {
                 case HideAnimEnum.NormalToZeroSize:
-                    transform.DoScale(Vector3.zero, HideAnimTime, () =>
-                    {
-                        base.Hide();
-                        finish();
-                    });
+                    transform.ToScale(Vector3.zero, HideAnimTime )
+                        .AddCompleteCallBack(() =>
+                        {
+                            base.Hide();
+                            finish();
+                        });
                     break;
                 case HideAnimEnum.RightToLeftPos:
-                    transform.DoMoveX(transform.position.x - Screen.width, HideAnimTime, () =>
-                    {
-                        transform.position += Vector3.right * Screen.width;
-                        base.Hide();
-                        finish();
-                    });
+                    transform.ToMoveX(transform.position.x - Screen.width, HideAnimTime)
+                        .AddCompleteCallBack(() =>
+                        {
+                            transform.position += Vector3.right * Screen.width;
+                            base.Hide();
+                            finish();
+                        })
+                        ;
                     break;
                 case HideAnimEnum.LeftToRightPos:
-                    transform.DoMoveX(transform.position.x + Screen.width, HideAnimTime, () =>
-                    {
-                        transform.position -= Vector3.right * Screen.width;
-                        base.Hide();
-                        finish();
-                    });
+                    transform.ToMoveX(transform.position.x + Screen.width, HideAnimTime)
+                        .AddCompleteCallBack(() =>
+                        {
+                            transform.position -= Vector3.right * Screen.width;
+                            base.Hide();
+                            finish();
+                        })
+                        ;
                     break;
                 case HideAnimEnum.TopToBottomPos:
-                    transform.DoMoveY(transform.position.y - Screen.height, HideAnimTime, () =>
-                    {
-                        transform.position += Vector3.up * Screen.height;
-                        base.Hide();
-                        finish();
-                    });
+                    transform.ToMoveY(transform.position.y - Screen.height, HideAnimTime)
+                        .AddCompleteCallBack(() =>
+                        {
+                            transform.position += Vector3.up * Screen.height;
+                            base.Hide();
+                            finish();
+                        })
+                        ;
                     break;
                 case HideAnimEnum.BottmToTopPos:
-                    transform.DoMoveY(transform.position.y + Screen.height, HideAnimTime, () =>
-                    {
-                        transform.position -= Vector3.up * Screen.height;
-                        base.Hide();
-                        finish();
-                    });
+                    transform.ToMoveY(transform.position.y + Screen.height, HideAnimTime)
+                        .AddCompleteCallBack(() =>
+                        {
+                            transform.position -= Vector3.up * Screen.height;
+                            base.Hide();
+                            finish();
+                        })
+                        ;
                     break;
                 case HideAnimEnum.None:
                     base.Hide();

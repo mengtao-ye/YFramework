@@ -7,7 +7,10 @@ namespace YFramework
     /// </summary>
     public class MultiTree<T>
     {
-        public MultiTreeNode<T> mHead { get; private set; }//头节点
+        /// <summary>
+        /// 头节点
+        /// </summary>
+        public MultiTreeNode<T> mHead { get; private set; }
         public MultiTree()
         {
             mHead = new MultiTreeNode<T>(default(T),null);
