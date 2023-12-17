@@ -83,6 +83,16 @@ namespace YFramework
         {
             return BitConverter.GetBytes(@this);
         }
+
+        /// <summary>
+        /// ulong类型转换成byte数组
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static byte[] ToBytes(this ulong @this)
+        {
+            return BitConverter.GetBytes(@this);
+        }
         /// <summary>
         /// double类型转换成byte数组
         /// </summary>
@@ -193,6 +203,15 @@ namespace YFramework
         public static long ToLong(this byte[] @this)
         {
             return BitConverter.ToInt64(@this, 0);
+        }
+        /// <summary>
+        ///  将字节数组转换成long
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static ulong ToULong(this byte[] @this)
+        {
+            return BitConverter.ToUInt64(@this, 0);
         }
         /// <summary>
         ///  将字节数组转换成int
