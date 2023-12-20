@@ -7,6 +7,30 @@ namespace YFramework
     {
         public static class ListTools
         {
+            public static byte[] GetBytes(IListData<string> data)
+            {
+                if (data.IsNullOrEmpty()) return null;
+                IListData<byte[]> list = ClassPool<ListData<byte[]>>.Pop();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    list.Add(data[i].ToBytes());
+                }
+                byte[] bytes = GetBytes(list);
+                list.Recycle();
+                return bytes;
+            }
+            public static byte[] GetBytes(IList<string> data)
+            {
+                if (data.IsNullOrEmpty()) return null;
+                IListData<byte[]> list = ClassPool<ListData<byte[]>>.Pop();
+                for (int i = 0; i < data.Count; i++)
+                {
+                    list.Add(data[i].ToBytes());
+                }
+                byte[] bytes = GetBytes(list);
+                list.Recycle();
+                return bytes;
+            }
             public static byte[] GetBytes(IList<byte[]> data)
             {
                 if (data == null || data.Count == 0) return null;
@@ -69,6 +93,50 @@ namespace YFramework
                         }
                     }
                     data.Add(tempByte);
+                    i += length + 1;
+                }
+                return data;
+            }
+            public static IList<byte[]> ToIList(byte[] bytes, int startIndex = 0)
+            {
+                if (bytes == null || bytes.Length == 0 || bytes.Length <= startIndex) return null;
+                ushort length = 0;
+                IList<byte[]> data = new List<byte[]>();
+                for (int i = startIndex; i < bytes.Length; i++)
+                {
+                    length = BitConverter.ToUInt16(bytes, i);
+                    byte[] tempByte = new byte[0];
+                    if (length != 0)
+                    {
+                        tempByte = new byte[length];
+                        for (int j = 0; j < length; j++)
+                        {
+                            tempByte[j] = bytes[i + 2 + j];
+                        }
+                    }
+                    data.Add(tempByte);
+                    i += length + 1;
+                }
+                return data;
+            }
+            public static IList<string> ToListString(byte[] bytes, int startIndex = 0)
+            {
+                if (bytes == null || bytes.Length == 0 || bytes.Length <= startIndex) return null;
+                ushort length = 0;
+                IList<string> data = new List<string>();
+                for (int i = startIndex; i < bytes.Length; i++)
+                {
+                    length = BitConverter.ToUInt16(bytes, i);
+                    byte[] tempByte = new byte[0];
+                    if (length != 0)
+                    {
+                        tempByte = new byte[length];
+                        for (int j = 0; j < length; j++)
+                        {
+                            tempByte[j] = bytes[i + 2 + j];
+                        }
+                    }
+                    data.Add(tempByte.ToStr());
                     i += length + 1;
                 }
                 return data;

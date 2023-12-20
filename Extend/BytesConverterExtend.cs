@@ -186,6 +186,16 @@ namespace YFramework
         {
             return ListTools.ToList(@this);
         }
+
+        /// <summary>
+        /// 将字节数组转换成IListData<byte[]>
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static IList<byte[]> ToIListBytes(this byte[] @this)
+        {
+            return ListTools.ToIList(@this);
+        }
         /// <summary>
         ///  将字节数组转换成double
         /// </summary>
