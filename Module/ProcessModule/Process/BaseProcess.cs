@@ -35,14 +35,14 @@
         /// <summary>
         /// 帧函数
         /// </summary>
-        public abstract void Update();
+        public virtual void Update() { }
         /// <summary>
         /// 进入流程方法
         /// </summary>
-        public abstract void Enter();
+        public virtual void Enter() { }
         /// <summary>
         /// 退出流程方法
         /// </summary>
-        public abstract void Exit();
+        public virtual void Exit() { }
     }
 }
