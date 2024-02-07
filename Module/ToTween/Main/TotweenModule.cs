@@ -13,11 +13,10 @@ namespace YFramework
         /// ToTweenÊý×é
         /// </summary>
         private IList<IToTween> mProcessList = new List<IToTween>();
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Init()
+        public static void Init()
         {
-            UnityEngine.Debug.Log("Launcher DoTween");
-            GameObject yCenter = new GameObject("Dotween");
+            UnityEngine.Debug.Log("Launcher ToTween");
+            GameObject yCenter = new GameObject("Totween");
             Instance =  yCenter.AddComponent<TotweenModule>();
             DontDestroyOnLoad(yCenter);
             yCenter.hideFlags = HideFlags.HideAndDontSave;

@@ -112,7 +112,7 @@ namespace YFramework
                 stream.Dispose();
             }
             /// <summary>
-            /// 写入数据
+            /// 写入数据（如果有之前的数据的话就把之前的数据删了重新新建一个）
             /// </summary>
             /// <param name="path">写入数据的地址</param>
             /// <param name="data">写入的数据</param>

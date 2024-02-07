@@ -54,10 +54,21 @@ namespace YFramework
         /// <param name="controller"></param>
         public void AddChildController(IChildController controller)
         {
-
             if (controller == null) return;
             if (mControllerList.Contains(controller)) return;
             mControllerList.Add(controller);
+        }
+        /// <summary>
+        /// 添加子控制器
+        /// </summary>
+        /// <param name="controller"></param>
+        public void InsertChildController(IChildController controller)
+        {
+            if (controller == null) return;
+            if (mControllerList.Contains(controller)) return;
+            mControllerList.Add(controller);
+            controller.Awake();
+            controller.Start();
         }
         /// <summary>
         /// 移除子控制器
@@ -139,6 +150,5 @@ namespace YFramework
             }
         } 
         #endregion
-      
     }
 }

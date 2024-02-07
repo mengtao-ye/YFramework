@@ -12,8 +12,7 @@
         /// <summary>
         /// 流程管理器
         /// </summary>
-        public ProcessManager processManager { get;  set; }
-      
+        public IProcessManager processManager { get; set; }
         /// <summary>
         /// 链接流程对象
         /// </summary>
@@ -23,6 +22,7 @@
         {
             Next = process;
             process.processManager = processManager;
+            process.Init();
             return Next;
         }
         /// <summary>
@@ -35,14 +35,18 @@
         /// <summary>
         /// 帧函数
         /// </summary>
-        public abstract void Update();
+        public virtual void Update() { }
         /// <summary>
         /// 进入流程方法
         /// </summary>
-        public abstract void Enter();
+        public virtual void Enter() { }
         /// <summary>
         /// 退出流程方法
         /// </summary>
-        public abstract void Exit();
+        public virtual void Exit() { }
+        /// <summary>
+        /// 初始化方法
+        /// </summary>
+        public virtual void Init() { }
     }
 }

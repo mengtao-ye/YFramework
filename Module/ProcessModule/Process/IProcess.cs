@@ -5,7 +5,7 @@
     /// </summary>
     public interface IProcess
     {
-        ProcessManager processManager { get; set; }
+        IProcessManager processManager { get; set; }
         /// <summary>
         /// 下一个流程
         /// </summary>
@@ -32,5 +32,9 @@
         /// 退出流程方法
         /// </summary>
         void Exit();
+        /// <summary>
+        /// 初始化方法
+        /// </summary>
+        void Init();
     }
 }

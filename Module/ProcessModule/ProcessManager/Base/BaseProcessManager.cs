@@ -1,6 +1,6 @@
 ﻿namespace YFramework
 {
-    public class ProcessManager
+    public abstract class BaseProcessManager : IProcessManager
     {
         /// <summary>
         /// 当前的流程
@@ -33,6 +33,7 @@
         {
             curProcess = process;
             process.processManager = this;
+            process.Init();
             return curProcess;
         }
         /// <summary>
@@ -62,7 +63,7 @@
         /// </summary>
         public void Update()
         {
-            if (curProcess != null) 
+            if (curProcess != null)
             {
                 curProcess.Update();
             }

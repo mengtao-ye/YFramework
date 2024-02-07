@@ -7,16 +7,16 @@ namespace YFramework
     /// </summary>
     public class ProcessController
     {
-        private IList<ProcessManager> mProcessList;
+        private IList<IProcessManager> mProcessList;
         public ProcessController()
         {
-            mProcessList = new List<ProcessManager>();
+            mProcessList = new List<IProcessManager>();
         }
         /// <summary>
         /// 启动流程模块
         /// </summary>
         /// <param name="processManager"></param>
-        public void Add(ProcessManager processManager)
+        public void Add(IProcessManager processManager)
         { 
             if (processManager == null) return;
             if (!mProcessList.Contains(processManager))
@@ -29,13 +29,23 @@ namespace YFramework
         /// 创建processManager
         /// </summary>
         /// <returns></returns>
-        public ProcessManager Create() 
+        public IProcessManager Create() 
         {
             ProcessManager processManager = new ProcessManager();
             Add(processManager);
             return processManager;
         }
-
+        /// <summary>
+        /// 创建processManager
+        /// </summary>
+        /// <returns></returns>
+        public IProcessManager Create<T>() where T : class, new()
+        {
+            ProcessManager<T> processManager = new ProcessManager<T>();
+            processManager.condition = new T();
+            Add(processManager);
+            return processManager;
+        }
 
         /// <summary>
         ///刷新
@@ -51,7 +61,7 @@ namespace YFramework
         /// 移除流程管理模块
         /// </summary>
         /// <param name="process"></param>
-        public void Remove(ProcessManager process)
+        public void Remove(IProcessManager process)
         {
             if (process == null) return;
             if (mProcessList.Contains(process))

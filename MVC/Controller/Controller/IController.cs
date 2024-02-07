@@ -18,6 +18,12 @@
         /// <param name="controller"></param>
         void AddChildController(IChildController controller);
         /// <summary>
+        /// 插入子控制器(会执行Awake 跟Start方法)
+        /// </summary>
+        /// <param name="controller"></param>
+        void InsertChildController(IChildController controller);
+
+        /// <summary>
         /// 移除子控制器
         /// </summary>
         /// <param name="controller"></param>

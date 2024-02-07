@@ -165,7 +165,14 @@ namespace YFramework
             tempCanvas.additionalShaderChannels = AdditionalCanvasShaderChannels.None;
             CanvasScaler tempCanvasSacler = canvas.AddComponent<CanvasScaler>();
             tempCanvasSacler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            tempCanvasSacler.referenceResolution = new Vector2(1624, 750);
+            if (YFrameworkHelper.IsInitHelper)
+            {
+                tempCanvasSacler.referenceResolution = new Vector2(YFrameworkHelper.Instance.ScreenSize.x, YFrameworkHelper.Instance.ScreenSize.y);
+            }
+            else 
+            {
+                Log.LogError("BaseCanvase: YFrameworkHelper not init");
+            }
             tempCanvasSacler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             tempCanvasSacler.referencePixelsPerUnit = 100;
             GraphicRaycaster graphicRaycaster = canvas.AddComponent<GraphicRaycaster>();
