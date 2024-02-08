@@ -48,5 +48,6 @@
         /// 初始化方法
         /// </summary>
         public virtual void Init() { }
+
     }
 }
