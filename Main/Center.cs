@@ -12,7 +12,7 @@ namespace YFramework
         /// </summary>
         private List<IModule> mGameList;
 
-        public Center()
+        public Center( )
         {
             mGameList = new List<IModule>();
         }
