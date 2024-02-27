@@ -10,11 +10,10 @@ namespace YFramework
         public static bool IsInitHelper
         {
             get {
-                return Instance != null && Instance.IsInit;
+                return Instance != null ;
             }
         }
         public static YFrameworkHelper Instance;
-        public abstract bool IsInit { get; set; }
         public abstract Vector2 ScreenSize { get; set; }
     }
 }

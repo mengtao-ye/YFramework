@@ -50,6 +50,16 @@ namespace YFramework
             return GameObject.Instantiate(go, parent);
         }
         /// <summary>
+        /// 不销毁该对象
+        /// </summary>
+        /// <param name="go"></param>
+        /// <returns></returns>
+        public static void DontDestroyOnLoad(this GameObject go)
+        {
+            if (go == null) return ;
+             GameObject.DontDestroyOnLoad(go);
+        }
+        /// <summary>
         /// 设置物体的显示
         /// </summary>
         /// <param name="go"></param>

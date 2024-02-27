@@ -24,7 +24,7 @@ namespace YFramework
         {
             if (state == null) return;
             if (mStateDict.ContainsKey(state.stateID)) {
-                Log.LogError($"已经包含了{state.stateID}");
+                LogHelper.LogError($"已经包含了{state.stateID}");
                 return;
             }
             state.SetFSM(this);
@@ -37,7 +37,7 @@ namespace YFramework
         public void Performance(int stateID)
         {
             if (!mStateDict.ContainsKey(stateID)) {
-                Log.LogError($"状态{stateID}不存在");
+                LogHelper.LogError($"状态{stateID}不存在");
                 return;
             }
             if (curState == null)

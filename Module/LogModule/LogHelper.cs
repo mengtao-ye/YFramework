@@ -1,12 +1,12 @@
 ﻿namespace YFramework
 {
-    public abstract class Log
+    public abstract class LogHelper
     {
-        public static Log Instance;
+        public static LogHelper Instance;
         protected abstract void LogMsg<T>(T msg);
         protected abstract void LogWarningMsg<T>(T msg);
         protected abstract void LogErrorMsg<T>(T msg);
-        public static void Loger<T>(T msg)
+        public static void Log<T>(T msg)
         {
             Instance.LogMsg(msg);
         }

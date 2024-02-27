@@ -11,10 +11,10 @@ namespace YFramework
         /// 游戏模块数组
         /// </summary>
         private List<IModule> mGameList;
-        public Center(Log log,Resource resource)
+        public Center(LogHelper log,Resource resource)
         {
             if (log == null) UnityEngine.Debug.LogError("请初始化Log");
-            else Log.Instance = log;
+            else LogHelper.Instance = log;
 
             if (resource == null) UnityEngine.Debug.LogError("请初始化Resource");
             else Resource.Instance = resource;

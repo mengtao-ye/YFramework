@@ -171,7 +171,7 @@ namespace YFramework
             }
             else 
             {
-                Log.LogError("BaseCanvase: YFrameworkHelper not init");
+                LogHelper.LogError("BaseCanvase: YFrameworkHelper not init");
             }
             tempCanvasSacler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             tempCanvasSacler.referencePixelsPerUnit = 100;
@@ -362,19 +362,19 @@ namespace YFramework
             string assetPath = UIMap.Get(typeof(T).Name).assetPath;
             if (assetPath == null)
             {
-                Log.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
+                LogHelper.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
                 return false;
             }
             GameObject target = Resource.LoadAsset<GameObject>(assetPath);
             if (target == null)
             {
-                Log.LogError(assetPath + "未找到对应的对象");
+                LogHelper.LogError(assetPath + "未找到对应的对象");
                 return false;
             }
             target = GameObject.Instantiate(target, GetLayer((byte)CanvasLayerData.PANEL_LAYER));
             if (target == null)
             {
-                Log.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
+                LogHelper.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
                 return false;
             }
             panel.SetTrans(target.transform);
@@ -404,19 +404,19 @@ namespace YFramework
             string assetPath = UIMap.Get(typeof(T).Name).assetPath;
             if (assetPath == null)
             {
-                Log.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
+                LogHelper.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
                 return null;
             }
             GameObject target = Resource.LoadAsset<GameObject>(assetPath);
             if (target == null)
             {
-                Log.LogError(assetPath + "未找到对应的对象");
+                LogHelper.LogError(assetPath + "未找到对应的对象");
                 return null;
             }
             target = GameObject.Instantiate(target, GetLayer((byte)CanvasLayerData.PANEL_LAYER));
             if (target == null)
             {
-                Log.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
+                LogHelper.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
                 return null;
             }
             panel.SetTrans(target.transform);

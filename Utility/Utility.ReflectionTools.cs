@@ -103,7 +103,7 @@ namespace YFramework
                 }
                 if (string.IsNullOrEmpty(className))
                 {
-                    Log.LogError("类名不能为空！");
+                    LogHelper.LogError("类名不能为空！");
                     return null;
                 }
                 else
@@ -134,7 +134,7 @@ namespace YFramework
             {
                 if (classTarget == null)
                 {
-                    Log.LogError("Error:Class is NULL!");
+                    LogHelper.LogError("Error:Class is NULL!");
                     return;
                 }
                 PropertyInfo info = classTarget.GetType().GetProperty(propertyName);
