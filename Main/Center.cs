@@ -11,13 +11,9 @@ namespace YFramework
         /// 游戏模块数组
         /// </summary>
         private List<IModule> mGameList;
-        public Center(LogHelper log,Resource resource)
-        {
-            if (log == null) UnityEngine.Debug.LogError("请初始化Log");
-            else LogHelper.Instance = log;
 
-            if (resource == null) UnityEngine.Debug.LogError("请初始化Resource");
-            else Resource.Instance = resource;
+        public Center()
+        {
             mGameList = new List<IModule>();
         }
         #region 生命周期

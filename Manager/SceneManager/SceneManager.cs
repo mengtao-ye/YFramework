@@ -73,6 +73,41 @@ namespace YFramework
             IEnumeratorModule .StartCoroutine (IELoadScene(loadAction, mTempScene));
         }
 
+        public void ChangeScene(string sceneName) 
+        {
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                Debug.LogError("场景名称不能为空！");
+                return;
+            }
+            IScene mTempScene = mSceneMap.Get(sceneName);
+            if (mTempScene == null)
+            {
+                Debug.LogError(string.Format("场景名称：{0}  未找到对应的场景类！", sceneName));
+                return;
+            }
+            mPreScene = mCurScene;
+            mCurScene = mTempScene;
+            if (mCurScene.sceneName == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name)
+            {
+                //如果当前场景就是现在的场景的话
+                mCurScene.Awake();
+                mCurScene.Start();
+                return;
+            }
+            if (mPreScene != null)
+            {
+                //如果下一个加载的场景跟当前场景相同的话
+                if (mPreScene.sceneName == mCurScene.sceneName)
+                {
+                    return;
+                }
+                mPreScene.OnDestory();
+            }
+            mCurScene.Awake();
+            mCurScene.Start();
+        }
+
         private IEnumerator IELoadScene(Action<float> loadAction, IScene tempScene) {
             if (StartLoadScene != null) StartLoadScene.Invoke(tempScene.sceneName);
             AsyncOperation ao = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(tempScene.sceneName);

@@ -289,6 +289,21 @@ namespace YFramework
         #endregion
         #region Converter
         /// <summary>
+        /// 将string 转换成long
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static long ToLong(this string str)
+        {
+            if (str.IsNullOrEmpty()) return 0;
+            long value = 0;
+            if (long.TryParse(str, out value))
+            {
+                return value;
+            }
+            return value;
+        }
+        /// <summary>
         /// 将string 转换成Int
         /// </summary>
         /// <param name="str"></param>

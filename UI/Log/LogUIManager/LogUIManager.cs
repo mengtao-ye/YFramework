@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace YFramework
@@ -44,30 +45,34 @@ namespace YFramework
         /// 显示提示UI
         /// </summary>
         /// <param name="name"></param>
-        public T ShowLogUI<T>() where T : class, ILogUI, new()
+        public void ShowLogUI<T>(Action<T> action) where T : class, ILogUI, new()
         {
-            T baseLogPanel = GetLogUI<T>();
-            if(!isShow) Show();
-            baseLogPanel.Show();
-            return baseLogPanel;
+             GetLogUI<T>((target)=> 
+             {
+                 if (!isShow) Show();
+                 target.Show();
+                 action?.Invoke(target);
+             });
         }
         /// <summary>
         /// 显示提示UI
         /// </summary>
         /// <param name="name"></param>
-        public T GetLogUI<T>() where T : class, ILogUI, new()
+        public void GetLogUI<T>(Action<T> action) where T : class, ILogUI, new()
         {
             for (int i = 0; i < mAllLogUIList.Count; i++)
             {
                 if (mAllLogUIList[i] is T)
                 {
-                    return mAllLogUIList[i] as T;
+                    action?.Invoke( mAllLogUIList[i] as T);
+                    return;
                 }
             }
             //如果当前列表中没有的话就生成
-            T tempTipsPanel = SpawnLogPanel<T>();
-            AddLogUI(tempTipsPanel);
-            return tempTipsPanel;
+            SpawnLogPanel<T>((target)=> {
+                AddLogUI(target);
+                action?.Invoke(target);
+            });
         }
         /// <summary>
         /// 添加
@@ -84,17 +89,18 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        private T SpawnLogPanel<T>() where T : ILogUI, new()
+        private void SpawnLogPanel<T>(Action<T> action) where T : ILogUI, new()
         {
             T panel = new T();
             panel.SetLogUIManager(this);
-            GameObject target = Resource.LoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath);
-            target = GameObject.Instantiate(target, transform);
-            panel.SetCanvas(mUICanvas);
-            panel.SetTrans(target.transform);
-            panel.Awake();
-            panel.Start();
-            return panel;
+            ResourceHelper.AsyncLoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath,(target)=> {
+                target = GameObject.Instantiate(target, transform);
+                panel.SetCanvas(mUICanvas);
+                panel.SetTrans(target.transform);
+                panel.Awake();
+                panel.Start();
+                action?.Invoke( panel);
+            });
         }
     }
 }

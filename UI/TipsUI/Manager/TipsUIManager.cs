@@ -7,7 +7,7 @@ using static YFramework.Utility;
 
 namespace YFramework
 {
-    public class TipsUIManager : BasePanel ,ITipsUIManager
+    public class TipsUIManager : BasePanel, ITipsUIManager
     {
         private Transform BG;//显示的背景
         protected Transform mTipsUIParent;//父对象
@@ -23,7 +23,7 @@ namespace YFramework
 
         }
 
-        public void SetBG( Button bgImg )
+        public void SetBG(Button bgImg)
         {
             if (bgImg == null) return;
             bgImg.onClick.AddListener(BGClick);
@@ -59,7 +59,7 @@ namespace YFramework
             {
                 Debug.LogError("ShowTipsUI下面没有TipsUIParent面板！");
             }
-            
+
         }
 
         public override void Update()
@@ -82,31 +82,35 @@ namespace YFramework
         /// 显示提示UI
         /// </summary>
         /// <param name="name"></param>
-        public T ShowTipsUI<T>() where T :class, ITipsUI, new()
+        public void ShowTipsUI<T>(Action<T> action) where T : class, ITipsUI, new()
         {
-            T baseTipPanel = GetTipsUI<T>();
-            if (!isShow) Show();
-            if (IsInShowStack<T>())//在显示栈里面
-            {
-                //并且还是显示在最上层
-                if (mCurShowTipsUI != null && mCurShowTipsUI.GetType().Name != baseTipPanel.GetType().Name)
-                {
-                    return baseTipPanel;
-                }
-            }
-            BG.gameObject.SetAvtiveExtend(true);
-            if (!IsInShowStack<T>()) {
-                mTipsUIStack.Push(baseTipPanel);
-            }
-            if (mCurShowTipsUI != null)
-            {
-                mCurShowTipsUI.transform.parent = mTipsUIParent;
-                mCurShowTipsUI.transform.SetSiblingIndex(mTipsUIParent.childCount - 1);
-            }
-            baseTipPanel.transform.parent = BG;
-            baseTipPanel.Show();
-            mCurShowTipsUI = baseTipPanel;
-            return mCurShowTipsUI as T;
+             GetTipsUI<T>((baseTipPanel) => {
+                 if (!isShow) Show();
+                 if (IsInShowStack<T>())//在显示栈里面
+                 {
+                     //并且还是显示在最上层
+                     if (mCurShowTipsUI != null && mCurShowTipsUI.GetType().Name != baseTipPanel.GetType().Name)
+                     {
+                         action ?.Invoke(baseTipPanel);
+                         return;
+                     }
+                 }
+                 BG.gameObject.SetAvtiveExtend(true);
+                 if (!IsInShowStack<T>())
+                 {
+                     mTipsUIStack.Push(baseTipPanel);
+                 }
+                 if (mCurShowTipsUI != null)
+                 {
+                     mCurShowTipsUI.transform.parent = mTipsUIParent;
+                     mCurShowTipsUI.transform.SetSiblingIndex(mTipsUIParent.childCount - 1);
+                 }
+                 baseTipPanel.transform.parent = BG;
+                 baseTipPanel.Show();
+                 mCurShowTipsUI = baseTipPanel;
+                 action?.Invoke(mCurShowTipsUI as T);
+             });
+           
         }
         /// <summary>
         /// 当前TipsUI是否在显示栈里面
@@ -116,9 +120,10 @@ namespace YFramework
         private bool IsInShowStack<T>() where T : class, ITipsUI, new()
         {
             var temp = mTipsUIStack.GetEnumerator();
-            while (temp.MoveNext()) 
+            while (temp.MoveNext())
             {
-                if (temp.Current.GetType().Name == typeof(T).Name) {
+                if (temp.Current.GetType().Name == typeof(T).Name)
+                {
                     return true;
                 }
             }
@@ -127,7 +132,7 @@ namespace YFramework
         /// <summary>
         /// 将TipsUI显示到最上层
         /// </summary>
-        public void PopTopTipsUI(ITipsUI tipsUI) 
+        public void PopTopTipsUI(ITipsUI tipsUI)
         {
             if (tipsUI == null) return;
             ITipsUI temp = null;
@@ -135,11 +140,11 @@ namespace YFramework
             mTipsUIStack.Clear();
             while (mTipsUIStack.Count != 0)
             {
-                temp =  mTipsUIStack.Pop();
+                temp = mTipsUIStack.Pop();
                 if (temp.GetType().Name == tipsUI.GetType().Name)
                 {
                     isFind = true;
-                    while (mTempTipsUI.Count!=0)//把前面拿出来的TipsUI全部放回去
+                    while (mTempTipsUI.Count != 0)//把前面拿出来的TipsUI全部放回去
                     {
                         mTipsUIStack.Push(mTempTipsUI.Pop());
                     }
@@ -159,21 +164,28 @@ namespace YFramework
             {
                 mCurShowTipsUI = null;
             }
-          
+
         }
 
         /// <summary>
         /// 显示提示UI
         /// </summary>
         /// <param name="name"></param>
-        public T GetTipsUI<T>() where T  : class, ITipsUI, new()
+        public void GetTipsUI<T>(Action<T> action) where T : class, ITipsUI, new()
         {
             T tempTipsPanel = null;
             tempTipsPanel = FindTipsPanel<T>();
-            if (tempTipsPanel != null) return tempTipsPanel;
-            tempTipsPanel =  SpawnTipsPanel<T>();
-            AddTipsUI(tempTipsPanel);
-            return tempTipsPanel;
+            if (tempTipsPanel != null)
+            {
+                action?.Invoke(tempTipsPanel);
+                return;
+            }
+            SpawnTipsPanel<T>((ui) =>
+            {
+                AddTipsUI(ui);
+                action?.Invoke(ui);
+            });
+
         }
         /// <summary>
         /// 隐藏面板
@@ -181,7 +193,8 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         public void HideTipsUI<T>() where T : class, ITipsUI, new()
         {
-            if (IsShow<T>()) {
+            if (IsShow<T>())
+            {
                 FindTipsPanel<T>().Hide();
             }
         }
@@ -197,7 +210,8 @@ namespace YFramework
                 return;
             }
             ITipsUI tempTipsUI = mTipsUIStack.Pop();
-            tempTipsUI.Hide(()=> {
+            tempTipsUI.Hide(() =>
+            {
                 tempTipsUI.transform.parent = mTipsUIParent;
                 tempTipsUI.transform.SetSiblingIndex(0);
                 if (mTipsUIStack.Count == 0)
@@ -226,7 +240,8 @@ namespace YFramework
             if (tipsUI == null) return false;
             for (int i = 0; i < mAllTipsUI.Count; i++)
             {
-                if (mAllTipsUI[i].GetType().Name == tipsUI.GetType().Name) {
+                if (mAllTipsUI[i].GetType().Name == tipsUI.GetType().Name)
+                {
                     return true;
                 }
             }
@@ -239,25 +254,28 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        private T SpawnTipsPanel<T>() where T : class, ITipsUI, new()
+        private void SpawnTipsPanel<T>(Action<T> action) where T : class, ITipsUI, new()
         {
             T panel = new T();
             panel.SetShowTipsPanel(this);
-            GameObject target = Resource.LoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath);
-            target = GameObject.Instantiate(target, mTipsUIParent);
-            panel.SetCanvas(mUICanvas);
-            panel.SetTrans(target.transform);
-            panel.transform.Reset();
-            panel.Awake();
-            panel.Start();
-            return panel;
+            ResourceHelper.AsyncLoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath, (target) =>
+            {
+                target = GameObject.Instantiate(target, mTipsUIParent);
+                panel.SetCanvas(mUICanvas);
+                panel.SetTrans(target.transform);
+                panel.transform.Reset();
+                panel.Awake();
+                panel.Start();
+                action?.Invoke(panel);
+            });
         }
         /// <summary>
         /// 查找面板
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T FindTipsPanel<T>() where T : class,  ITipsUI, new() {
+        public T FindTipsPanel<T>() where T : class, ITipsUI, new()
+        {
             for (int i = 0; i < mAllTipsUI.Count; i++)
             {
                 if (mAllTipsUI[i].GetType().Name == typeof(T).Name)
@@ -272,7 +290,8 @@ namespace YFramework
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool IsShow<T>() where T : class, ITipsUI, new() {
+        public bool IsShow<T>() where T : class, ITipsUI, new()
+        {
             T panel = FindTipsPanel<T>();
             if (panel != null && panel.isShow) return true;
             return false;
@@ -283,7 +302,8 @@ namespace YFramework
         /// <param name="active"></param>
         public void SetBGActive(bool active)
         {
-            if (BG != null) {
+            if (BG != null)
+            {
                 BG.gameObject.SetAvtiveExtend(active);
             }
         }

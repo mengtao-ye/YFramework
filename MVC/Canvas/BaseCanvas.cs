@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using static YFramework.Utility;
 
 namespace YFramework
 {
-    public abstract class BaseCanvas : BaseUI,ICanvas
+    public abstract class BaseCanvas : BaseUI, ICanvas
     {
         public EventSystem CurEventSystem = null; //当前的EventSystem
         private ITipsUIManager mShowTipsPanel;
@@ -60,7 +61,7 @@ namespace YFramework
         {
             ITipsUIManager mShowTipsPanel = new TipsUIManager();
             mShowTipsPanel.SetCanvas(this);
-            Button bgImg =  SpawnShowTipsPanel();
+            Button bgImg = SpawnShowTipsPanel();
             mShowTipsPanel.SetBG(bgImg);
             mShowTipsPanel.SetTrans(GetLayer(CanvasLayerData.TIPS_LAYER));
             mShowTipsPanel.Awake();
@@ -169,7 +170,7 @@ namespace YFramework
             {
                 tempCanvasSacler.referenceResolution = new Vector2(YFrameworkHelper.Instance.ScreenSize.x, YFrameworkHelper.Instance.ScreenSize.y);
             }
-            else 
+            else
             {
                 LogHelper.LogError("BaseCanvase: YFrameworkHelper not init");
             }
@@ -209,33 +210,41 @@ namespace YFramework
         /// 显示面板
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public T ShowPanel<T>() where T :class, IPanel, new()
+        public void ShowPanel<T>(Action<T> callBack = null) where T : class, IPanel, new()
         {
             T tempPanel = null;
             if (IsExist<T>()) //如果需要显示的界面在列表中的话
             {
-                if (mCurPanel.GetType().Name == typeof(T).Name) {
-                    return mCurPanel as T;
+                if (mCurPanel.GetType().Name == typeof(T).Name)
+                {
+                    callBack?.Invoke(mCurPanel as T);
+                    return;
                 }
                 tempPanel = SetTopPanel<T>();
-                return tempPanel;
+                callBack?.Invoke(tempPanel);
+                return;
             }
             else
             {
-               tempPanel = SpawnPanel<T>();
-                if (tempPanel != null) 
+                SpawnPanel<T>(
+                (panel) =>
                 {
-                    AddPanel(tempPanel);
+                    tempPanel = panel;
+                    if (tempPanel != null)
+                    {
+                        AddPanel(tempPanel);
+                    }
+                    if (mCurPanel != null)
+                    {
+                        mCurPanel.Hide();
+                    }
+                    mCurPanel = tempPanel;
+                    tempPanel.Show();
+                    tempPanel.transform.SetAsLastSibling();
+                    callBack?.Invoke(tempPanel);
                 }
+                );
             }
-            if (mCurPanel != null)
-            {
-                mCurPanel.Hide();
-            }
-            mCurPanel = tempPanel;
-            tempPanel.Show();
-            tempPanel.transform.SetAsLastSibling();
-            return tempPanel;
         }
         /// <summary>
         /// 获取面板
@@ -267,7 +276,7 @@ namespace YFramework
         {
             foreach (var item in mPopStack)
             {
-                if (item.GetType().Name == name) return true; 
+                if (item.GetType().Name == name) return true;
             }
             return false;
         }
@@ -339,7 +348,7 @@ namespace YFramework
                     tempPanel.OnDestory();
                     return;
                 }
-                else 
+                else
                 {
                     mTempStackPanel.Push(tempPanel);
                 }
@@ -365,7 +374,7 @@ namespace YFramework
                 LogHelper.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
                 return false;
             }
-            GameObject target = Resource.LoadAsset<GameObject>(assetPath);
+            GameObject target = ResourceHelper.LoadAsset<GameObject>(assetPath);
             if (target == null)
             {
                 LogHelper.LogError(assetPath + "未找到对应的对象");
@@ -393,11 +402,15 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        private T SpawnPanel<T>() where T :class, IPanel, new()
+        private void SpawnPanel<T>(Action<T> loadCallBack) where T : class, IPanel, new()
         {
             for (int i = 0; i < mClosePanel.Count; i++)//先检查下需要生成的面板是否在关闭列表中
             {
-                if (mClosePanel[i].GetType().Name == typeof(T).Name) return mClosePanel[i] as T;
+                if (mClosePanel[i].GetType().Name == typeof(T).Name)
+                {
+                    loadCallBack?.Invoke(mClosePanel[i] as T);
+                    return;
+                }
             }
             T panel = new T();
             panel.SetCanvas(this);
@@ -405,24 +418,30 @@ namespace YFramework
             if (assetPath == null)
             {
                 LogHelper.LogError("Panel:" + typeof(T).Name + "未找到对应的映射");
-                return null;
+
+                return;
             }
-            GameObject target = Resource.LoadAsset<GameObject>(assetPath);
-            if (target == null)
+            ResourceHelper.AsyncLoadAsset<GameObject>(assetPath,
+            (target) =>
             {
-                LogHelper.LogError(assetPath + "未找到对应的对象");
-                return null;
-            }
-            target = GameObject.Instantiate(target, GetLayer((byte)CanvasLayerData.PANEL_LAYER));
-            if (target == null)
-            {
-                LogHelper.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
-                return null;
-            }
-            panel.SetTrans(target.transform);
-            panel.Awake();
-            panel.Start();
-            return panel;
+
+                if (target == null)
+                {
+                    LogHelper.LogError(assetPath + "未找到对应的对象");
+                    return;
+                }
+                target = GameObject.Instantiate(target, GetLayer((byte)CanvasLayerData.PANEL_LAYER));
+                if (target == null)
+                {
+                    LogHelper.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
+                    return;
+                }
+                panel.SetTrans(target.transform);
+                panel.Awake();
+                panel.Start();
+                loadCallBack?.Invoke(panel);
+                return;
+            });
         }
         /// <summary>
         /// 判断面板是否生成并显示
@@ -455,17 +474,17 @@ namespace YFramework
         private T SetTopPanel<T>() where T : class, IPanel, new()
         {
             IPanel tempPanel = null;
-            while (mPopStack.Count != 0) 
+            while (mPopStack.Count != 0)
             {
                 tempPanel = mPopStack.Pop();
                 if (tempPanel.GetType().Name == typeof(T).Name)
                 {
-                    while (mTempStackPanel.Count != 0) 
+                    while (mTempStackPanel.Count != 0)
                     {
                         mPopStack.Push(mTempStackPanel.Pop());
                     }
                     mPopStack.Push(tempPanel);
-                    
+
                     if (mCurPanel != null) mCurPanel.Hide();
                     mCurPanel = tempPanel;
                     mCurPanel.Show();
@@ -476,7 +495,7 @@ namespace YFramework
                     mCurPanel.transform.SetAsLastSibling();
                     return tempPanel as T;
                 }
-                else 
+                else
                 {
                     mTempStackPanel.Push(tempPanel);
                 }
@@ -489,7 +508,7 @@ namespace YFramework
         /// </summary>
         public void CloseTopPanel()
         {
-            if(mPopStack.Count !=0)
+            if (mPopStack.Count != 0)
             {
                 IPanel topPanel = mPopStack.Pop();
                 topPanel.Hide();
@@ -497,12 +516,12 @@ namespace YFramework
                 {
                     mClosePanel.Add(topPanel);
                 }
-                else 
+                else
                 {
                     topPanel.OnDestory();
                 }
             }
-            if (mPopStack.Count != 0) 
+            if (mPopStack.Count != 0)
             {
                 mCurPanel = mPopStack.Peek();
                 mCurPanel.Show();

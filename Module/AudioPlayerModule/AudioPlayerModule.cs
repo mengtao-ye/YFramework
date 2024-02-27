@@ -62,7 +62,7 @@ namespace YFramework
         public static void Play(AudioType type,string assetPath,bool isLoop = false)
         {
             ChechInit();
-            mAS[(int)type].clip = Resource.LoadAsset<AudioClip>(assetPath);
+            mAS[(int)type].clip = ResourceHelper.LoadAsset<AudioClip>(assetPath);
             mAS[(int)type].Play();
             mAS[(int)type].loop = isLoop;
         }
