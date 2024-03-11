@@ -22,6 +22,24 @@ namespace YFramework
             /// <param name="url"></param>
             /// <param name="img"></param>
             /// <param name="finish"></param>
+            public static void LoadSprite<T>(string url, Action<Sprite,T> finish ,Action<string> error,T value)
+            {
+                if (string.IsNullOrEmpty(url)) return;
+                if (mTempLoadImgDict.ContainsKey(url))
+                {
+
+                    if (finish != null) finish.Invoke(mTempLoadImgDict[url],value);
+                    return;
+                }
+                IEnumeratorModule.StartCoroutine(GetSprite(url, finish, error, value));
+            }
+
+            /// <summary>
+            /// 加载图片
+            /// </summary>
+            /// <param name="url"></param>
+            /// <param name="img"></param>
+            /// <param name="finish"></param>
             public static void LoadSprite(string url, Action<Sprite> finish = null)
             {
                 if (string.IsNullOrEmpty(url)) return;
@@ -49,6 +67,25 @@ namespace YFramework
                     return;
                 }
                 IEnumeratorModule.StartCoroutine(GetImage(url, img, finish));
+            }
+            private static IEnumerator GetSprite<T>(string url, Action<Sprite,T> finish,Action<string> fail,T value)
+            {
+                WWW www = new WWW(url);
+                yield return www;
+                if (string.IsNullOrEmpty(www.error))
+                {
+                    Texture2D tex = www.texture;
+                    Sprite temp = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0));
+                    if (!mTempLoadImgDict.ContainsKey(url))
+                    {
+                        mTempLoadImgDict.Add(url, temp);
+                    }
+                    if (finish != null) finish.Invoke(temp,value);
+                }
+                else
+                {
+                    if (fail != null) fail.Invoke(www.error);
+                }
             }
             private static IEnumerator GetSprite(string url, Action<Sprite> finish)
             {

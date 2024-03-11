@@ -199,6 +199,18 @@ namespace YFramework
             }
         }
         /// <summary>
+        /// 隐藏面板
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void HideTipsUI<T>(int type) where T : class, ITipsUI, new()
+        {
+            if (IsShow<T>())
+            {
+                T value = FindTipsPanel<T>();
+                if(value.tipType == type) value.Hide();
+            }
+        }
+        /// <summary>
         /// 关闭按钮按下时
         /// </summary>
         public override void Hide()

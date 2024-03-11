@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -26,6 +27,37 @@ namespace YFramework
                 }
                 Directory.Delete(dirPath, true);
                 Directory.CreateDirectory(dirPath);
+            }
+            /// <summary>
+            /// 清空目录下面的所有文件
+            /// </summary>
+            /// <param name="dirPath"></param>
+            public static void ForceDelete(string folderPath)
+            {
+                try
+                {
+                    DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
+
+                    if (directoryInfo.Exists)
+                    {
+                        directoryInfo.Attributes &= ~FileAttributes.ReadOnly; // 取消只读属性
+
+                        foreach (var file in directoryInfo.GetFiles())
+                        {
+                            file.IsReadOnly = false; // 取消文件只读属性
+                        }
+                        directoryInfo.Delete(true); // 递归删除文件夹及其所有内容
+                        Debug.Log("成功删除文件夹！");
+                    }
+                    else
+                    {
+                        Debug.Log("文件夹不存在！");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log($"发生错误：{ex.Message}");
+                }
             }
 
             /// <summary>

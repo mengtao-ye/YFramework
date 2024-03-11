@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace YFramework
@@ -20,6 +21,91 @@ namespace YFramework
             mPopTarget = new Dictionary<int, List<IGameObjectPoolTarget>>();
             mPoolDict = new Dictionary<int, Stack<IGameObjectPoolTarget>>();
         }
+
+        /// <summary>
+        /// 异步弹出对象池里面的对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static void AsyncPop<T,T2>(int type, Transform parent, Action<T,T2> initSuccessCallBack,T2 value) where T : class, IGameObjectPoolTarget, new()
+        {
+            if (!mIsInit)
+            {
+                Init();
+            }
+            if (!mPoolDict.ContainsKey(type) || mPoolDict[type].Count == 0)
+            {
+                AsyncSpawnTarget<T,T2>(parent, initSuccessCallBack,value);
+                return;
+            }
+            else
+            {
+                IGameObjectPoolTarget tempGo = mPoolDict[type].Pop();
+                if (tempGo == null)
+                {
+                    AsyncSpawnTarget<T,T2>(parent, initSuccessCallBack,value);
+                    return;
+                }
+                if (tempGo.Target == null)
+                {
+                    AsyncSpawnTarget<T,T2>(parent, initSuccessCallBack,value);
+                    return;
+                }
+                tempGo.Target.transform.parent = parent;
+                tempGo.Pop();
+                if (!mPopTarget.ContainsKey(tempGo.Type))
+                {
+                    mPopTarget.Add(tempGo.Type, new List<IGameObjectPoolTarget>());
+                }
+                mPopTarget[tempGo.Type].Add(tempGo);
+                initSuccessCallBack?.Invoke(tempGo as T,value);
+            }
+        }
+
+        /// <summary>
+        /// 异步弹出对象池里面的对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static void AsyncPop<T>(int type, Transform parent ,Action<T> initSuccessCallBack) where T : class, IGameObjectPoolTarget, new()
+        {
+            if (!mIsInit)
+            {
+                Init();
+            }
+            if (!mPoolDict.ContainsKey(type) || mPoolDict[type].Count == 0)
+            {
+                AsyncSpawnTarget<T>(parent, initSuccessCallBack);
+                return;
+            }
+            else
+            {
+                IGameObjectPoolTarget tempGo = mPoolDict[type].Pop();
+                if (tempGo == null)
+                {
+                    AsyncSpawnTarget<T>(parent, initSuccessCallBack);
+                    return;
+                }
+                if (tempGo.Target == null)
+                {
+                    AsyncSpawnTarget<T>(parent, initSuccessCallBack);
+                    return;
+                }
+                tempGo.Target.transform.parent = parent;
+                tempGo.Pop();
+                if (!mPopTarget.ContainsKey(tempGo.Type))
+                {
+                    mPopTarget.Add(tempGo.Type, new List<IGameObjectPoolTarget>());
+                }
+                mPopTarget[tempGo.Type].Add(tempGo);
+                initSuccessCallBack?.Invoke( tempGo as T);
+            }
+        }
+
         /// <summary>
         /// 弹出对象池里面的对象
         /// </summary>
@@ -64,6 +150,59 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="parent"></param>
         /// <returns></returns>
+        private static void AsyncSpawnTarget<T,T2>(Transform parent, Action<T,T2> successCallBack,T2 value) where T : class, IGameObjectPoolTarget, new()
+        {
+            T temp = new T();
+            if (temp == null)
+            {
+                return;
+            }
+            ResourceHelper.AsyncLoadAsset<GameObject>(temp.assetPath, (item) => {
+                GameObject target = GameObject.Instantiate(item);
+                target.transform.SetParent(parent);
+                temp.Init(target);
+                temp.Pop();
+                if (!mPopTarget.ContainsKey(temp.Type))
+                {
+                    mPopTarget.Add(temp.Type, new List<IGameObjectPoolTarget>());
+                }
+                mPopTarget[temp.Type].Add(temp);
+                successCallBack?.Invoke(temp,value);
+            });
+        }
+        /// <summary>
+        /// 生成对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        private static void AsyncSpawnTarget<T>(Transform parent,Action<T> successCallBack) where T : class, IGameObjectPoolTarget, new()
+        {
+            T temp = new T();
+            if (temp == null)
+            {
+                return ;
+            }
+            ResourceHelper.AsyncLoadAsset<GameObject>(temp.assetPath, (item) => {
+                GameObject target = GameObject.Instantiate(item);
+                target.transform.SetParent(parent);
+                temp.Init(target);
+                temp.Pop();
+                if (!mPopTarget.ContainsKey(temp.Type))
+                {
+                    mPopTarget.Add(temp.Type, new List<IGameObjectPoolTarget>());
+                }
+                mPopTarget[temp.Type].Add(temp);
+                successCallBack?.Invoke(temp);
+            });
+        }
+
+        /// <summary>
+        /// 生成对象
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <returns></returns>
         private static T SpawnTarget<T>(Transform parent) where T : class, IGameObjectPoolTarget, new()
         {
             T temp = new T();
@@ -71,7 +210,7 @@ namespace YFramework
             {
                 return default(T);
             }
-            GameObject target = GameObject.Instantiate(temp.Original);
+            GameObject target = ResourceHelper.LoadAsset<GameObject>(temp.assetPath);
             target.transform.SetParent(parent);
             temp.Init(target);
             temp.Pop();
@@ -167,6 +306,7 @@ namespace YFramework
                 Init();
             }
             if (target == null) return;
+            if (!target.IsPop) return;
             if (!mPoolDict.ContainsKey(target.Type))
             {
                 mPoolDict.Add(target.Type, new Stack<IGameObjectPoolTarget>());

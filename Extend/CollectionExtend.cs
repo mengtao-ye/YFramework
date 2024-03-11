@@ -10,6 +10,41 @@ namespace YFramework
     public static class CollectionExtend
     {
         /// <summary>
+        /// 遍历字典
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="action"></param>
+        /// <param name="value"></param>
+        public static void Foreach<TKey, TValue, T1, T2>(this IDictionary<TKey, TValue> dict, Action<TKey, TValue, T1, T2> action, T1 value, T2 value2)
+        {
+            if (dict.IsNullOrEmpty()) return;
+            IEnumerator<KeyValuePair<TKey, TValue>> enumerator = dict.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                if (action != null) action(enumerator.Current.Key, enumerator.Current.Value, value, value2);
+            }
+        }
+        /// <summary>
+        ///遍历字典
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="action"></param>
+        public static void Foreach<TKey, TValue, T>(this IDictionary<TKey, TValue> dict, Action<TKey, TValue, T> action, T value)
+        {
+            if (dict.IsNullOrEmpty()) return;
+            IEnumerator<KeyValuePair<TKey, TValue>> enumerator = dict.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                if (action != null) action(enumerator.Current.Key, enumerator.Current.Value, value);
+            }
+        }
+        /// <summary>
         ///遍历字典
         /// </summary>
         /// <typeparam name="TKey"></typeparam>

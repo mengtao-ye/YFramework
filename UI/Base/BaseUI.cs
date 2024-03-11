@@ -8,14 +8,14 @@ namespace YFramework
         protected RectTransform rectTransform { get; private set; }
         protected GameObject gameObject { get; private set; }
         public bool isShow { get { return gameObject.activeInHierarchy; } set { gameObject.SetActive(value); } }
-        public string uiName =>transform.name;
+        public string uiName => transform.name;
         public ICanvas mUICanvas { get; private set; }
         private bool mIsFirstShow;//是否是首次打开
         public BaseUI()
         {
 
         }
-        public BaseUI( Transform trans)
+        public BaseUI(Transform trans)
         {
             SetTrans(trans);
         }
@@ -23,7 +23,7 @@ namespace YFramework
         /// 设置UI的父对象
         /// </summary>
         /// <param name="trans"></param>
-         public void SetTrans(Transform trans)
+        public void SetTrans(Transform trans)
         {
             if (trans == null || trans.GetComponent<RectTransform>() == null)
             {
@@ -44,13 +44,13 @@ namespace YFramework
             {
                 return;
             }
-            gameObject.SetAvtiveExtend(true);
-            if (!mIsFirstShow) 
+            if (!mIsFirstShow)
             {
                 FirstShow();
                 mIsFirstShow = true;
             }
-            //transform.SetAsLastSibling();
+            gameObject.SetAvtiveExtend(true);
+
         }
         public virtual void Hide()
         {
@@ -77,7 +77,7 @@ namespace YFramework
         }
         public T GetComponent<T>() where T : Component
         {
-            if (transform.GetComponent<T>() != null) 
+            if (transform.GetComponent<T>() != null)
             {
                 return transform.GetComponent<T>();
             }
@@ -91,5 +91,6 @@ namespace YFramework
         public virtual void FixedUpdate() { }
         public virtual void LaterUpdate() { }
         public virtual void FirstShow() { }
+        public virtual void Refresh() { }
     }
 }

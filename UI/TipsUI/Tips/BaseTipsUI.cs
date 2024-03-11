@@ -10,11 +10,28 @@ namespace YFramework
         protected virtual HideAnimEnum HideAnim { get { return HideAnimEnum.None; } }
         protected virtual float ShowAnimTime { get { return 0.35f; } }
         protected virtual float HideAnimTime { get { return 0.35f; } }
+        public int tipType { get; private set;}//该界面的类型
         public BaseTipsUI() :base()
         {
 
         }
-
+        /// <summary>
+        /// 设置类型
+        /// </summary>
+        /// <param name="type"></param>
+        public void SetType(int type)
+        {
+            tipType = type;
+        }
+        /// <summary>
+        /// 根据类型来隐藏界面
+        /// </summary>
+        /// <param name="type"></param>
+        public void HideByType(int type)
+        {
+            if (tipType != 0 && tipType != type) return;
+            Hide();
+        }
         /// <summary>
         /// 设置提示面板
         /// </summary>

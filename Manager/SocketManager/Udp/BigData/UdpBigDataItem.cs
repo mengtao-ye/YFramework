@@ -3,7 +3,7 @@ using static YFramework.Utility;
 
 namespace YFramework
 {
-    public class UdpBigDataItem : IDataConverter
+    public class UdpBigDataItem : IPool,IDataConverter
     {
         public ushort index;//当前数据所处的下标
         public ushort lastIndex;//最后一个数据的下标
@@ -11,6 +11,8 @@ namespace YFramework
         public byte[] Data = null;
         public bool isReceiveCallBack;//请求方是否收到消息
         public int msgID;
+        public bool isPop { get; set ; }
+
         public UdpBigDataItem()
         {
 
@@ -24,6 +26,23 @@ namespace YFramework
             isReceiveCallBack = false;
             this.msgID = msgID;
         }
+
+
+        public void PopPool()
+        {
+            
+        }
+
+        public void PushPool()
+        {
+           
+        }
+
+        public void Recycle()
+        {
+            ClassPool<UdpBigDataItem>.Push(this);
+        }
+
         public byte[] ToBytes()
         {
             int len =12;

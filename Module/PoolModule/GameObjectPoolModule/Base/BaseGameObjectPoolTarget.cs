@@ -5,20 +5,18 @@ namespace YFramework
     /// <summary>
     /// 对象池基类
     /// </summary>
-    public abstract class BaseGameObjectPoolTarget<T> : IGameObjectPoolTarget where T : IGameObjectPoolTarget,new()
+    public abstract class BaseGameObjectPoolTarget<T> : IGameObjectPoolTarget where T : IGameObjectPoolTarget, new()
     {
         /// <summary>
         /// 游戏对象
         /// </summary>
-        public  GameObject Target { get; private set; }
+        public GameObject Target { get; private set; }
+
+        public Transform transform { get { return Target.transform; } }
         /// <summary>
         /// 类型ID
         /// </summary>
         public abstract int Type { get; }
-        /// <summary>
-        /// 元对象，非实例化对象
-        /// </summary>
-        public abstract GameObject Original { get; }
         /// <summary>
         /// 是否已经出栈了
         /// </summary>
@@ -27,6 +25,11 @@ namespace YFramework
         /// 实体对象ID
         /// </summary>
         public int ID { get; private set; }
+
+        /// <summary>
+        /// 资源地址
+        /// </summary>
+        public abstract string assetPath { get; }
 
         public IGameObjectPoolTarget Clone()
         {

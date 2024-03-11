@@ -5,51 +5,130 @@ using System.Text;
 
 namespace YFramework
 {
-    public partial class Utility 
+    public partial class Utility
     {
         public partial class FileTools
         {
             /// <summary>
-            /// 在数据头部写入数据
+            /// 修改文件内容
             /// </summary>
-            /// <param name="path">写入数据的地址</param>
-            /// <param name="data">写入的数据</param>
-            public static void AppendHeadWrite(string path, byte[] data)
+            /// <param name="path"></param>
+            /// <param name="startIndex"></param>
+            /// <param name="modifyBytes"></param>
+            public static void ModifySubBytes(string path, int startIndex, byte[] modifyBytes)
             {
-                if (string.IsNullOrEmpty(path) || data == null) return;
-                string dir = Path.GetDirectoryName(path);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
                 using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    byte[] tempData = null;
-                    using (BinaryReader br = new BinaryReader(fs))
+                    if (startIndex >= 0 && startIndex + modifyBytes.Length <= fs.Length)
                     {
-                        tempData = br.ReadBytes((int)fs.Length);
+                        byte[] buffer = new byte[fs.Length];
+                        // 将文件内容读取到字节数组中
+                        fs.Read(buffer, 0, buffer.Length);
+                        for (int i = startIndex; i < startIndex + modifyBytes.Length; i++)
+                        {
+                            buffer[i] = modifyBytes[i - startIndex];
+                        }
+                        // 重新设置文件大小为原有大小减去被删除的长度
+                        fs.SetLength(buffer.Length);
+                        fs.Seek(0, SeekOrigin.Begin);
+                        // 将更新后的字节数组写回文件
+                        fs.Write(buffer, 0, buffer.Length);
                     }
-                    byte[] datas = ByteTools.ConcatParam(BitConverter.GetBytes(data.Length), data, tempData);
-                    File.WriteAllBytes(path,datas);
+                }
+            }
+
+
+            /// <summary>
+            /// 插入文件内容到尾部
+            /// </summary>
+            /// <param name="filePath"></param>
+            /// <param name="startIndex"></param>
+            /// <param name="insert"></param>
+            public static void InsertToTailSubBytes(string filePath, byte[] insert)
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                {
+                    long startIndex = fs.Length;
+                    byte[] buffer = new byte[fs.Length + insert.Length];
+                    // 将文件内容读取到字节数组中
+                    fs.Read(buffer, 0, buffer.Length - insert.Length);
+                    for (long i = startIndex; i < startIndex + insert.Length; i++)
+                    {
+                        buffer[i] = insert[i - startIndex];
+                    }
+                    // 重新设置文件大小为原有大小减去被删除的长度
+                    fs.SetLength(buffer.Length);
+                    fs.Seek(0, SeekOrigin.Begin);
+                    // 将更新后的字节数组写回文件
+                    fs.Write(buffer, 0, buffer.Length);
+                }
+            }
+
+            /// <summary>
+            /// 插入文件内容
+            /// </summary>
+            /// <param name="filePath"></param>
+            /// <param name="startIndex"></param>
+            /// <param name="insert"></param>
+            public static void InsertSubBytes(string filePath, int startIndex, byte[] insert)
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                {
+                    if (startIndex >= 0 && startIndex <= fs.Length)
+                    {
+                        byte[] buffer = new byte[fs.Length + insert.Length];
+                        // 将文件内容读取到字节数组中
+                        fs.Read(buffer, 0, buffer.Length - insert.Length);
+                        for (int i = buffer.Length - 1; i >= buffer.Length - insert.Length; i--)
+                        {
+                            int index = i - insert.Length;
+                            if (index < 0) break;
+                            buffer[i] = buffer[index];
+                        }
+                        for (int i = startIndex; i < startIndex + insert.Length; i++)
+                        {
+                            buffer[i] = insert[i - startIndex];
+                        }
+                        // 重新设置文件大小为原有大小减去被删除的长度
+                        fs.SetLength(buffer.Length);
+                        fs.Seek(0, SeekOrigin.Begin);
+                        // 将更新后的字节数组写回文件
+                        fs.Write(buffer, 0, buffer.Length);
+                    }
                 }
             }
             /// <summary>
-            /// 写入数据
+            /// 删除文件内容
             /// </summary>
-            /// <param name="path">写入数据的地址</param>
-            /// <param name="data">写入的数据</param>
-            public static void AppendWrite(string path, byte[] data)
+            /// <param name="filePath"></param>
+            /// <param name="startIndex"></param>
+            /// <param name="lengthToDelete"></param>
+            public static void DeleteSubBytes(string filePath, int startIndex, int lengthToDelete)
             {
-                if (string.IsNullOrEmpty(path) || data == null) return;
-                string dir = Path.GetDirectoryName(path);
-                if (!Directory.Exists(dir))
+                using (FileStream fs = new FileStream(filePath, FileMode.Open))
                 {
-                    Directory.CreateDirectory(dir);
-                }
-                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate)) {
-                    using (BinaryWriter bw = new BinaryWriter(fs)) {
-                        bw.Seek((int)fs.Length, SeekOrigin.Begin);
-                        bw.Write(ByteTools.Concat( BitConverter.GetBytes(data.Length),data));
+                    if (startIndex >= 0 && startIndex + lengthToDelete <= fs.Length)
+                    {
+                        byte[] buffer = new byte[fs.Length];
+                        // 将文件内容读取到字节数组中
+                        fs.Read(buffer, 0, buffer.Length);
+                        for (int i = startIndex; i < startIndex + lengthToDelete; i++)
+                        {
+                            int index = i + lengthToDelete;
+                            if (index < fs.Length)
+                            {
+                                buffer[i] = buffer[i + lengthToDelete];
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        // 重新设置文件大小为原有大小减去被删除的长度
+                        fs.SetLength(fs.Length - lengthToDelete);
+                        fs.Seek(0, SeekOrigin.Begin);
+                        // 将更新后的字节数组写回文件
+                        fs.Write(buffer, 0, buffer.Length - lengthToDelete);
                     }
                 }
             }
@@ -73,22 +152,7 @@ namespace YFramework
                 }
                 return datas;
             }
-            /// <summary>
-            /// 写入数据
-            /// </summary>
-            /// <param name="path">写入数据的地址</param>
-            /// <param name="data">写入的数据</param>
-            public static void AppendWrite(string path, string content)
-            {
-                if (string.IsNullOrEmpty(path) || content == null) return;
-                string dir = Path.GetDirectoryName(path);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
 
-                File.AppendAllText(path,content);
-            }
             /// <summary>
             /// 写入数据,如果路径存在指定的文件则把指定的文件删除重新生成新的文件并写入
             /// </summary>
@@ -148,6 +212,17 @@ namespace YFramework
                 if (!File.Exists(path))
                 {
                     File.Create(path).Close();
+                }
+            }
+            /// <summary>
+            /// 强制删除
+            /// </summary>
+            /// <param name="path"></param>
+            public static void ForceDelete(string path)
+            {
+                if (path.IsNullOrEmpty()) return;
+                if (File.Exists(path)) {
+                    File.Delete(path);
                 }
             }
         }

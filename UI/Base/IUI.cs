@@ -2,7 +2,7 @@
 
 namespace YFramework
 {
-    public interface IUI:ILife
+    public interface IUI:ILife,IRefresh
     {
         #region Field
         bool isShow { get; }

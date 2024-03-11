@@ -12,6 +12,7 @@ namespace YFramework
         /// </summary>
         public static class ConverterDataTools
         {
+            #region ToBytes
             /// <summary>
             /// 将泛型对象转换成字节
             /// </summary>
@@ -51,6 +52,10 @@ namespace YFramework
                 byteList.Recycle();
                 return datas;
             }
+
+            #endregion
+            #region ToValue
+
             /// <summary>
             /// 将字节转换成泛型对象
             /// </summary>
@@ -58,10 +63,24 @@ namespace YFramework
             /// <param name="data"></param>
             /// <param name="startIndex"></param>
             /// <returns></returns>
-            public static T ToObject<T>(byte[] data,int startIndex=0) where T : IDataConverter, new()
+            public static T ToPoolObject<T>(byte[] data, int startIndex = 0) where T : class, IDataConverter, IPool, new()
+            {
+                T value = ClassPool<T>.Pop();
+                value.ToValue(ByteTools.SubBytes(data, startIndex));
+                return value;
+            }
+
+            /// <summary>
+            /// 将字节转换成泛型对象
+            /// </summary>
+            /// <typeparam name="T"></typeparam>
+            /// <param name="data"></param>
+            /// <param name="startIndex"></param>
+            /// <returns></returns>
+            public static T ToObject<T>(byte[] data, int startIndex = 0) where T : IDataConverter, new()
             {
                 T value = new T();
-                value.ToValue(ByteTools.SubBytes(data,startIndex) );
+                value.ToValue(ByteTools.SubBytes(data, startIndex));
                 return value;
             }
             /// <summary>
@@ -74,15 +93,39 @@ namespace YFramework
             public static IListData<T> ToListObject<T>(byte[] data, int startIndex = 0) where T : IDataConverter, new()
             {
                 if (data == null || data.Length == 0) return null;
-                IListData<T> byteList = ClassPool<ListData<T>>.Pop();
+                IListData<T> byteList = null;
                 IListData<byte[]> listBytes = ListTools.ToList(data, startIndex);
                 for (int i = 0; i < listBytes.Count; i++)
                 {
+                    if(byteList == null) byteList = ClassPool<ListData<T>>.Pop();
                     byteList.Add(ToObject<T>(listBytes[i]));
                 }
                 listBytes.Recycle();
                 return byteList;
             }
+
+            /// <summary>
+            /// 将字节转换成泛型数组
+            /// </summary>
+            /// <typeparam name="T"></typeparam>
+            /// <param name="data"></param>
+            /// <param name="startIndex"></param>
+            /// <returns></returns>
+            public static IListData<T> ToListPoolObject<T>(byte[] data, int startIndex = 0) where T :class, IDataConverter,IPool, new()
+            {
+                if (data == null || data.Length == 0) return null;
+                IListData<T> byteList = null;
+                IListData<byte[]> listBytes = ListTools.ToList(data, startIndex);
+                for (int i = 0; i < listBytes.Count; i++)
+                {
+                    if(byteList == null) byteList = ClassPool<ListData<T>>.Pop();
+                    T value = ToPoolObject<T>(listBytes[i]);
+                    byteList.Add(value);
+                }
+                listBytes.Recycle();
+                return byteList;
+            }
+            #endregion
         }
     }
 }

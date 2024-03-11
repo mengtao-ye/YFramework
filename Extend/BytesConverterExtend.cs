@@ -178,6 +178,16 @@ namespace YFramework
             return ConverterDataTools.ToListObject<T>(@this);
         }
         /// <summary>
+        /// 将字节数组转换成IListData<T> 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static IListData<T> ToListPoolBytes<T>(this byte[] @this) where T : class, IDataConverter, IPool, new()
+        {
+            return ConverterDataTools.ToListPoolObject<T>(@this);
+        }
+        /// <summary>
         /// 将字节数组转换成IListData<byte[]>
         /// </summary>
         /// <param name="this"></param>
@@ -212,7 +222,16 @@ namespace YFramework
         /// <returns></returns>
         public static long ToLong(this byte[] @this)
         {
-            return BitConverter.ToInt64(@this, 0);
+            return ToLong(@this,0) ;
+        }
+        /// <summary>
+        ///  将字节数组转换成long
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static long ToLong(this byte[] @this,int startIndex)
+        {
+            return BitConverter.ToInt64(@this, startIndex);
         }
         /// <summary>
         ///  将字节数组转换成long

@@ -9,7 +9,7 @@ namespace YFramework
     {
         int Type { get; }
         GameObject Target { get;  }
-        GameObject Original { get; }
+        string assetPath { get; }
         int ID { get;  }
         bool IsPop { get; }
         void Pop();
