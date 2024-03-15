@@ -9,8 +9,8 @@ namespace YFramework
     /// </summary>
     public static class GameObjectPoolModule
     {
-        private static Dictionary<int, Stack<IGameObjectPoolTarget>> mPoolDict;//存放对象池对象
-        private static Dictionary<int, List<IGameObjectPoolTarget>> mPopTarget;//存放已经弹出来的对象
+        private static Dictionary<string, Stack<IGameObjectPoolTarget>> mPoolDict;//存放对象池对象
+        private static Dictionary<string, List<IGameObjectPoolTarget>> mPopTarget;//存放已经弹出来的对象
         private static bool mIsInit = false;
         /// <summary>
         /// 初始化
@@ -18,8 +18,8 @@ namespace YFramework
         private static void Init()
         {
             mIsInit = true;
-            mPopTarget = new Dictionary<int, List<IGameObjectPoolTarget>>();
-            mPoolDict = new Dictionary<int, Stack<IGameObjectPoolTarget>>();
+            mPopTarget = new Dictionary<string, List<IGameObjectPoolTarget>>();
+            mPoolDict = new Dictionary<string, Stack<IGameObjectPoolTarget>>();
         }
 
         /// <summary>
@@ -29,20 +29,27 @@ namespace YFramework
         /// <param name="type"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public static void AsyncPop<T,T2>(int type, Transform parent, Action<T,T2> initSuccessCallBack,T2 value) where T : class, IGameObjectPoolTarget, new()
+
+        public static void AsyncPop<T,T2>( Transform parent, Action<T,T2> initSuccessCallBack,T2 value) where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
+
             if (!mIsInit)
             {
                 Init();
             }
-            if (!mPoolDict.ContainsKey(type) || mPoolDict[type].Count == 0)
+
+            if (!mPoolDict.ContainsKey(typeName) || mPoolDict[typeName].Count == 0)
+
             {
                 AsyncSpawnTarget<T,T2>(parent, initSuccessCallBack,value);
                 return;
             }
             else
             {
-                IGameObjectPoolTarget tempGo = mPoolDict[type].Pop();
+
+                IGameObjectPoolTarget tempGo = mPoolDict[typeName].Pop();
+
                 if (tempGo == null)
                 {
                     AsyncSpawnTarget<T,T2>(parent, initSuccessCallBack,value);
@@ -53,13 +60,15 @@ namespace YFramework
                     AsyncSpawnTarget<T,T2>(parent, initSuccessCallBack,value);
                     return;
                 }
-                tempGo.Target.transform.parent = parent;
+
+                tempGo.Target.transform.SetParent(parent, tempGo.isUI);
                 tempGo.Pop();
-                if (!mPopTarget.ContainsKey(tempGo.Type))
+                if (!mPopTarget.ContainsKey(typeName))
                 {
-                    mPopTarget.Add(tempGo.Type, new List<IGameObjectPoolTarget>());
+                    mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
                 }
-                mPopTarget[tempGo.Type].Add(tempGo);
+                mPopTarget[typeName].Add(tempGo);
+
                 initSuccessCallBack?.Invoke(tempGo as T,value);
             }
         }
@@ -71,20 +80,27 @@ namespace YFramework
         /// <param name="type"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public static void AsyncPop<T>(int type, Transform parent ,Action<T> initSuccessCallBack) where T : class, IGameObjectPoolTarget, new()
+
+        public static void AsyncPop<T>( Transform parent ,Action<T> initSuccessCallBack) where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
+
             if (!mIsInit)
             {
                 Init();
             }
-            if (!mPoolDict.ContainsKey(type) || mPoolDict[type].Count == 0)
+
+            if (!mPoolDict.ContainsKey(typeName) || mPoolDict[typeName].Count == 0)
+
             {
                 AsyncSpawnTarget<T>(parent, initSuccessCallBack);
                 return;
             }
             else
             {
-                IGameObjectPoolTarget tempGo = mPoolDict[type].Pop();
+
+                IGameObjectPoolTarget tempGo = mPoolDict[typeName].Pop();
+
                 if (tempGo == null)
                 {
                     AsyncSpawnTarget<T>(parent, initSuccessCallBack);
@@ -95,13 +111,15 @@ namespace YFramework
                     AsyncSpawnTarget<T>(parent, initSuccessCallBack);
                     return;
                 }
-                tempGo.Target.transform.parent = parent;
+
+                tempGo.Target.transform.SetParent(parent, tempGo.isUI);
                 tempGo.Pop();
-                if (!mPopTarget.ContainsKey(tempGo.Type))
+                if (!mPopTarget.ContainsKey(typeName))
                 {
-                    mPopTarget.Add(tempGo.Type, new List<IGameObjectPoolTarget>());
+                    mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
                 }
-                mPopTarget[tempGo.Type].Add(tempGo);
+                mPopTarget[typeName].Add(tempGo);
+
                 initSuccessCallBack?.Invoke( tempGo as T);
             }
         }
@@ -113,19 +131,20 @@ namespace YFramework
         /// <param name="type"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public static T Pop<T>(int type, Transform parent) where T : class, IGameObjectPoolTarget, new()
+        public static T Pop<T>( Transform parent) where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
             if (!mIsInit)
             {
                 Init();
             }
-            if (!mPoolDict.ContainsKey(type) || mPoolDict[type].Count == 0)
+            if (!mPoolDict.ContainsKey(typeName) || mPoolDict[typeName].Count == 0)
             {
                 return SpawnTarget<T>(parent);
             }
             else
             {
-                IGameObjectPoolTarget tempGo = mPoolDict[type].Pop();
+                IGameObjectPoolTarget tempGo = mPoolDict[typeName].Pop();
                 if (tempGo == null)
                 {
                     return SpawnTarget<T>(parent);
@@ -134,13 +153,13 @@ namespace YFramework
                 {
                     return SpawnTarget<T>(parent);
                 }
-                tempGo.Target.transform.parent = parent;
+                tempGo.Target.transform.SetParent(parent, tempGo.isUI);
                 tempGo.Pop();
-                if (!mPopTarget.ContainsKey(tempGo.Type))
+                if (!mPopTarget.ContainsKey(typeName))
                 {
-                    mPopTarget.Add(tempGo.Type, new List<IGameObjectPoolTarget>());
+                    mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
                 }
-                mPopTarget[tempGo.Type].Add(tempGo);
+                mPopTarget[typeName].Add(tempGo);
                 return tempGo as T;
             }
         }
@@ -152,6 +171,9 @@ namespace YFramework
         /// <returns></returns>
         private static void AsyncSpawnTarget<T,T2>(Transform parent, Action<T,T2> successCallBack,T2 value) where T : class, IGameObjectPoolTarget, new()
         {
+
+            string typeName = typeof(T).Name;
+
             T temp = new T();
             if (temp == null)
             {
@@ -159,14 +181,16 @@ namespace YFramework
             }
             ResourceHelper.AsyncLoadAsset<GameObject>(temp.assetPath, (item) => {
                 GameObject target = GameObject.Instantiate(item);
-                target.transform.SetParent(parent);
+
+                target.transform.SetParent(parent, temp.isUI);
                 temp.Init(target);
                 temp.Pop();
-                if (!mPopTarget.ContainsKey(temp.Type))
+                if (!mPopTarget.ContainsKey(typeName))
                 {
-                    mPopTarget.Add(temp.Type, new List<IGameObjectPoolTarget>());
+                    mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
                 }
-                mPopTarget[temp.Type].Add(temp);
+                mPopTarget[typeName].Add(temp);
+
                 successCallBack?.Invoke(temp,value);
             });
         }
@@ -178,6 +202,9 @@ namespace YFramework
         /// <returns></returns>
         private static void AsyncSpawnTarget<T>(Transform parent,Action<T> successCallBack) where T : class, IGameObjectPoolTarget, new()
         {
+
+            string typeName = typeof(T).Name;
+
             T temp = new T();
             if (temp == null)
             {
@@ -185,14 +212,16 @@ namespace YFramework
             }
             ResourceHelper.AsyncLoadAsset<GameObject>(temp.assetPath, (item) => {
                 GameObject target = GameObject.Instantiate(item);
-                target.transform.SetParent(parent);
+
+                target.transform.SetParent(parent, temp.isUI);
                 temp.Init(target);
                 temp.Pop();
-                if (!mPopTarget.ContainsKey(temp.Type))
+                if (!mPopTarget.ContainsKey(typeName))
                 {
-                    mPopTarget.Add(temp.Type, new List<IGameObjectPoolTarget>());
+                    mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
                 }
-                mPopTarget[temp.Type].Add(temp);
+                mPopTarget[typeName].Add(temp);
+
                 successCallBack?.Invoke(temp);
             });
         }
@@ -205,20 +234,23 @@ namespace YFramework
         /// <returns></returns>
         private static T SpawnTarget<T>(Transform parent) where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
             T temp = new T();
             if (temp == null)
             {
                 return default(T);
             }
             GameObject target = ResourceHelper.LoadAsset<GameObject>(temp.assetPath);
-            target.transform.SetParent(parent);
+
+            target =  GameObject.Instantiate(target,parent);
+
             temp.Init(target);
             temp.Pop();
-            if (!mPopTarget.ContainsKey(temp.Type))
+            if (!mPopTarget.ContainsKey(typeName))
             {
-                mPopTarget.Add(temp.Type, new List<IGameObjectPoolTarget>());
+                mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
             }
-            mPopTarget[temp.Type].Add(temp);
+            mPopTarget[typeName].Add(temp);
             return temp;
         }
         /// <summary>
@@ -226,42 +258,44 @@ namespace YFramework
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Stack<IGameObjectPoolTarget> Get(int type)
+        public static Stack<IGameObjectPoolTarget> Get<T>() where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
             if (!mIsInit)
             {
                 Init();
             }
-            if (!mPoolDict.ContainsKey(type))
+            if (!mPoolDict.ContainsKey(typeName))
             {
                 return null;
             }
-            return mPoolDict[type];
+            return mPoolDict[typeName];
         }
 
         /// <summary>
         /// 将指定类型全部放入栈中
         /// </summary>
         /// <param name="type"></param>
-        public static void PushTarget(int type,System.Predicate<IGameObjectPoolTarget> predicate)
+        public static void PushTarget<T>(System.Predicate<IGameObjectPoolTarget> predicate) where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
             if (!mIsInit)
             {
                 Init();
             }
-            if (mPopTarget.ContainsKey(type))
+            if (mPopTarget.ContainsKey(typeName))
             {
-                if (!mPoolDict.ContainsKey(type))
+                if (!mPoolDict.ContainsKey(typeName))
                 {
-                    mPoolDict.Add(type, new Stack<IGameObjectPoolTarget>());
+                    mPoolDict.Add(typeName, new Stack<IGameObjectPoolTarget>());
                 }
-                List<IGameObjectPoolTarget> targets = mPopTarget[type];
+                List<IGameObjectPoolTarget> targets = mPopTarget[typeName];
                 for (int i = 0; i < targets.Count; i++)
                 {
                     if (targets[i].IsPop && predicate(targets[i]) )
                     {
                         targets[i].Push();
-                        mPoolDict[type].Push(targets[i]);
+                        mPoolDict[typeName].Push(targets[i]);
                     }
                 }
             }
@@ -271,28 +305,29 @@ namespace YFramework
         /// 将指定类型全部放入栈中
         /// </summary>
         /// <param name="type"></param>
-        public static void PushTarget(int type)
+        public static void PushTarget<T>() where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
             if (!mIsInit)
             {
                 Init();
             }
-            if (mPopTarget.ContainsKey(type))
+            if (mPopTarget.ContainsKey(typeName))
             {
-                if (!mPoolDict.ContainsKey(type))
+                if (!mPoolDict.ContainsKey(typeName))
                 {
-                    mPoolDict.Add(type, new Stack<IGameObjectPoolTarget>());
+                    mPoolDict.Add(typeName, new Stack<IGameObjectPoolTarget>());
                 }
-                List<IGameObjectPoolTarget> targets = mPopTarget[type];
+                List<IGameObjectPoolTarget> targets = mPopTarget[typeName];
                 for (int i = 0; i < targets.Count; i++)
                 {
                     if (targets[i].IsPop)
                     {
                         targets[i].Push();
-                        mPoolDict[type].Push(targets[i]);
+                        mPoolDict[typeName].Push(targets[i]);
                     }
                 }
-                mPopTarget[type].Clear();
+                mPopTarget[typeName].Clear();
             }
         }
         /// <summary>
@@ -301,26 +336,29 @@ namespace YFramework
         /// <param name="target"></param>
         public static void Push(IGameObjectPoolTarget target)
         {
+            string typeName = target.GetType().Name;
             if (!mIsInit)
             {
                 Init();
             }
             if (target == null) return;
             if (!target.IsPop) return;
-            if (!mPoolDict.ContainsKey(target.Type))
+
+            if (!mPoolDict.ContainsKey(typeName))
+
             {
-                mPoolDict.Add(target.Type, new Stack<IGameObjectPoolTarget>());
+                mPoolDict.Add(typeName, new Stack<IGameObjectPoolTarget>());
             }
             target.Push();
-            mPoolDict[target.Type].Push(target);
-            if (mPopTarget.ContainsKey(target.Type))
+            mPoolDict[typeName].Push(target);
+            if (mPopTarget.ContainsKey(typeName))
             {
-                List<IGameObjectPoolTarget> targets = mPopTarget[target.Type];
+                List<IGameObjectPoolTarget> targets = mPopTarget[typeName];
                 for (int i = 0; i < targets.Count; i++)
                 {
                     if (targets[i] == target)
                     {
-                        mPopTarget[target.Type].RemoveAt(i);
+                        mPopTarget[typeName].RemoveAt(i);
                         break;
                     }
                 }
@@ -342,19 +380,20 @@ namespace YFramework
         /// 清除目标对象
         /// </summary>
         /// <param name="type"></param>
-        public static void ClearTarget(int type)
+        public static void ClearTarget<T>() where T : class, IGameObjectPoolTarget, new()
         {
+            string typeName = typeof(T).Name;
             if (!mIsInit)
             {
                 Init();
             }
-            if (mPoolDict.ContainsKey(type))
+            if (mPoolDict.ContainsKey(typeName))
             {
-                mPoolDict.Remove(type);
+                mPoolDict.Remove(typeName);
             }
-            if (mPopTarget.ContainsKey(type))
+            if (mPopTarget.ContainsKey(typeName))
             {
-                mPopTarget.Remove(type);
+                mPopTarget.Remove(typeName);
             }
         }
     }

@@ -5,9 +5,9 @@ namespace YFramework
     /// <summary>
     /// 对象池对象基类
     /// </summary>
-    public interface IGameObjectPoolTarget
+    public interface IGameObjectPoolTarget : IRecycle
     {
-        int Type { get; }
+        bool isUI { get; }
         GameObject Target { get;  }
         string assetPath { get; }
         int ID { get;  }

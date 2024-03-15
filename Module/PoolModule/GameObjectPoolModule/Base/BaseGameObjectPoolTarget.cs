@@ -14,10 +14,7 @@ namespace YFramework
 
         public Transform transform { get { return Target.transform; } }
         /// <summary>
-        /// 类型ID
-        /// </summary>
-        public abstract int Type { get; }
-        /// <summary>
+
         /// 是否已经出栈了
         /// </summary>
         public bool IsPop { get; private set; }
@@ -30,6 +27,12 @@ namespace YFramework
         /// 资源地址
         /// </summary>
         public abstract string assetPath { get; }
+
+        /// <summary>
+        /// 是否是UI对象
+        /// </summary>
+        public abstract bool isUI { get; }
+
 
         public IGameObjectPoolTarget Clone()
         {
@@ -70,5 +73,6 @@ namespace YFramework
         {
             ID = id;
         }
+        public abstract void Recycle();
     }
 }
