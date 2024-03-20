@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 namespace YFramework
 {
-    public partial class Utility {
+    public partial class Utility
+    {
         /// <summary>
         /// Http协议数据
         /// </summary>

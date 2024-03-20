@@ -21,7 +21,7 @@ namespace YFramework
         /// <summary>
         /// 实体对象ID
         /// </summary>
-        public int ID { get; private set; }
+        public long ID { get;  set; }
 
         /// <summary>
         /// 资源地址
@@ -32,7 +32,7 @@ namespace YFramework
         /// 是否是UI对象
         /// </summary>
         public abstract bool isUI { get; }
-
+        public bool isPop { get; set ; }
 
         public IGameObjectPoolTarget Clone()
         {
@@ -65,14 +65,9 @@ namespace YFramework
         /// 更新函数
         /// </summary>
         public virtual void Update() { }
-        /// <summary>
-        /// 设置实体对象ID
-        /// </summary>
-        /// <param name="id"></param>
-        public void SetID(int id)
-        {
-            ID = id;
-        }
+       
         public abstract void Recycle();
+        public virtual void PopPool() { }
+        public void PushPool()  {}
     }
 }
