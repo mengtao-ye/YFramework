@@ -42,10 +42,7 @@ namespace YFramework
         {
             mList.RemoveAt(index);
         }
-        public bool IsNullOrEmpty()
-        {
-            return mList.IsNullOrEmpty();
-        }
+        
         public virtual void PopPool()
         {
             isPop = true;

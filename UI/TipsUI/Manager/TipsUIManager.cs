@@ -105,7 +105,7 @@ namespace YFramework
                      mCurShowTipsUI.transform.parent = mTipsUIParent;
                      mCurShowTipsUI.transform.SetSiblingIndex(mTipsUIParent.childCount - 1);
                  }
-                 baseTipPanel.transform.parent = BG;
+                 baseTipPanel.transform.SetParent(BG,true);
                  baseTipPanel.Show();
                  mCurShowTipsUI = baseTipPanel;
                  action?.Invoke(mCurShowTipsUI as T);

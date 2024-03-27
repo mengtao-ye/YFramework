@@ -13,7 +13,6 @@ namespace YFramework
         int IndexOf(T item);
         void Insert(int index, T item);
         bool Remove(T item);
-        bool IsNullOrEmpty();
         void RemoveAt(int index);
     }
 }

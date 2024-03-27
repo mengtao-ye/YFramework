@@ -28,7 +28,6 @@ namespace YFramework
                 if (string.IsNullOrEmpty(url)) return;
                 if (mTempLoadImgDict.ContainsKey(url))
                 {
-
                     if (finish != null) finish.Invoke(mTempLoadImgDict[url],value);
                     return;
                 }

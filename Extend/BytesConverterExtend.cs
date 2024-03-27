@@ -173,9 +173,9 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static IListData<T> ToListBytes<T>(this byte[] @this) where T : IDataConverter, new()
+        public static IListData<T> ToListBytes<T>(this byte[] @this, int startIndex = 0) where T : IDataConverter, new()
         {
-            return ConverterDataTools.ToListObject<T>(@this);
+            return ConverterDataTools.ToListObject<T>(@this, startIndex);
         }
         /// <summary>
         /// 将字节数组转换成IListData<T> 
@@ -192,9 +192,9 @@ namespace YFramework
         /// </summary>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static IListData<byte[]> ToListBytes(this byte[] @this)
+        public static IListData<byte[]> ToListBytes(this byte[] @this,int startIndex = 0)
         {
-            return ListTools.ToList(@this);
+            return ListTools.ToList(@this, startIndex);
         }
 
         /// <summary>

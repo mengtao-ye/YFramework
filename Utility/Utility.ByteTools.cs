@@ -15,6 +15,7 @@ namespace YFramework
                 if (data == null) return null;
                 if (startIndex < 0) return null;
                 if (data.Length <= startIndex) return null;
+                if (startIndex == 0) return data;
                 byte[] temp = new byte[data.Length - startIndex];
                 for (int i = startIndex; i < data.Length; i++)
                 {

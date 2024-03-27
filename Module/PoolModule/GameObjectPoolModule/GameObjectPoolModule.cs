@@ -123,7 +123,6 @@ namespace YFramework
                 initSuccessCallBack?.Invoke( tempGo as T);
             }
         }
-
         /// <summary>
         /// 弹出对象池里面的对象
         /// </summary>
@@ -225,7 +224,7 @@ namespace YFramework
                 successCallBack?.Invoke(temp);
             });
         }
-
+       
         /// <summary>
         /// 生成对象
         /// </summary>
@@ -241,7 +240,6 @@ namespace YFramework
                 return default(T);
             }
             GameObject target = ResourceHelper.LoadAsset<GameObject>(temp.assetPath);
-
             target =  GameObject.Instantiate(target,parent);
 
             temp.Init(target);
