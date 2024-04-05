@@ -11,6 +11,14 @@ namespace YFramework
     public static class BytesConverterExtend
     {
         #region ToBytes
+        public static byte[] ToBytes(this IList<int> @this)
+        {
+            return ListTools.GetBytes(@this);
+        }
+        public static byte[] ToBytes(this IList<long> @this)
+        {
+            return ListTools.GetBytes(@this);
+        }
         /// <summary>
         /// 将字典转换成byte数组
         /// </summary>
@@ -196,7 +204,14 @@ namespace YFramework
         {
             return ListTools.ToList(@this, startIndex);
         }
-
+        public static IListData<long> ToListLong(this byte[] @this)
+        {
+            return ListTools.ToLongList(@this);
+        }
+        public static IListData<int> ToListInt(this byte[] @this)
+        {
+            return ListTools.ToIntList(@this);
+        }
         /// <summary>
         /// 将字节数组转换成IListData<byte[]>
         /// </summary>
@@ -294,7 +309,16 @@ namespace YFramework
         /// <returns></returns>
         public static bool ToBool(this byte[] @this)
         {
-            return @this[0] == 1;
+            return ToBool(@this,0);
+        }
+        /// <summary>
+        ///  将字节数组转换成bool
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static bool ToBool(this byte[] @this,int index)
+        {
+            return @this[index] == 1;
         }
         /// <summary>
         ///  将字节数组转换成string

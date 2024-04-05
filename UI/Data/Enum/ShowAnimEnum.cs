@@ -8,6 +8,6 @@
         RightToLeftPos,
         LeftToRightPos,
         TopToBottomPos,
-        BottmToTopPos
+        BottomToTopPos
     }
 }

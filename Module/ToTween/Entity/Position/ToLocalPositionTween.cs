@@ -6,7 +6,7 @@ namespace YFramework
     /// <summary>
     /// LocalPosition 的Tween
     /// </summary>
-    public class ToLocalPositionTween : BaseToTween
+    public class ToLocalPositionTween : BaseTransformToTween
     {
         private Vector3 mTargetPos;
         private Vector3 nNowPos;

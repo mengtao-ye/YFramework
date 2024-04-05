@@ -17,7 +17,7 @@ namespace YFramework
 
         /// 是否已经出栈了
         /// </summary>
-        public bool IsPop { get; private set; }
+        public bool GameObjectIsPop { get; private set; }
         /// <summary>
         /// 实体对象ID
         /// </summary>
@@ -32,7 +32,6 @@ namespace YFramework
         /// 是否是UI对象
         /// </summary>
         public abstract bool isUI { get; }
-        public bool isPop { get; set ; }
 
         public IGameObjectPoolTarget Clone()
         {
@@ -50,7 +49,7 @@ namespace YFramework
             {
                 Target.SetActive(true);
             }
-            IsPop = true;
+            GameObjectIsPop = true;
         }
 
         public virtual void Push()
@@ -59,15 +58,16 @@ namespace YFramework
             {
                 Target.SetActive(false);
             }
-            IsPop = false;
+            GameObjectIsPop = false;
         }
+        /// <summary>
+        /// 回收
+        /// </summary>
+        public abstract void Recycle();
+
         /// <summary>
         /// 更新函数
         /// </summary>
         public virtual void Update() { }
-       
-        public abstract void Recycle();
-        public virtual void PopPool() { }
-        public void PushPool()  {}
     }
 }

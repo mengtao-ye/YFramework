@@ -6,7 +6,7 @@ namespace YFramework
     {
         #region Field
         bool isShow { get; }
-        Transform transform { get; } 
+        RectTransform transform { get; } 
         string uiName { get; }
         ICanvas mUICanvas { get; }
         #endregion

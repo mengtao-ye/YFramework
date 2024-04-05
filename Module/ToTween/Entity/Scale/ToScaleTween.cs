@@ -3,7 +3,7 @@ using YFramework;
 
 namespace YFramework
 {
-    public class ToScaleTween : BaseToTween
+    public class ToScaleTween : BaseTransformToTween
     {
         private Vector3 mTargetScale;
         private Vector3 nNowScale;

@@ -224,7 +224,7 @@ namespace YFramework
             ITipsUI tempTipsUI = mTipsUIStack.Pop();
             tempTipsUI.Hide(() =>
             {
-                tempTipsUI.transform.parent = mTipsUIParent;
+                tempTipsUI.transform.SetParent(mTipsUIParent,true) ;
                 tempTipsUI.transform.SetSiblingIndex(0);
                 if (mTipsUIStack.Count == 0)
                 {
@@ -233,7 +233,7 @@ namespace YFramework
                 }
                 else
                 {
-                    mTipsUIStack.Peek().transform.parent = BG;
+                    mTipsUIStack.Peek().transform.SetParent(BG,true);
                     mCurShowTipsUI = mTipsUIStack.Peek();
                 }
             });

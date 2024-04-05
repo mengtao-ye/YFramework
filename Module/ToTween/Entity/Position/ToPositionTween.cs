@@ -3,7 +3,7 @@ using YFramework;
 
 namespace YFramework
 {
-    public class ToPositionTween : BaseToTween
+    public class ToPositionTween : BaseTransformToTween
     {
         private Vector3 mTargetPos;
         private Vector3 nNowPos;

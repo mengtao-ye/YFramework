@@ -4,7 +4,7 @@ namespace YFramework
 {
     public abstract class BaseUI : IUI
     {
-        public Transform transform { get; private set; }
+        public RectTransform transform { get; private set; }
         protected RectTransform rectTransform { get; private set; }
         protected GameObject gameObject { get; private set; }
         public bool isShow { get { return gameObject.activeInHierarchy; } set { gameObject.SetActive(value); } }
@@ -29,7 +29,7 @@ namespace YFramework
             {
                 return;
             }
-            transform = trans;
+            transform = trans.GetComponent<RectTransform>();
             gameObject = trans.gameObject;
             rectTransform = trans.GetComponent<RectTransform>();
         }

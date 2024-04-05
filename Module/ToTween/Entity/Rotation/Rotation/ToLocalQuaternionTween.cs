@@ -3,7 +3,7 @@ using YFramework;
 
 namespace YFramework
 {
-    public class ToLocalQuaternionTween : BaseToTween
+    public class ToLocalQuaternionTween : BaseTransformToTween
     {
         private Quaternion mTargetEuler;
         private Quaternion nNowEuler;

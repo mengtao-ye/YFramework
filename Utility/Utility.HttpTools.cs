@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace YFramework
@@ -13,6 +14,7 @@ namespace YFramework
         /// </summary>
         public static class HttpTools
         {
+            
             /// <summary>
             /// 缓存已经加载的Sprite资源
             /// </summary>
@@ -21,109 +23,105 @@ namespace YFramework
             /// 加载图片
             /// </summary>
             /// <param name="url"></param>
-            /// <param name="img"></param>
             /// <param name="finish"></param>
-            public static void LoadSprite<T>(string url, Action<Sprite,T> finish ,Action<string> error,T value)
+            /// <param name="error"></param>
+            public static void LoadSprite(string url, Action<Sprite> finish, Action<string> error)
             {
                 if (string.IsNullOrEmpty(url)) return;
                 if (mTempLoadImgDict.ContainsKey(url))
                 {
-                    if (finish != null) finish.Invoke(mTempLoadImgDict[url],value);
-                    return;
-                }
-                IEnumeratorModule.StartCoroutine(GetSprite(url, finish, error, value));
-            }
-
-            /// <summary>
-            /// 加载图片
-            /// </summary>
-            /// <param name="url"></param>
-            /// <param name="img"></param>
-            /// <param name="finish"></param>
-            public static void LoadSprite(string url, Action<Sprite> finish = null)
-            {
-                if (string.IsNullOrEmpty(url)) return;
-                if (mTempLoadImgDict.ContainsKey(url))
-                {
-
                     if (finish != null) finish.Invoke(mTempLoadImgDict[url]);
                     return;
                 }
-                IEnumeratorModule.StartCoroutine(GetSprite(url, finish));
+                IEnumeratorModule.StartCoroutine(IELoadSprite(url, finish, error));
             }
             /// <summary>
             /// 加载图片
             /// </summary>
             /// <param name="url"></param>
-            /// <param name="img"></param>
             /// <param name="finish"></param>
-            public static void LoadImage(string url, Image img, Action finish = null)
+            /// <param name="error"></param>
+            public static void LoadSprite<T>(string url, Action<Sprite,T> finish, Action<string> error,T value)
             {
-                if (string.IsNullOrEmpty(url) || img == null) return;
+                if (string.IsNullOrEmpty(url)) return;
                 if (mTempLoadImgDict.ContainsKey(url))
                 {
-                    img.sprite = mTempLoadImgDict[url];
-                    if (finish != null) finish.Invoke();
+                    if (finish != null) finish.Invoke(mTempLoadImgDict[url], value);
                     return;
                 }
-                IEnumeratorModule.StartCoroutine(GetImage(url, img, finish));
+                IEnumeratorModule.StartCoroutine(IELoadSprite(url, finish, error,value));
             }
-            private static IEnumerator GetSprite<T>(string url, Action<Sprite,T> finish,Action<string> fail,T value)
+            /// <summary>
+            /// 加载图片
+            /// </summary>
+            /// <param name="url"></param>
+            /// <param name="finish"></param>
+            /// <param name="error"></param>
+            public static void LoadSprite(string url, Action<Sprite> finish)
             {
-                WWW www = new WWW(url);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error))
+                if (string.IsNullOrEmpty(url)) return;
+                if (mTempLoadImgDict.ContainsKey(url))
                 {
-                    Texture2D tex = www.texture;
-                    Sprite temp = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0));
-                    if (!mTempLoadImgDict.ContainsKey(url))
-                    {
-                        mTempLoadImgDict.Add(url, temp);
-                    }
-                    if (finish != null) finish.Invoke(temp,value);
+                    if (finish != null) finish.Invoke(mTempLoadImgDict[url]);
+                    return;
                 }
-                else
+                IEnumeratorModule.StartCoroutine(IELoadSprite(url, finish, LoadSpriteError));
+            }
+            private static void LoadSpriteError(string error) {
+                LogHelper.LogError("Sprite下载异常:" + error);
+            }
+            private static IEnumerator IELoadSprite<T>(string url, Action<Sprite,T> finish, Action<string> error,T value)
+            {
+                using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url))
                 {
-                    if (fail != null) fail.Invoke(www.error);
+                    yield return uwr.SendWebRequest();
+
+                    if (uwr.result != UnityWebRequest.Result.Success)
+                    {
+                        error?.Invoke(uwr.error);
+                    }
+                    else
+                    {
+                        // 获取下载的纹理 (Texture)
+                        Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+
+                        // 将纹理转换为Sprite
+                        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
+
+                        // 使用Sprite，例如将其应用到一个GameObject上
+                        if (!mTempLoadImgDict.ContainsKey(url))
+                        {
+                            mTempLoadImgDict.Add(url, sprite);
+                        }
+                        if (finish != null) finish.Invoke(sprite,value);
+                    }
                 }
             }
-            private static IEnumerator GetSprite(string url, Action<Sprite> finish)
+            private static IEnumerator IELoadSprite(string url,  Action<Sprite> finish, Action<string> error)
             {
-                WWW www = new WWW(url);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error))
+                using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url))
                 {
-                    Texture2D tex = www.texture;
-                    Sprite temp = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0));
-                    if (!mTempLoadImgDict.ContainsKey(url))
+                    yield return uwr.SendWebRequest();
+
+                    if (uwr.result != UnityWebRequest.Result.Success)
                     {
-                        mTempLoadImgDict.Add(url, temp);
+                        error?.Invoke(uwr.error);
                     }
-                    if (finish != null) finish.Invoke(temp);
-                }
-                else
-                {
-                    if (finish != null) finish.Invoke(null);
-                }
-            }
-            private static IEnumerator GetImage(string url, Image img, Action finish)
-            {
-                WWW www = new WWW(url);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error))
-                {
-                    Texture2D tex = www.texture;
-                    Sprite temp = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0));
-                    img.sprite = temp; //设置的图片，显示从URL图片
-                    if (!mTempLoadImgDict.ContainsKey(url))
+                    else
                     {
-                        mTempLoadImgDict.Add(url, temp);
+                        // 获取下载的纹理 (Texture)
+                        Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+
+                        // 将纹理转换为Sprite
+                        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
+
+                        // 使用Sprite，例如将其应用到一个GameObject上
+                        if (!mTempLoadImgDict.ContainsKey(url))
+                        {
+                            mTempLoadImgDict.Add(url, sprite);
+                        }
+                        if (finish != null) finish.Invoke(sprite);
                     }
-                    if (finish != null) finish.Invoke();
-                }
-                else
-                {
-                    if (finish != null) finish.Invoke();
                 }
             }
         }

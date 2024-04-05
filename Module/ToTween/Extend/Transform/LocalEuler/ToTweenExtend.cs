@@ -27,22 +27,22 @@ namespace YFramework
         }
         #endregion
         #region IToTween
-        public static IToTween ToLocalEuler(this IToTween trans, Vector3 targetEuler, float time)
+        public static IToTween ToLocalEuler(this ITransformToTween trans, Vector3 targetEuler, float time)
         {
             ToLocalEulerTween tween = ClassPool<ToLocalEulerTween>.Pop();
             tween.SetEuler(targetEuler, trans.transform, time);
             trans.Concat(tween);
             return tween;
         }
-        public static IToTween ToLocalEulerX(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalEulerX(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalEuler(trans, new Vector3(targetEuler, trans.transform.localEulerAngles.y, trans.transform.localEulerAngles.z), time);
         }
-        public static IToTween ToLocalEulerY(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalEulerY(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalEuler(trans, new Vector3(trans.transform.localEulerAngles.x, targetEuler, trans.transform.localEulerAngles.z), time);
         }
-        public static IToTween ToLocalEulerZ(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalEulerZ(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalEuler(trans, new Vector3(trans.transform.localEulerAngles.x, trans.transform.localEulerAngles.y, targetEuler), time);
         } 

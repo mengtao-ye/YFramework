@@ -65,20 +65,20 @@ namespace YFramework
                     transform.ToScale(Vector3.one, ShowAnimTime);
                     break;
                 case ShowAnimEnum.RightToLeftPos:
-                    transform.position += new Vector3(Screen.width, 0, 0);
-                    transform.ToMoveX(transform.position.x - Screen.width, ShowAnimTime);
+                    transform.anchoredPosition = new Vector2(Screen.width, 0);
+                    transform.ToAnchorPositionMoveX(0, ShowAnimTime);
                     break;
                 case ShowAnimEnum.LeftToRightPos:
-                    transform.position -= new Vector3(Screen.width, 0, 0);
-                    transform.ToMoveX(transform.position.x + Screen.width, ShowAnimTime);
+                    transform.anchoredPosition = new Vector2(-Screen.width, 0);
+                    transform.ToAnchorPositionMoveX(0, ShowAnimTime);
                     break;
                 case ShowAnimEnum.TopToBottomPos:
-                    transform.position += new Vector3(0, Screen.height, 0);
-                    transform.ToMoveY(transform.position.y - Screen.height, ShowAnimTime);
+                    transform.anchoredPosition = new Vector3(0, Screen.height);
+                    transform.ToAnchorPositionMoveY(0, ShowAnimTime);
                     break;
-                case ShowAnimEnum.BottmToTopPos:
-                    transform.position -= new Vector3(0, Screen.height, 0);
-                    transform.ToMoveY(transform.position.y + Screen.height, ShowAnimTime);
+                case ShowAnimEnum.BottomToTopPos:
+                    transform.anchoredPosition = new Vector2(0, -Screen.height);
+                    transform.ToAnchorPositionMoveY(0, ShowAnimTime);
                     break;
             }
 
@@ -86,61 +86,73 @@ namespace YFramework
         public void Hide(Action finish)
         {
             if (!isShow) return;
-            if(mShowTipsPanel.curShowCount== 0) 
-               mShowTipsPanel.SetBGActive(false);
+        
             switch (HideAnim)
             {
                 case HideAnimEnum.NormalToZeroSize:
+                    transform.localScale = Vector3.one;
                     transform.ToScale(Vector3.zero, HideAnimTime )
                         .AddCompleteCallBack(() =>
                         {
                             base.Hide();
-                            finish();
+                            if (mShowTipsPanel.curShowCount == 0)
+                                mShowTipsPanel.SetBGActive(false);
+                            finish?.Invoke();
                         });
                     break;
                 case HideAnimEnum.RightToLeftPos:
-                    transform.ToMoveX(transform.position.x - Screen.width, HideAnimTime)
+                    transform.anchoredPosition = Vector2.zero;
+                    transform.ToAnchorPositionMoveX( - Screen.width, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
-                            transform.position += Vector3.right * Screen.width;
                             base.Hide();
-                            finish();
+                            if (mShowTipsPanel.curShowCount == 0)
+                                mShowTipsPanel.SetBGActive(false);
+                            finish?.Invoke();
                         })
                         ;
                     break;
                 case HideAnimEnum.LeftToRightPos:
-                    transform.ToMoveX(transform.position.x + Screen.width, HideAnimTime)
+                    transform.anchoredPosition = Vector2.zero;
+                    transform.ToAnchorPositionMoveX(Screen.width, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
-                            transform.position -= Vector3.right * Screen.width;
                             base.Hide();
-                            finish();
+                            if (mShowTipsPanel.curShowCount == 0)
+                                mShowTipsPanel.SetBGActive(false);
+                            finish?.Invoke();
                         })
                         ;
                     break;
                 case HideAnimEnum.TopToBottomPos:
-                    transform.ToMoveY(transform.position.y - Screen.height, HideAnimTime)
+                    transform.anchoredPosition = Vector2.zero;
+                    transform.ToAnchorPositionMoveY(- Screen.height, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
-                            transform.position += Vector3.up * Screen.height;
                             base.Hide();
-                            finish();
+                            if (mShowTipsPanel.curShowCount == 0)
+                                mShowTipsPanel.SetBGActive(false);
+                            finish?.Invoke();
                         })
                         ;
                     break;
                 case HideAnimEnum.BottmToTopPos:
-                    transform.ToMoveY(transform.position.y + Screen.height, HideAnimTime)
+                    transform.anchoredPosition = Vector2.zero;
+                    transform.ToAnchorPositionMoveY(Screen.height, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
-                            transform.position -= Vector3.up * Screen.height;
                             base.Hide();
-                            finish();
+                            if (mShowTipsPanel.curShowCount == 0)
+                                mShowTipsPanel.SetBGActive(false);
+                            finish?.Invoke();
                         })
                         ;
                     break;
                 case HideAnimEnum.None:
                     base.Hide();
                     finish();
+                    if (mShowTipsPanel.curShowCount == 0)
+                        mShowTipsPanel.SetBGActive(false);
                     break;
             }
         }

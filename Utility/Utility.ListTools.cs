@@ -7,6 +7,40 @@ namespace YFramework
     {
         public static class ListTools
         {
+
+            public static byte[] GetBytes(IList<long> data)
+            {
+                if (data.IsNullOrEmpty()) return null;
+                byte[] bytes = new byte[data.Count * 8];
+                byte[] temp = null;
+                int index = 0;
+                for (int i = 0; i < data.Count; i++)
+                {
+                    temp = data[i].ToBytes();
+                    for (int j = 0; j < temp.Length; j++)
+                    {
+                        bytes[index++] = temp[j];
+                    }
+                }
+                return bytes;
+            }
+            public static byte[] GetBytes(IList<int> data)
+            {
+                if (data.IsNullOrEmpty()) return null;
+                byte[] bytes = new byte[data.Count * 4];
+                byte[] temp = null;
+                int index = 0;
+                for (int i = 0; i < data.Count; i++)
+                {
+                    temp = data[i].ToBytes();
+                    for (int j = 0; j < temp.Length; j++)
+                    {
+                        bytes[index++] = temp[j];
+                    }
+                }
+                return bytes;
+            }
+
             public static byte[] GetBytes(IListData<string> data)
             {
                 if (data.IsNullOrEmpty()) return null;
@@ -138,6 +172,26 @@ namespace YFramework
                     }
                     data.Add(tempByte.ToStr());
                     i += length + 1;
+                }
+                return data;
+            }
+            public static IListData<long> ToLongList(byte[] bytes, int startIndex = 0)
+            {
+                if (bytes == null || bytes.Length == 0 || bytes.Length <= startIndex) return null;
+                IListData<long> data = ClassPool<ListData<long>>.Pop();
+                for (int i = startIndex; i < bytes.Length; i += 8)
+                {
+                    data.Add(bytes.ToLong(i));
+                }
+                return data;
+            }
+            public static IListData<int> ToIntList(byte[] bytes, int startIndex = 0)
+            {
+                if (bytes == null || bytes.Length == 0 || bytes.Length <= startIndex) return null;
+                IListData<int> data = ClassPool<ListData<int>>.Pop();
+                for (int i = startIndex; i < bytes.Length; i += 4)
+                {
+                    data.Add(bytes.ToInt(i));
                 }
                 return data;
             }

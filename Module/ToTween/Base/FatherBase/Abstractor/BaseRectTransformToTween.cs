@@ -6,7 +6,7 @@ namespace YFramework
     /// <summary>
     /// ToTween基类
     /// </summary>
-    public abstract class BaseToTween : IToTween
+    public abstract class BaseRectTransformToTween : IRectTransformToTween
     {
         /// <summary>
         /// 计时器
@@ -15,7 +15,7 @@ namespace YFramework
         /// <summary>
         /// 时间
         /// </summary>
-        protected float mTime { get; private set; }
+        protected float mTime { get;  set; }
         /// <summary>
         /// 完成时执行的回调
         /// </summary>
@@ -27,7 +27,7 @@ namespace YFramework
         /// <summary>
         /// 当前transform
         /// </summary>
-        public Transform transform { get; private set; }
+        public RectTransform rectTransform { get; private set; }
         /// <summary>
         /// 是否处于使用状态
         /// </summary>
@@ -49,10 +49,10 @@ namespace YFramework
         /// </summary>
         /// <param name="time"></param>
         /// <param name="transform"></param>
-        protected void SetBaseToTween(float time, Transform transform)
+        protected virtual void SetBaseToTween(float time, RectTransform transform)
         {
             mTime = time;
-            this.transform = transform;
+            this.rectTransform = transform;
         }
 
         #region 生命周期
@@ -87,7 +87,9 @@ namespace YFramework
         /// <summary>
         /// 用完后执行的方法
         /// </summary>
-        public virtual void PushPool() { }
+        public virtual void PushPool() {
+            complete = null;
+        }
         /// <summary>
         /// 完成执行的方法
         /// </summary>

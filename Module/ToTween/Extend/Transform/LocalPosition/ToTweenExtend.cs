@@ -53,48 +53,48 @@ namespace YFramework
         }
         #endregion
         #region IToTween
-        public static IToTween ToLocalMove(this IToTween trans, Vector3 targetPos, float time)
+        public static IToTween ToLocalMove(this ITransformToTween trans, Vector3 targetPos, float time)
         {
             ToLocalPositionTween tween = ClassPool<ToLocalPositionTween>.Pop();
             tween.SetPosition(targetPos, trans.transform, time);
             tween.Concat(tween);
             return tween;
         }
-        public static IToTween ToLocalMoveXY(this IToTween trans, float targetX, float targetY, float time)
+        public static IToTween ToLocalMoveXY(this ITransformToTween trans, float targetX, float targetY, float time)
         {
             return ToLocalMove(trans, new Vector3(targetX, targetY, trans.transform.localPosition.z), time);
         }
-        public static IToTween ToLocalMoveXY(this IToTween trans, Vector2 targetPos, float time)
+        public static IToTween ToLocalMoveXY(this ITransformToTween trans, Vector2 targetPos, float time)
         {
             return ToLocalMove(trans, new Vector3(targetPos.x, targetPos.y, trans.transform.localPosition.z), time);
         }
 
-        public static IToTween ToLocalMoveXZ(this IToTween trans, float targetX, float targetZ, float time)
+        public static IToTween ToLocalMoveXZ(this ITransformToTween trans, float targetX, float targetZ, float time)
         {
             return ToLocalMove(trans, new Vector3(targetX, trans.transform.localPosition.y, targetZ), time);
         }
-        public static IToTween ToLocalMoveXZ(this IToTween trans, Vector2 targetPos, float time)
+        public static IToTween ToLocalMoveXZ(this ITransformToTween trans, Vector2 targetPos, float time)
         {
             return ToLocalMove(trans, new Vector3(targetPos.x, trans.transform.localPosition.y, targetPos.y), time);
         }
 
-        public static IToTween ToLocalMoveYZ(this IToTween trans, float targetY, float targetZ, float time)
+        public static IToTween ToLocalMoveYZ(this ITransformToTween trans, float targetY, float targetZ, float time)
         {
             return ToLocalMove(trans, new Vector3(trans.transform.localPosition.x, targetY, targetZ), time);
         }
-        public static IToTween ToLocalMoveYZ(this IToTween trans, Vector2 targetPos, float time)
+        public static IToTween ToLocalMoveYZ(this ITransformToTween trans, Vector2 targetPos, float time)
         {
             return ToLocalMove(trans, new Vector3(trans.transform.localPosition.x, targetPos.x, targetPos.y), time);
         }
-        public static IToTween ToLocalMoveX(this IToTween trans, float targetX, float time)
+        public static IToTween ToLocalMoveX(this ITransformToTween trans, float targetX, float time)
         {
             return ToLocalMove(trans, new Vector3(targetX, trans.transform.localPosition.y, trans.transform.localPosition.z), time);
         }
-        public static IToTween ToLocalMoveY(this IToTween trans, float targetY, float time)
+        public static IToTween ToLocalMoveY(this ITransformToTween trans, float targetY, float time)
         {
             return ToLocalMove(trans, new Vector3(trans.transform.localPosition.x, targetY, trans.transform.localPosition.z), time);
         }
-        public static IToTween ToLocalMoveZ(this IToTween trans, float targetZ, float time)
+        public static IToTween ToLocalMoveZ(this ITransformToTween trans, float targetZ, float time)
         {
             return ToLocalMove(trans, new Vector3(trans.transform.localPosition.x, trans.transform.localPosition.y, targetZ), time);
         }

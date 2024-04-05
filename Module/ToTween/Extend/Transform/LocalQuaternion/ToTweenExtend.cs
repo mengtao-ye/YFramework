@@ -33,28 +33,28 @@ namespace YFramework
         } 
         #endregion
         #region IToTween
-        public static IToTween ToLocalQuaternion(this IToTween trans, Quaternion targetEuler, float time)
+        public static IToTween ToLocalQuaternion(this ITransformToTween trans, Quaternion targetEuler, float time)
         {
             ToLocalQuaternionTween tween = ClassPool<ToLocalQuaternionTween>.Pop();
             tween.SetEuler(targetEuler, trans.transform, time);
             trans.Concat(tween);
             return tween;
         }
-        public static IToTween ToLocalQuaternionX(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalQuaternionX(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalQuaternion(trans, new Quaternion(targetEuler, trans.transform.localRotation.y, trans.transform.localRotation.z, trans.transform.localRotation.w), time);
         }
 
-        public static IToTween ToLocalQuaternionY(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalQuaternionY(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalQuaternion(trans, new Quaternion(trans.transform.localRotation.x, targetEuler, trans.transform.localRotation.z, trans.transform.localRotation.w), time);
         }
 
-        public static IToTween ToLocalQuaternionZ(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalQuaternionZ(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalQuaternion(trans, new Quaternion(trans.transform.localRotation.x, trans.transform.localRotation.y, targetEuler, trans.transform.localRotation.w), time);
         }
-        public static IToTween ToLocalQuaternionW(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToLocalQuaternionW(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToLocalQuaternion(trans, new Quaternion(trans.transform.localRotation.x, trans.transform.localRotation.y, trans.transform.localRotation.z, targetEuler), time);
         }

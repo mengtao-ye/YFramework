@@ -3,7 +3,7 @@ using YFramework;
 
 namespace YFramework
 {
-    public class ToEulerTween : BaseToTween
+    public class ToEulerTween : BaseTransformToTween
     {
         private Vector3 mTargetEuler;
         private Vector3 nNowEuler;

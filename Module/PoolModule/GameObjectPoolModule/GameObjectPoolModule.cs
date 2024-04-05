@@ -119,7 +119,6 @@ namespace YFramework
                     mPopTarget.Add(typeName, new List<IGameObjectPoolTarget>());
                 }
                 mPopTarget[typeName].Add(tempGo);
-
                 initSuccessCallBack?.Invoke( tempGo as T);
             }
         }
@@ -290,7 +289,7 @@ namespace YFramework
                 List<IGameObjectPoolTarget> targets = mPopTarget[typeName];
                 for (int i = 0; i < targets.Count; i++)
                 {
-                    if (targets[i].IsPop && predicate(targets[i]) )
+                    if (targets[i].GameObjectIsPop && predicate(targets[i]) )
                     {
                         targets[i].Push();
                         mPoolDict[typeName].Push(targets[i]);
@@ -319,7 +318,7 @@ namespace YFramework
                 List<IGameObjectPoolTarget> targets = mPopTarget[typeName];
                 for (int i = 0; i < targets.Count; i++)
                 {
-                    if (targets[i].IsPop)
+                    if (targets[i].GameObjectIsPop)
                     {
                         targets[i].Push();
                         mPoolDict[typeName].Push(targets[i]);
@@ -334,13 +333,14 @@ namespace YFramework
         /// <param name="target"></param>
         public static void Push(IGameObjectPoolTarget target)
         {
+            if (target == null) return;
             string typeName = target.GetType().Name;
             if (!mIsInit)
             {
                 Init();
             }
             if (target == null) return;
-            if (!target.IsPop) return;
+            if (!target.GameObjectIsPop) return;
 
             if (!mPoolDict.ContainsKey(typeName))
 

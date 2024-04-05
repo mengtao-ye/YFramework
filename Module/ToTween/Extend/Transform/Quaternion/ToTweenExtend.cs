@@ -33,26 +33,26 @@ namespace YFramework
         #endregion
         #region IToTween
 
-        public static IToTween ToQuaternion(this IToTween trans, Quaternion targetEuler, float time)
+        public static IToTween ToQuaternion(this ITransformToTween trans, Quaternion targetEuler, float time)
         {
             ToQuaternionTween tween = ClassPool<ToQuaternionTween>.Pop();
             tween.SetEuler(targetEuler, trans.transform, time);
             trans.Concat(tween);
             return tween;
         }
-        public static IToTween ToQuaternionX(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToQuaternionX(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToQuaternion(trans, new Quaternion(targetEuler, trans.transform.rotation.y, trans.transform.rotation.z, trans.transform.rotation.w), time);
         }
-        public static IToTween ToQuaternionY(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToQuaternionY(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToQuaternion(trans, new Quaternion(trans.transform.rotation.x, targetEuler, trans.transform.rotation.z, trans.transform.rotation.w), time);
         }
-        public static IToTween ToQuaternionZ(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToQuaternionZ(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToQuaternion(trans, new Quaternion(trans.transform.rotation.x, trans.transform.rotation.y, targetEuler, trans.transform.rotation.w), time);
         }
-        public static IToTween ToQuaternionW(this IToTween trans, float targetEuler, float time)
+        public static IToTween ToQuaternionW(this ITransformToTween trans, float targetEuler, float time)
         {
             return ToQuaternion(trans, new Quaternion(trans.transform.rotation.x, trans.transform.rotation.y, trans.transform.rotation.y, targetEuler), time);
         }

@@ -21,8 +21,6 @@ namespace YFramework
         {
             return ToMove(trans, new Vector3(targetPos.x, targetPos.y, trans.position.z), time);
         }
-
-
         public static IToTween ToMoveXZ(this Transform trans, float targetX, float targetZ, float time)
         {
             return ToMove(trans, new Vector3(targetX, trans.position.y, targetZ), time);
@@ -56,49 +54,49 @@ namespace YFramework
         }
         #endregion
         #region IToTween
-        public static IToTween ToMove(this IToTween trans, Vector3 targetPos, float time)
+        public static IToTween ToMove(this ITransformToTween trans, Vector3 targetPos, float time)
         {
             ToPositionTween tween = ClassPool<ToPositionTween>.Pop();
             tween.SetPosition(targetPos, trans.transform, time);
             trans.Concat(tween);
             return tween;
         }
-        public static IToTween ToMoveXY(this IToTween trans, float targetX, float targetY, float time)
+        public static IToTween ToMoveXY(this ITransformToTween trans, float targetX, float targetY, float time)
         {
             return ToMove(trans, new Vector3(targetX, targetY, trans.transform.position.z), time);
         }
-        public static IToTween ToMoveXY(this IToTween trans, Vector2 targetPos, float time)
+        public static IToTween ToMoveXY(this ITransformToTween trans, Vector2 targetPos, float time)
         {
             return ToMove(trans, new Vector3(targetPos.x, targetPos.y, trans.transform.position.z), time);
         }
-        public static IToTween ToMoveXZ(this IToTween trans, float targetX, float targetZ, float time)
+        public static IToTween ToMoveXZ(this ITransformToTween trans, float targetX, float targetZ, float time)
         {
             return ToMove(trans, new Vector3(targetX, trans.transform.position.y, targetZ), time);
         }
-        public static IToTween ToMoveXZ(this IToTween trans, Vector2 targetPos, float time)
+        public static IToTween ToMoveXZ(this ITransformToTween trans, Vector2 targetPos, float time)
         {
             return ToMove(trans, new Vector3(targetPos.x, trans.transform.position.y, targetPos.y), time);
         }
 
-        public static IToTween ToMoveYZ(this IToTween trans, float targetY, float targetZ, float time)
+        public static IToTween ToMoveYZ(this ITransformToTween trans, float targetY, float targetZ, float time)
         {
             return ToMove(trans, new Vector3(trans.transform.position.x, targetY, targetZ), time);
         }
-        public static IToTween ToMoveYZ(this IToTween trans, Vector2 targetPos, float time)
+        public static IToTween ToMoveYZ(this ITransformToTween trans, Vector2 targetPos, float time)
         {
             return ToMove(trans, new Vector3(trans.transform.position.x, targetPos.x, targetPos.y), time);
         }
 
-        public static IToTween ToMoveX(this IToTween trans, float targetX, float time)
+        public static IToTween ToMoveX(this ITransformToTween trans, float targetX, float time)
         {
             return ToMove(trans, new Vector3(targetX, trans.transform.position.y, trans.transform.position.z), time);
         }
 
-        public static IToTween ToMoveY(this IToTween trans, float targetY, float time)
+        public static IToTween ToMoveY(this ITransformToTween trans, float targetY, float time)
         {
             return ToMove(trans, new Vector3(trans.transform.position.x, targetY, trans.transform.position.z), time);
         }
-        public static IToTween ToMoveZ(this IToTween trans, float targetZ, float time)
+        public static IToTween ToMoveZ(this ITransformToTween trans, float targetZ, float time)
         {
             return ToMove(trans, new Vector3(trans.transform.position.x, trans.transform.position.y, targetZ), time);
         }

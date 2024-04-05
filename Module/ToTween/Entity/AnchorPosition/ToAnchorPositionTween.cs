@@ -3,20 +3,20 @@ using YFramework;
 
 namespace YFramework
 {
-    public class ToQuaternionTween : BaseTransformToTween
+    public class ToAnchorPositionTween : BaseRectTransformToTween
     {
-        private Quaternion mTargetEuler;
-        private Quaternion nNowEuler;
+        private Vector2 mTargetPos;
+        private Vector2 nNowPos;
         private float mTempValue;
-        public void SetEuler(Quaternion targetEuler, Transform transform, float time)
+        public void SetPosition(Vector2 targetPos, RectTransform transform, float time)
         {
-            mTargetEuler = targetEuler;
-            SetBaseToTween( time, transform);
+            mTargetPos = targetPos;
+            SetBaseToTween(time,transform);
         }
         public override void Awake()
         {
             base.Awake();
-            nNowEuler = transform.rotation;
+            nNowPos = rectTransform.anchoredPosition;
         }
         public override void Update()
         {
@@ -35,16 +35,16 @@ namespace YFramework
                     mTempValue = Mathf.Lerp(mTimer, mTime, mTimer / mTime);
                     break;
             }
-            transform.rotation = Quaternion.Lerp(nNowEuler, mTargetEuler, mTempValue/ mTime);
+            rectTransform.anchoredPosition= Vector2.Lerp(nNowPos, mTargetPos, mTempValue/ mTime);
         }
         protected override void Finish()
         {
             base.Finish();
-            transform.rotation = mTargetEuler;
+            rectTransform.anchorMin= mTargetPos;
         }
         public override void Recycle()
         {
-            ClassPool<ToQuaternionTween>.Push(this);
+            ClassPool<ToAnchorPositionTween>.Push(this);
         }
     }
 }

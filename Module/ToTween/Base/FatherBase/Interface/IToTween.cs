@@ -13,10 +13,7 @@ namespace YFramework
         /// 是否处于运行状态
         /// </summary>
         bool isRun { get;  }
-        /// <summary>
-        /// 当前Transform
-        /// </summary>
-        Transform transform { get; }
+ 
         /// <summary>
         /// 曲线类型
         /// </summary>
