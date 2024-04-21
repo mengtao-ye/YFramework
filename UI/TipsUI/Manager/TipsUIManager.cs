@@ -40,9 +40,9 @@ namespace YFramework
             mTipsUIStack = new Stack<ITipsUI>();
             mAllTipsUI = new List<ITipsUI>();
             mTempTipsUI = new Stack<ITipsUI>();
-            if (transform.Find("BG") != null)
+            if (rectTransform.Find("BG") != null)
             {
-                BG = transform.Find("BG");
+                BG = rectTransform.Find("BG");
                 BG.SetSiblingIndex(1);
                 BG.gameObject.SetActive(false);
             }
@@ -50,9 +50,9 @@ namespace YFramework
             {
                 Debug.LogError("ShowTipsUI下面没有BG面板！");
             }
-            if (transform.Find("TipsPanel") != null)
+            if (rectTransform.Find("TipsPanel") != null)
             {
-                mTipsUIParent = transform.Find("TipsPanel");
+                mTipsUIParent = rectTransform.Find("TipsPanel");
                 mTipsUIParent.SetSiblingIndex(0);
             }
             else
@@ -102,10 +102,10 @@ namespace YFramework
                  }
                  if (mCurShowTipsUI != null)
                  {
-                     mCurShowTipsUI.transform.parent = mTipsUIParent;
-                     mCurShowTipsUI.transform.SetSiblingIndex(mTipsUIParent.childCount - 1);
+                     mCurShowTipsUI.rectTransform.parent = mTipsUIParent;
+                     mCurShowTipsUI.rectTransform.SetSiblingIndex(mTipsUIParent.childCount - 1);
                  }
-                 baseTipPanel.transform.SetParent(BG,true);
+                 baseTipPanel.rectTransform.SetParent(BG,true);
                  baseTipPanel.Show();
                  mCurShowTipsUI = baseTipPanel;
                  action?.Invoke(mCurShowTipsUI as T);
@@ -224,8 +224,8 @@ namespace YFramework
             ITipsUI tempTipsUI = mTipsUIStack.Pop();
             tempTipsUI.Hide(() =>
             {
-                tempTipsUI.transform.SetParent(mTipsUIParent,true) ;
-                tempTipsUI.transform.SetSiblingIndex(0);
+                tempTipsUI.rectTransform.SetParent(mTipsUIParent,true) ;
+                tempTipsUI.rectTransform.SetSiblingIndex(0);
                 if (mTipsUIStack.Count == 0)
                 {
                     mCurShowTipsUI = null;
@@ -233,7 +233,7 @@ namespace YFramework
                 }
                 else
                 {
-                    mTipsUIStack.Peek().transform.SetParent(BG,true);
+                    mTipsUIStack.Peek().rectTransform.SetParent(BG,true);
                     mCurShowTipsUI = mTipsUIStack.Peek();
                 }
             });
@@ -275,7 +275,7 @@ namespace YFramework
                 target = GameObject.Instantiate(target, mTipsUIParent);
                 panel.SetCanvas(mUICanvas);
                 panel.SetTrans(target.transform);
-                panel.transform.Reset();
+                panel.rectTransform.Reset();
                 panel.Awake();
                 panel.Start();
                 action?.Invoke(panel);

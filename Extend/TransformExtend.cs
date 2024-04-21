@@ -4,6 +4,12 @@ namespace YFramework
 {
     public static class TransformExtend
     {
+        public static T AddComponent<T>(this Transform trans) where T : Component
+        {
+            if (trans == null ) return null;
+            return trans.gameObject.AddComponent<T>();
+        }
+
         /// <summary>
         /// 查找对象
         /// </summary>

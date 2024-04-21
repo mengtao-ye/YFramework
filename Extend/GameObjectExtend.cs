@@ -70,6 +70,17 @@ namespace YFramework
             go.SetActive(active);
         }
         /// <summary>
+        /// 设置物体的显示
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="active"></param>
+        public static void SetAvtiveHideAndShow(this GameObject go)
+        {
+            if (go == null) return;
+            go.SetActive(false);
+            go.SetActive(true);
+        }
+        /// <summary>
         /// 反转Active状态
         /// </summary>
         public static void ReversalActive(this GameObject go) {

@@ -94,7 +94,7 @@ namespace YFramework
             T panel = new T();
             panel.SetLogUIManager(this);
             ResourceHelper.AsyncLoadAsset<GameObject>(mUICanvas.UIMap.Get(typeof(T).Name).assetPath,(target)=> {
-                target = GameObject.Instantiate(target, transform);
+                target = GameObject.Instantiate(target, rectTransform);
                 panel.SetCanvas(mUICanvas);
                 panel.SetTrans(target.transform);
                 panel.Awake();

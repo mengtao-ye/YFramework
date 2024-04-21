@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 namespace YFramework
 {
-    public partial class Utility {
+    public partial class Utility 
+    {
         /// <summary>
         /// UI工具
         /// </summary>
-        public static class UITools
+        public partial  class UITools
         {
             /// <summary>
             /// 设置为全屏状态

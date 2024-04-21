@@ -282,7 +282,17 @@ namespace YFramework
         /// <returns></returns>
         public static short ToShort(this byte[] @this)
         {
-            return BitConverter.ToInt16(@this, 0);
+            return ToShort(@this,0);
+        }
+
+        /// <summary>
+        ///  将字节数组转换成short
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static short ToShort(this byte[] @this,int startIndex)
+        {
+            return BitConverter.ToInt16(@this, startIndex);
         }
         /// <summary>
         ///  将字节数组转换成ushort

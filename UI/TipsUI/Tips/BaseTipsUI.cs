@@ -65,20 +65,20 @@ namespace YFramework
                     transform.ToScale(Vector3.one, ShowAnimTime);
                     break;
                 case ShowAnimEnum.RightToLeftPos:
-                    transform.anchoredPosition = new Vector2(Screen.width, 0);
-                    transform.ToAnchorPositionMoveX(0, ShowAnimTime);
+                    rectTransform.anchoredPosition = new Vector2(Screen.width, 0);
+                    rectTransform.ToAnchorPositionMoveX(0, ShowAnimTime);
                     break;
                 case ShowAnimEnum.LeftToRightPos:
-                    transform.anchoredPosition = new Vector2(-Screen.width, 0);
-                    transform.ToAnchorPositionMoveX(0, ShowAnimTime);
+                    rectTransform.anchoredPosition = new Vector2(-Screen.width, 0);
+                    rectTransform.ToAnchorPositionMoveX(0, ShowAnimTime);
                     break;
                 case ShowAnimEnum.TopToBottomPos:
-                    transform.anchoredPosition = new Vector3(0, Screen.height);
-                    transform.ToAnchorPositionMoveY(0, ShowAnimTime);
+                    rectTransform.anchoredPosition = new Vector3(0, Screen.height);
+                    rectTransform.ToAnchorPositionMoveY(0, ShowAnimTime);
                     break;
                 case ShowAnimEnum.BottomToTopPos:
-                    transform.anchoredPosition = new Vector2(0, -Screen.height);
-                    transform.ToAnchorPositionMoveY(0, ShowAnimTime);
+                    rectTransform.anchoredPosition = new Vector2(0, -Screen.height);
+                    rectTransform.ToAnchorPositionMoveY(0, ShowAnimTime);
                     break;
             }
 
@@ -101,8 +101,8 @@ namespace YFramework
                         });
                     break;
                 case HideAnimEnum.RightToLeftPos:
-                    transform.anchoredPosition = Vector2.zero;
-                    transform.ToAnchorPositionMoveX( - Screen.width, HideAnimTime)
+                    rectTransform.anchoredPosition = Vector2.zero;
+                    rectTransform.ToAnchorPositionMoveX( - Screen.width, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
                             base.Hide();
@@ -113,8 +113,8 @@ namespace YFramework
                         ;
                     break;
                 case HideAnimEnum.LeftToRightPos:
-                    transform.anchoredPosition = Vector2.zero;
-                    transform.ToAnchorPositionMoveX(Screen.width, HideAnimTime)
+                    rectTransform.anchoredPosition = Vector2.zero;
+                    rectTransform.ToAnchorPositionMoveX(Screen.width, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
                             base.Hide();
@@ -125,8 +125,8 @@ namespace YFramework
                         ;
                     break;
                 case HideAnimEnum.TopToBottomPos:
-                    transform.anchoredPosition = Vector2.zero;
-                    transform.ToAnchorPositionMoveY(- Screen.height, HideAnimTime)
+                    rectTransform.anchoredPosition = Vector2.zero;
+                    rectTransform.ToAnchorPositionMoveY(- Screen.height, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
                             base.Hide();
@@ -137,8 +137,8 @@ namespace YFramework
                         ;
                     break;
                 case HideAnimEnum.BottmToTopPos:
-                    transform.anchoredPosition = Vector2.zero;
-                    transform.ToAnchorPositionMoveY(Screen.height, HideAnimTime)
+                    rectTransform.anchoredPosition = Vector2.zero;
+                    rectTransform.ToAnchorPositionMoveY(Screen.height, HideAnimTime)
                         .AddCompleteCallBack(() =>
                         {
                             base.Hide();

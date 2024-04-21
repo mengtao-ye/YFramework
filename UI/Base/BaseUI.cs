@@ -4,11 +4,11 @@ namespace YFramework
 {
     public abstract class BaseUI : IUI
     {
-        public RectTransform transform { get; private set; }
-        protected RectTransform rectTransform { get; private set; }
+        public RectTransform rectTransform { get; private set; }
+        public Transform transform { get { return rectTransform; } }
         protected GameObject gameObject { get; private set; }
         public bool isShow { get { return gameObject.activeInHierarchy; } set { gameObject.SetActive(value); } }
-        public string uiName => transform.name;
+        public string uiName => rectTransform.name;
         public ICanvas mUICanvas { get; private set; }
         private bool mIsFirstShow;//是否是首次打开
         public BaseUI()
@@ -29,7 +29,6 @@ namespace YFramework
             {
                 return;
             }
-            transform = trans.GetComponent<RectTransform>();
             gameObject = trans.gameObject;
             rectTransform = trans.GetComponent<RectTransform>();
         }
@@ -77,9 +76,9 @@ namespace YFramework
         }
         public T GetComponent<T>() where T : Component
         {
-            if (transform.GetComponent<T>() != null)
+            if (rectTransform.GetComponent<T>() != null)
             {
-                return transform.GetComponent<T>();
+                return rectTransform.GetComponent<T>();
             }
             return null;
         }
