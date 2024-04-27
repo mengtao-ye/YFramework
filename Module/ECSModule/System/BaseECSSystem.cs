@@ -2,13 +2,13 @@
 
 namespace YFramework
 {
-    public abstract class BaseECSSystem<T> : IECSSystem where T : IECSEntity
+    public abstract class BaseECSSystem : IECSSystem 
     {
-        protected List<T> mEntity;
-        public List<T> entitys { get { return mEntity; } }
+        protected List<IECSEntity> mEntity;
+        public List<IECSEntity> entitys { get { return mEntity; } }
         public BaseECSSystem()
         {
-            mEntity =new List<T>();
+            mEntity =new List<IECSEntity>();
         }
         public virtual void Awake(){}
         public virtual void Start(){}
@@ -46,16 +46,20 @@ namespace YFramework
         /// 移除实体
         /// </summary>
         /// <param name="entity"></param>
-        public void RemoveEntity(T entity)
+        public void RemoveEntity(IECSEntity entity)
         {
+            if (entity == null) return;
             if (mEntity.Contains(entity))
+            {
+                entity.OnDestory();
                 mEntity.Remove(entity);
+            }
         }
         /// <summary>
         /// 添加实体
         /// </summary>
         /// <param name="entity"></param>
-        public void AddEntity(T entity)
+        public void AddEntity(IECSEntity entity)
         {
             if (entity == null)
             {
@@ -72,14 +76,13 @@ namespace YFramework
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T FindEntity(int id)
+        public IECSEntity FindEntity(long id)
         {
             for (int i = 0; i < mEntity.Count; i++)
             {
                 if (mEntity[i].ID == id) return mEntity[i];
             }
-            return default(T) ;
+            return default(IECSEntity) ;
         }
-       
     }
 }

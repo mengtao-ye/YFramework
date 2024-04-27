@@ -17,8 +17,10 @@
         public virtual void LaterUpdate(){ }
         public virtual void Clear(){}
         public virtual void OnDestory() {}
-       
-        public abstract void SetData(byte[] data);
+
+        public virtual void SetData(byte[] data) { }
+        public virtual byte[] GetData() { return null; }
+
         public void SetEntity(IECSEntity entity)
         {
             this.entity = entity;

@@ -210,7 +210,6 @@ namespace YFramework
             }
             ResourceHelper.AsyncLoadAsset<GameObject>(temp.assetPath, (item) => {
                 GameObject target = GameObject.Instantiate(item);
-
                 target.transform.SetParent(parent, temp.isUI);
                 temp.Init(target);
                 temp.Pop();
@@ -339,11 +338,8 @@ namespace YFramework
             {
                 Init();
             }
-            if (target == null) return;
             if (!target.GameObjectIsPop) return;
-
             if (!mPoolDict.ContainsKey(typeName))
-
             {
                 mPoolDict.Add(typeName, new Stack<IGameObjectPoolTarget>());
             }

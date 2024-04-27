@@ -11,11 +11,15 @@ namespace YFramework
         /// <summary>
         /// 唯一标识符
         /// </summary>
-        int ID { get; }
+        long ID { get; }
         /// <summary>
         /// 目标对象
         /// </summary>
         GameObject gameObject { get; }
+        /// <summary>
+        /// 目标对象
+        /// </summary>
+        Transform transform { get{ return gameObject.transform; } }
         /// <summary>
         /// 设置实体数据
         /// </summary>
@@ -31,6 +35,12 @@ namespace YFramework
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        IECSComponent FindComponent(int type);
+        IECSComponent GetComponent(int type);
+        /// <summary>
+        /// 查找组件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        T GetComponent<T>() where T : class, IECSComponent;
     }
 }

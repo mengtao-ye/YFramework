@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace YFramework
 {
-    public abstract class BaseECSEntity<TComponent> : IECSEntity where TComponent:IECSComponent
+    public abstract class BaseECSEntity: IECSEntity 
     {
-        private List<TComponent> mComponentList;
-        public int ID { get; private set; } = 0;
+        private List<IECSComponent> mComponentList;
+        public long ID { get; private set; } = 0;
         public IECSSystem system { get; private set; }
         public GameObject gameObject { get; private set; }
-        public BaseECSEntity(int id,GameObject target)
+        public BaseECSEntity(long id,GameObject target)
         {
             Init();
             SetID(id);
@@ -30,18 +30,23 @@ namespace YFramework
             }
         }
         public virtual void LaterUpdate() { }
-        public virtual void OnDestory() { }
+        public virtual void OnDestory() {
+            for (int i = 0; i < mComponentList.Count; i++)
+            {
+                mComponentList[i].OnDestory();
+            }
+        }
         public virtual void Clear() { }
         private void Init()
         {
-            mComponentList = new List<TComponent>();
+            mComponentList = new List<IECSComponent>();
         }
 
         /// <summary>
         /// 移除实体
         /// </summary>
         /// <param name="entity"></param>
-        public void Remove(TComponent entity)
+        public void Remove(IECSComponent entity)
         {
             if (entity == null)
             {
@@ -56,7 +61,7 @@ namespace YFramework
         /// 添加实体
         /// </summary>
         /// <param name="entity"></param>
-        public void AddComponent(TComponent entity)
+        public void AddComponent(IECSComponent entity)
         {
             if (entity == null)
             {
@@ -71,7 +76,7 @@ namespace YFramework
         /// 设置标识符
         /// </summary>
         /// <param name="id"></param>
-        public void SetID(int id)
+        public void SetID(long id)
         {
             ID = id;
         }
@@ -80,7 +85,7 @@ namespace YFramework
         /// </summary>
         /// <param name="data"></param>
         public abstract void SetData(byte[] data);
-        public IECSComponent FindComponent(int type) 
+        public IECSComponent GetComponent(int type) 
         {
             for (int i = 0; i < mComponentList.Count; i++)
             {
@@ -91,6 +96,19 @@ namespace YFramework
             }
             return null;
         }
+
+        public T GetComponent<T>() where T : class, IECSComponent
+        {
+            for (int i = 0; i < mComponentList.Count; i++)
+            {
+                if (mComponentList[i].GetType().Name == typeof(T).Name)
+                {
+                    return mComponentList[i] as T;
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// 设置系统
         /// </summary>

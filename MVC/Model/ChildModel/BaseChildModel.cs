@@ -32,14 +32,12 @@ namespace YFramework
             mModel = model;
             mGameObject = target;
         }
-        #region 生命周期
+
         public virtual void Awake() { }
         public virtual void Start() { }
         public virtual void Update() { }
-        public virtual void OnDestory() { }
-        public virtual void Clear() { }
         public virtual void FixedUpdate() { }
-        public virtual void LaterUpdate() { } 
-        #endregion
+        public virtual void LaterUpdate() { }
+        public virtual void OnDestory() { }
     }
 }
