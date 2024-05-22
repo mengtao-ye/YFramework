@@ -102,7 +102,7 @@ namespace YFramework
                  }
                  if (mCurShowTipsUI != null)
                  {
-                     mCurShowTipsUI.rectTransform.parent = mTipsUIParent;
+                     mCurShowTipsUI.rectTransform.SetParent(mTipsUIParent,true);
                      mCurShowTipsUI.rectTransform.SetSiblingIndex(mTipsUIParent.childCount - 1);
                  }
                  baseTipPanel.rectTransform.SetParent(BG,true);

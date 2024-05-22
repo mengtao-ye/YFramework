@@ -42,5 +42,10 @@ namespace YFramework
         /// <param name="type"></param>
         /// <returns></returns>
         T GetComponent<T>() where T : class, IECSComponent;
+        /// <summary>
+        /// 添加组件
+        /// </summary>
+        /// <param name="entity"></param>
+        void AddComponent(IECSComponent entity);
     }
 }

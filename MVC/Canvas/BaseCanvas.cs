@@ -41,7 +41,7 @@ namespace YFramework
         protected virtual byte mLayerCount { get { return (byte)CanvasLayerData.LAYER_COUNT; } }
         private RectTransform[] mLayerTrans;
         public IMap<string, UIMapperData> UIMap { get; private set; }
-        private IPanel mCurPanel;//当前显示的面板
+        public IPanel curPanel { get; private set; }//当前显示的面板
         private Stack<IPanel> mTempStackPanel;//临时面板
         private List<IPanel> mClosePanel;//关闭的面板
         public BaseCanvas(IScene scene, IMap<string, UIMapperData> map) : base()
@@ -184,7 +184,7 @@ namespace YFramework
 
         public override void Update()
         {
-            if (mCurPanel != null) mCurPanel.Update();
+            if (curPanel != null) curPanel.Update();
         }
         public override void OnDestory()
         {
@@ -215,9 +215,9 @@ namespace YFramework
             T tempPanel = null;
             if (IsExist<T>()) //如果需要显示的界面在列表中的话
             {
-                if (mCurPanel.GetType().Name == typeof(T).Name)
+                if (curPanel.GetType().Name == typeof(T).Name)
                 {
-                    callBack?.Invoke(mCurPanel as T);
+                    callBack?.Invoke(curPanel as T);
                     return;
                 }
                 tempPanel = SetTopPanel<T>();
@@ -226,7 +226,7 @@ namespace YFramework
             }
             else
             {
-                SpawnPanel<T>(
+                AsyncSpawnPanel<T>(
                 (panel) =>
                 {
                     tempPanel = panel;
@@ -234,11 +234,11 @@ namespace YFramework
                     {
                         AddPanel(tempPanel);
                     }
-                    if (mCurPanel != null)
+                    if (curPanel != null)
                     {
-                        mCurPanel.Hide();
+                        curPanel.Hide();
                     }
-                    mCurPanel = tempPanel;
+                    curPanel = tempPanel;
                     tempPanel.Show();
                     tempPanel.transform.SetAsLastSibling();
                     callBack?.Invoke(tempPanel);
@@ -397,12 +397,12 @@ namespace YFramework
             return true;
         }
         /// <summary>
-        /// 生成Panel
+        /// 异步生成Panel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="assetPath"></param>
         /// <returns></returns>
-        private void SpawnPanel<T>(Action<T> loadCallBack) where T : class, IPanel, new()
+        private void AsyncSpawnPanel<T>(Action<T> loadCallBack) where T : class, IPanel, new()
         {
             for (int i = 0; i < mClosePanel.Count; i++)//先检查下需要生成的面板是否在关闭列表中
             {
@@ -436,6 +436,7 @@ namespace YFramework
                     LogHelper.LogError(assetPath + "未找到对应的层级" + CanvasLayerData.PANEL_LAYER);
                     return;
                 }
+                target.name = typeof(T).Name;
                 panel.SetTrans(target.transform);
                 panel.Awake();
                 panel.Start();
@@ -485,14 +486,14 @@ namespace YFramework
                     }
                     mPopStack.Push(tempPanel);
 
-                    if (mCurPanel != null) mCurPanel.Hide();
-                    mCurPanel = tempPanel;
-                    mCurPanel.Show();
-                    if (!mCurPanel.isShow)
+                    if (curPanel != null) curPanel.Hide();
+                    curPanel = tempPanel;
+                    curPanel.Show();
+                    if (!curPanel.isShow)
                     {
-                        mCurPanel.Show();
+                        curPanel.Show();
                     }
-                    mCurPanel.transform.SetAsLastSibling();
+                    curPanel.transform.SetAsLastSibling();
                     return tempPanel as T;
                 }
                 else
@@ -523,8 +524,8 @@ namespace YFramework
             }
             if (mPopStack.Count != 0)
             {
-                mCurPanel = mPopStack.Peek();
-                mCurPanel.Show();
+                curPanel = mPopStack.Peek();
+                curPanel.Show();
             }
         }
     }

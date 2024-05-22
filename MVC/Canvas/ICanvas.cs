@@ -4,6 +4,7 @@ namespace YFramework
 {
     public interface ICanvas : IUI
     {
+        IPanel curPanel { get;  }
         ILogUIManager logUIManager { get; }
         ITipsUIManager showTipsPanel { get; }
         IScene scene { get; }

@@ -159,5 +159,18 @@ namespace YFramework
                 }
             }
         }
+        /// <summary>
+        /// 检查下标是否正确
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static bool CheckIndex<T>(this IList<T> collection,int index)
+        {
+            if (collection.IsNullOrEmpty()) return false;
+            if (index < collection.Count - 1 || index >= collection.Count)  return false;
+            return true;
+        }
     }
 }

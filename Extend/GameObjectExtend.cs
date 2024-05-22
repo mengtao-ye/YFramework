@@ -45,9 +45,10 @@ namespace YFramework
         /// <param name="go"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public static GameObject InstantiateGameObject(this GameObject go, Transform parent = null) {
+        public static T InstantiateGameObject<T>(this T go, Transform parent = null) where T : Object
+        {
             if (go == null) return null;
-            return GameObject.Instantiate(go, parent);
+            return GameObject.Instantiate(go, parent) as T;
         }
         /// <summary>
         /// 不销毁该对象

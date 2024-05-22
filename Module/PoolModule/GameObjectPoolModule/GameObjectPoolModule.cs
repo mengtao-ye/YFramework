@@ -363,12 +363,8 @@ namespace YFramework
         /// </summary>
         public static void Clear()
         {
-            if (!mIsInit)
-            {
-                Init();
-            }
-            mPoolDict.Clear();
-            mPopTarget.Clear();
+            mPoolDict?.Clear();
+            mPopTarget?.Clear();
         }
         /// <summary>
         /// 清除目标对象

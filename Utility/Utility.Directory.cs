@@ -37,17 +37,14 @@ namespace YFramework
                 try
                 {
                     DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
-
                     if (directoryInfo.Exists)
                     {
                         directoryInfo.Attributes &= ~FileAttributes.ReadOnly; // 取消只读属性
-
                         foreach (var file in directoryInfo.GetFiles())
                         {
                             file.IsReadOnly = false; // 取消文件只读属性
                         }
                         directoryInfo.Delete(true); // 递归删除文件夹及其所有内容
-                        Debug.Log("成功删除文件夹！");
                     }
                     else
                     {

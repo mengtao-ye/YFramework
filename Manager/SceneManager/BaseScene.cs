@@ -19,10 +19,6 @@ namespace YFramework
             if (canvas != null) canvas.Awake();
             if (model != null) model.Awake();
             if (controller != null) controller.Awake();
-            GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            if (mainCamera == null) {
-                
-            }
         }
         public virtual void Start()
         {

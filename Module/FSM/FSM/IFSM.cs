@@ -2,6 +2,8 @@
 {
     public interface IFSM<T>
     {
+        //当前状态
+        IFSMState<T> curState { get; }
         /// <summary>
         /// 条件
         /// </summary>
@@ -13,5 +15,7 @@
         void SetCondition(T condition);
         void Performance(int stateID);
         IFSMState<T> GetState(int stateID);
+        void Update();
+        void AddState(IFSMState<T> state);
     }
 }
