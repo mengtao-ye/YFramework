@@ -23,6 +23,12 @@ namespace YFramework
             {
                 IEnumeratorModule.StartCoroutine(GetTextureAsyn(url, actionResult, error));
             }
+
+            public static void GetBytesToLocal(string url, string localPath, Action<string> error,Action<int > size)
+            {
+                IEnumeratorModule.StartCoroutine(GetBytesToLocalAsyn(url, localPath, error,size));
+            }
+
             public static void GetBytes(string url, Action<float> process,Action<byte[]> actionResult, Action<string> error)
             {
                 IEnumeratorModule.StartCoroutine(GetBytesAsyn(url, process, actionResult, error));
@@ -70,6 +76,22 @@ namespace YFramework
                     error?.Invoke("Load Texture Error:" + uwr.error);
                 }
             }
+
+            private static IEnumerator GetBytesToLocalAsyn(string url,string localPath, Action<string> error, Action<int> size)
+            {
+                UnityWebRequest request = UnityWebRequest.Get(url);
+                yield return request.SendWebRequest();
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    size?.Invoke(request.downloadHandler.data.Length);
+                    FileTools.Write( localPath, request.downloadHandler.data);
+                }
+                else
+                {
+                    error?.Invoke("Load bytes Error:" + request.error);
+                }
+            }
+
             private static IEnumerator GetBytesAsyn(string url,Action<float> process, Action<byte[]> actionResult, Action<string> error)
             {
                 UnityWebRequest request = UnityWebRequest.Get(url);
