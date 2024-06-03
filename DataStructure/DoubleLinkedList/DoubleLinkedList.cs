@@ -221,7 +221,7 @@ namespace YFramework
         /// <returns></returns>
         public override string ToString()
         {
-            if (Count == 0) return "";
+            if (Count == 0) return string.Empty;
             StringBuilder sb = new StringBuilder();
             DoubleLinkedNode<T> temp = Head;
             while (temp != null) {

@@ -42,7 +42,7 @@ namespace YFramework
             /// <returns></returns>
             private static string FormatMD5(byte[] data)
             {
-                return System.BitConverter.ToString(data).Replace("-", "").ToLower();//将byte[]装换成字符串
+                return System.BitConverter.ToString(data).Replace("-", string.Empty).ToLower();//将byte[]装换成字符串
             }
         }
     }

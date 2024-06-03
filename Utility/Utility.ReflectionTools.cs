@@ -96,7 +96,7 @@ namespace YFramework
             /// <returns></returns>
             public static object CreateClass(string namespaceName, string className,params object[] obj)
             {
-                string fullName = "";
+                string fullName = string.Empty;
                 if (string.IsNullOrEmpty(namespaceName))
                 {
                     fullName = className;

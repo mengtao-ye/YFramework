@@ -41,39 +41,59 @@ namespace YFramework
                 mAllLogUIList[i].OnDestory();
             }
         }
+
+
         /// <summary>
         /// 显示提示UI
         /// </summary>
         /// <param name="name"></param>
         public void ShowLogUI<T>(Action<T> action) where T : class, ILogUI, new()
         {
-             GetLogUI<T>((target)=> 
-             {
-                 if (!isShow) Show();
-                 target.Show();
-                 action?.Invoke(target);
-             });
+            for (int i = 0; i < mAllLogUIList.Count; i++)
+            {
+                if (mAllLogUIList[i] is T)
+                {
+                    if (!isShow) Show();
+                    mAllLogUIList[i].Show();
+                    action?.Invoke(mAllLogUIList[i] as T);
+                    return;
+                }
+            }
+            //如果当前列表中没有的话就生成
+            SpawnLogPanel<T>((target) => 
+            {
+                AddLogUI(target);
+                if (!isShow) Show();
+                target.Show();
+                action?.Invoke(target);
+            });
         }
         /// <summary>
         /// 显示提示UI
         /// </summary>
         /// <param name="name"></param>
-        public void GetLogUI<T>(Action<T> action) where T : class, ILogUI, new()
+        public T GetLogUI<T>() where T : class, ILogUI, new()
         {
             for (int i = 0; i < mAllLogUIList.Count; i++)
             {
                 if (mAllLogUIList[i] is T)
                 {
-                    action?.Invoke( mAllLogUIList[i] as T);
-                    return;
+                    return mAllLogUIList[i] as T;
                 }
             }
-            //如果当前列表中没有的话就生成
-            SpawnLogPanel<T>((target)=> {
-                AddLogUI(target);
-                action?.Invoke(target);
-            });
+            return null;
         }
+        /// <summary>
+        /// 隐藏LogUI
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void HideLogUI<T>() where T : class, ILogUI, new()
+        {
+            T value = GetLogUI<T>();
+            if (value == null) return;
+            value.Hide();
+        }
+
         /// <summary>
         /// 添加
         /// </summary>

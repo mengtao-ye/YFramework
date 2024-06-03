@@ -66,7 +66,10 @@ namespace YFramework
         {
             for (int i = 0; i < mAllTipsUI.Count; i++)
             {
-                mAllTipsUI[i].Update();
+                if (mAllTipsUI[i].isShow)
+                {
+                    mAllTipsUI[i].Update();
+                }
             }
         }
 
@@ -84,33 +87,34 @@ namespace YFramework
         /// <param name="name"></param>
         public void ShowTipsUI<T>(Action<T> action) where T : class, ITipsUI, new()
         {
-             GetTipsUI<T>((baseTipPanel) => {
-                 if (!isShow) Show();
-                 if (IsInShowStack<T>())//在显示栈里面
-                 {
-                     //并且还是显示在最上层
-                     if (mCurShowTipsUI != null && mCurShowTipsUI.GetType().Name != baseTipPanel.GetType().Name)
-                     {
-                         action ?.Invoke(baseTipPanel);
-                         return;
-                     }
-                 }
-                 BG.gameObject.SetAvtiveExtend(true);
-                 if (!IsInShowStack<T>())
-                 {
-                     mTipsUIStack.Push(baseTipPanel);
-                 }
-                 if (mCurShowTipsUI != null)
-                 {
-                     mCurShowTipsUI.rectTransform.SetParent(mTipsUIParent,true);
-                     mCurShowTipsUI.rectTransform.SetSiblingIndex(mTipsUIParent.childCount - 1);
-                 }
-                 baseTipPanel.rectTransform.SetParent(BG,true);
-                 baseTipPanel.Show();
-                 mCurShowTipsUI = baseTipPanel;
-                 action?.Invoke(mCurShowTipsUI as T);
-             });
-           
+            GetTipsUI<T>((baseTipPanel) =>
+            {
+                if (!isShow) Show();
+                if (IsInShowStack<T>())//在显示栈里面
+                {
+                    //并且还是显示在最上层
+                    if (mCurShowTipsUI != null && mCurShowTipsUI.GetType().Name != baseTipPanel.GetType().Name)
+                    {
+                        action?.Invoke(baseTipPanel);
+                        return;
+                    }
+                }
+                BG.gameObject.SetAvtiveExtend(true);
+                if (!IsInShowStack<T>())
+                {
+                    mTipsUIStack.Push(baseTipPanel);
+                }
+                if (mCurShowTipsUI != null)
+                {
+                    mCurShowTipsUI.rectTransform.SetParent(mTipsUIParent, true);
+                    mCurShowTipsUI.rectTransform.SetSiblingIndex(mTipsUIParent.childCount - 1);
+                }
+                baseTipPanel.rectTransform.SetParent(BG, true);
+                baseTipPanel.Show();
+                mCurShowTipsUI = baseTipPanel;
+                action?.Invoke(mCurShowTipsUI as T);
+            });
+
         }
         /// <summary>
         /// 当前TipsUI是否在显示栈里面
@@ -207,7 +211,7 @@ namespace YFramework
             if (IsShow<T>())
             {
                 T value = FindTipsPanel<T>();
-                if(value.tipType == type) value.Hide();
+                if (value.tipType == type) value.Hide();
             }
         }
         /// <summary>
@@ -224,7 +228,7 @@ namespace YFramework
             ITipsUI tempTipsUI = mTipsUIStack.Pop();
             tempTipsUI.Hide(() =>
             {
-                tempTipsUI.rectTransform.SetParent(mTipsUIParent,true) ;
+                tempTipsUI.rectTransform.SetParent(mTipsUIParent, true);
                 tempTipsUI.rectTransform.SetSiblingIndex(0);
                 if (mTipsUIStack.Count == 0)
                 {
@@ -233,7 +237,7 @@ namespace YFramework
                 }
                 else
                 {
-                    mTipsUIStack.Peek().rectTransform.SetParent(BG,true);
+                    mTipsUIStack.Peek().rectTransform.SetParent(BG, true);
                     mCurShowTipsUI = mTipsUIStack.Peek();
                 }
             });

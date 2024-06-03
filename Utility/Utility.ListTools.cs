@@ -117,7 +117,7 @@ namespace YFramework
                 for (int i = startIndex; i < bytes.Length; i++)
                 {
                     length = BitConverter.ToUInt16(bytes, i);
-                    byte[] tempByte = new byte[0];
+                    byte[] tempByte = null;
                     if (length != 0)
                     {
                         tempByte = new byte[length];
@@ -125,6 +125,10 @@ namespace YFramework
                         {
                             tempByte[j] = bytes[i + 2 + j];
                         }
+                    }
+                    else 
+                    {
+                        tempByte = new byte[0];
                     }
                     data.Add(tempByte);
                     i += length + 1;

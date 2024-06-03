@@ -35,12 +35,12 @@ namespace YFramework
                     mTempValue = Mathf.Lerp(mTimer, mTime, mTimer / mTime);
                     break;
             }
-            rectTransform.anchoredPosition= Vector2.Lerp(nNowPos, mTargetPos, mTempValue/ mTime);
+            rectTransform.anchoredPosition = Vector2.Lerp(nNowPos, mTargetPos, mTempValue / mTime);
         }
         protected override void Finish()
         {
             base.Finish();
-            rectTransform.anchorMin= mTargetPos;
+            rectTransform.anchoredPosition = mTargetPos;
         }
         public override void Recycle()
         {

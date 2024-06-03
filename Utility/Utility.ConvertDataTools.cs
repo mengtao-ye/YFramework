@@ -118,7 +118,7 @@ namespace YFramework
                 IListData<byte[]> listBytes = ListTools.ToList(data, startIndex);
                 for (int i = 0; i < listBytes.Count; i++)
                 {
-                    if(byteList == null) byteList = ClassPool<ListData<T>>.Pop();
+                    if(byteList == null) byteList = ClassPool<ListPoolData<T>>.Pop();
                     T value = ToPoolObject<T>(listBytes[i]);
                     byteList.Add(value);
                 }

@@ -22,10 +22,20 @@ namespace YFramework
             if (!IsConnect) return;
             mRequestHandleManager.Update();
         }
-        public void Open(string ipAddress, int port)
+        protected void Open(string ipAddress, int port,string name)
         {
             mMsg = new Message();
-            Run(ipAddress, port);
+            try
+            {
+                Run(ipAddress, port);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("TCP启动失败：" + e.Message);
+                return;
+            }
+            Debug.Log(name + "TCP服务器启动成功！");
+            isRun = true;
         }
 
         private void Run(string ipAddress, int port)
@@ -33,6 +43,7 @@ namespace YFramework
             mTcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             mTcpSocket.Connect(new IPEndPoint(IPAddress.Parse(ipAddress), port));
             Receive();
+            
         }
         private void Receive()
         {

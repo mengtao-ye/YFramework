@@ -339,7 +339,7 @@ namespace YFramework
         }
         public string ToStringRound(int round = 2)
         {
-            return (float)Math.Round((float)this, round) + "";
+            return (float)Math.Round((float)this, round) + string.Empty;
         }
 
         public static Fix64 FromRaw(long rawValue)

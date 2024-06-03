@@ -52,7 +52,7 @@ namespace YFramework
         /// <returns></returns>
         public override string ToString()
         {
-            if (mData == null) return "";
+            if (mData == null) return string.Empty;
             return mData.ToString();
         }
         /// <summary>

@@ -130,10 +130,10 @@ namespace YFramework
         private Button SpawnShowTipsPanel()
         {
             GameObject tipsPanel = new GameObject("TipsPanel");
-            tipsPanel.transform.SetParent(GetLayer(CanvasLayerData.TIPS_LAYER),true);
+            tipsPanel.transform.SetParent(GetLayer(CanvasLayerData.TIPS_LAYER), true);
             UITools.SetFullScreen(tipsPanel.AddComponent<RectTransform>());
             GameObject BG = new GameObject("BG");
-            BG.transform.SetParent(GetLayer(CanvasLayerData.TIPS_LAYER),true);
+            BG.transform.SetParent(GetLayer(CanvasLayerData.TIPS_LAYER), true);
             UITools.SetFullScreen(BG.AddComponent<RectTransform>());
             BG.AddComponent<Image>().color = new Color(130 / 255f, 130 / 255f, 130 / 255f, 70 / 255f);
             Button btn = BG.AddComponent<Button>();
@@ -155,7 +155,7 @@ namespace YFramework
             for (int i = 0; i < mLayerCount; i++)
             {
                 mLayerTrans[i] = new GameObject(((CanvasLayerData)i).ToString()).AddComponent<RectTransform>();
-                mLayerTrans[i].SetParent(canvas.transform,true);
+                mLayerTrans[i].SetParent(canvas.transform, true);
                 UITools.SetFullScreen(mLayerTrans[i]);
             }
             canvas.AddComponent<RectTransform>().pivot = Vector2.zero;
@@ -185,6 +185,8 @@ namespace YFramework
         public override void Update()
         {
             if (curPanel != null) curPanel.Update();
+            if (mShowTipsPanel != null) mShowTipsPanel.Update();
+            if (mLogManager != null) mLogManager.Update();
         }
         public override void OnDestory()
         {

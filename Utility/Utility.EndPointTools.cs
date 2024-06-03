@@ -26,7 +26,7 @@ namespace YFramework
                 {
                     return  null;
                 }
-                string ipAddress = "";
+                string ipAddress = string.Empty;
                 byte[] ipAddressBytes = ByteTools.SubBytes(datas, startIndex, 4);
                 for (int i = 0; i < ipAddressBytes.Length; i++)
                 {

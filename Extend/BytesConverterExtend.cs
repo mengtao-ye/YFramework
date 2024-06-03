@@ -181,7 +181,7 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static IListData<T> ToListBytes<T>(this byte[] @this, int startIndex = 0) where T : IDataConverter, new()
+        public static IListData<T> ToListDataBytes<T>(this byte[] @this, int startIndex = 0) where T : IDataConverter, new()
         {
             return ConverterDataTools.ToListObject<T>(@this, startIndex);
         }
@@ -191,7 +191,7 @@ namespace YFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static IListData<T> ToListPoolBytes<T>(this byte[] @this) where T : class, IDataConverter, IPool, new()
+        public static IListData<T> ToListPoolDataBytes<T>(this byte[] @this) where T : class, IDataConverter, IPool, new()
         {
             return ConverterDataTools.ToListPoolObject<T>(@this);
         }
@@ -308,9 +308,9 @@ namespace YFramework
         /// </summary>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static byte ToByte(this byte[] @this)
+        public static byte ToByte(this byte[] @this,int index = 0)
         {
-            return @this[0];
+            return @this[index];
         }
         /// <summary>
         ///  将字节数组转换成bool
