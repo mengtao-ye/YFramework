@@ -9,12 +9,15 @@ namespace YFramework
     /// </summary>
     public class TotweenModule : SingletonMono<TotweenModule>
     {
+        private static bool mIsInstantiate;
         /// <summary>
         /// ToTweenÊý×é
         /// </summary>
         private IList<IToTween> mProcessList = new List<IToTween>();
         public static void Init()
         {
+            if (mIsInstantiate) return;
+            mIsInstantiate = true;
             UnityEngine.Debug.Log("Launcher ToTween");
             GameObject yCenter = new GameObject("Totween");
             Instance =  yCenter.AddComponent<TotweenModule>();

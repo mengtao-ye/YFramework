@@ -339,6 +339,10 @@ namespace YFramework
         {
             return Encoding.UTF8.GetString(@this);
         }
+        public static string ToStr(this byte[] @this, int startIndex, int count)
+        {
+            return Encoding.UTF8.GetString(@this, startIndex, count);
+        }
         #endregion
         #region Converter
         /// <summary>
