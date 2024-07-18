@@ -99,7 +99,7 @@ namespace YFramework
                         return;
                     }
                 }
-                BG.gameObject.SetAvtiveExtend(true);
+                BG.gameObject.SetActiveExtend(true);
                 if (!IsInShowStack<T>())
                 {
                     mTipsUIStack.Push(baseTipPanel);
@@ -320,7 +320,7 @@ namespace YFramework
         {
             if (BG != null)
             {
-                BG.gameObject.SetAvtiveExtend(active);
+                BG.gameObject.SetActiveExtend(active);
             }
         }
 

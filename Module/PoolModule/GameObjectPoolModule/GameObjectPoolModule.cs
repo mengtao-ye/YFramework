@@ -267,7 +267,24 @@ namespace YFramework
             }
             return mPoolDict[typeName];
         }
-
+        /// <summary>
+        /// 获取当前池子里面的数据
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static List<IGameObjectPoolTarget> GetPop<T>() where T : class, IGameObjectPoolTarget, new()
+        {
+            string typeName = typeof(T).Name;
+            if (!mIsInit)
+            {
+                Init();
+            }
+            if (!mPopTarget.ContainsKey(typeName))
+            {
+                return null;
+            }
+            return mPopTarget[typeName];
+        }
         /// <summary>
         /// 将指定类型全部放入栈中
         /// </summary>

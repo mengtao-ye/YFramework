@@ -65,8 +65,13 @@ namespace YFramework
         /// </summary>
         /// <param name="go"></param>
         /// <param name="active"></param>
-        public static void SetAvtiveExtend(this GameObject go, bool active) {
-            if (go == null) return;
+        public static void SetActiveExtend(this GameObject go, bool active) {
+            if (go == null)
+            {
+                Debug.LogError("SetActiveExtend go is null");
+                return;
+            }
+
             if (go.activeInHierarchy == active) return;
             go.SetActive(active);
         }

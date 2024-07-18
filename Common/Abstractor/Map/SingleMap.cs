@@ -15,6 +15,10 @@ namespace YFramework
         /// </summary>
         private Dictionary<TKey, TValue> mDataDict;
         /// <summary>
+        /// 数据字典
+        /// </summary>
+        public Dictionary<TKey, TValue> data { get { return mDataDict; } }
+        /// <summary>
         /// 配置数据Key值数组
         /// </summary>
         public ICollection<TKey> Keys => mDataDict.Keys;

@@ -48,7 +48,7 @@ namespace YFramework
                 FirstShow();
                 mIsFirstShow = true;
             }
-            gameObject.SetAvtiveExtend(true);
+            gameObject.SetActiveExtend(true);
 
         }
         public virtual void Hide()
